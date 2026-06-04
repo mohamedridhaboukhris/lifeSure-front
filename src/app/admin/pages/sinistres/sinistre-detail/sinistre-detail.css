@@ -1,0 +1,322 @@
+
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 SINISTRE DETAIL - NOIR + OR PREMIUM LUXE                */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ============= TITRE DE LA PAGE ============= */
+h1.h3.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+}
+
+/* ============= BOUTONS ============= */
+.btn-secondary {
+  background: #ffffff !important;
+  color: #555 !important;
+  border: 1.5px solid #e5e5e0 !important;
+  font-weight: 500 !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s !important;
+}
+
+.btn-secondary:hover {
+  background: #1a1a1a !important;
+  color: #d4af37 !important;
+  border-color: #1a1a1a !important;
+}
+
+/* Bouton "Télécharger PDF" */
+.btn-info {
+  background: #d4af37 !important;
+  color: white !important;
+  border: 1.5px solid #d4af37 !important;
+
+  font-weight: 600 !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+
+  transition: none !important;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active {
+  background: #d4af37 !important;
+  color: white !important;
+  border-color: #d4af37 !important;
+
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.btn-info:hover {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border-color: #d4af37 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4) !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border: 2px solid #d4af37 !important;
+  font-weight: 600 !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+}
+
+/* ============= LOADING SPINNER ============= */
+.fa-spinner.text-primary {
+  color: #d4af37 !important;
+}
+
+/* ============= ALERTE ERREUR ============= */
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08) !important;
+  color: #991b1b !important;
+  border: none !important;
+  border-left: 4px solid #ef4444 !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+}
+
+/* ============= CARTES ============= */
+.card.shadow {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #ffffff !important;
+  overflow: hidden;
+}
+
+.card-header {
+  background: #fafaf7 !important;
+  border-bottom: 1px solid #f0f0eb !important;
+  padding: 1.2rem 1.5rem !important;
+}
+
+.card-header h6,
+.card-header .font-weight-bold,
+.text-primary {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+.card-header h6 i,
+.card-body i.text-primary {
+  color: #d4af37 !important;
+}
+
+/* Carte avec bordure gauche (Montants) */
+.card.border-left-primary {
+  border-left: 4px solid #d4af37 !important;
+}
+
+/* ============= LABELS ET TEXTES ============= */
+.text-muted {
+  color: #888 !important;
+}
+
+.text-muted.small {
+  font-size: 0.75rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.font-weight-bold {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+}
+
+/* ============= BADGES TYPE ============= */
+.badge-info {
+  background: rgba(180, 180, 180, 0.2) !important;
+  color: #555 !important;
+  border: 1px solid #d0d0d0 !important;
+  font-weight: 500 !important;
+  padding: 5px 14px !important;
+  font-size: 0.75rem !important;
+  border-radius: 20px !important;
+  letter-spacing: 0.5px;
+}
+
+.badge-primary {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  padding: 5px 14px !important;
+  font-size: 0.75rem !important;
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+}
+
+/* ============= BADGES STATUTS ============= */
+.badge {
+  padding: 6px 14px !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  letter-spacing: 0.5px;
+}
+
+.badge-warning {
+  background: rgba(212, 175, 55, 0.15) !important;
+  color: #b8860b !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #047857 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+.badge-danger {
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #b91c1c !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+.badge-secondary {
+  background: rgba(80, 80, 80, 0.1) !important;
+  color: #1a1a1a !important;
+  border: 1px solid #d0d0d0 !important;
+}
+
+.badge-light {
+  background: transparent !important;
+  color: #888 !important;
+  border: 1px solid #e5e5e0 !important;
+}
+
+/* ============= MONTANTS (couleurs) ============= */
+h4.text-warning {
+  color: #b8860b !important;
+  font-weight: 700 !important;
+}
+
+h3.text-success {
+  color: #047857 !important;
+  font-weight: 700 !important;
+}
+
+/* ============= SÉPARATEURS ============= */
+hr {
+  border-color: rgba(212, 175, 55, 0.15) !important;
+  margin: 1.25rem 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #f0f0eb !important;
+}
+
+/* ============= LISTE DOCUMENTS ============= */
+.list-group {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.list-group-item {
+  background: #fafaf8 !important;
+  border: 1px solid #f0f0eb !important;
+  padding: 14px 16px !important;
+  transition: all 0.2s;
+  margin-bottom: 6px !important;
+  border-radius: 8px !important;
+}
+
+.list-group-item:hover {
+  background: rgba(212, 175, 55, 0.06) !important;
+  border-color: #d4af37 !important;
+  transform: translateX(4px);
+}
+
+.list-group-item strong {
+  color: #1a1a1a !important;
+  font-weight: 600;
+}
+
+.list-group-item i.text-primary {
+  color: #d4af37 !important;
+  font-size: 1.1rem;
+}
+
+/* ============= EMPTY STATE (Aucun document) ============= */
+.text-center.text-muted.py-3 i {
+  color: #d4af37 !important;
+  opacity: 0.5;
+}
+
+.text-center.text-muted.py-3 {
+  color: #888 !important;
+}
+
+/* ============= ANALYSE IA - BARRE DE PROGRESSION ============= */
+.progress {
+  background: #f5f5f0 !important;
+  border-radius: 20px !important;
+  overflow: hidden;
+  height: 25px !important;
+  border: 1px solid #f0f0eb;
+}
+
+.progress-bar {
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.4s ease;
+}
+
+.progress-bar.bg-danger {
+  background: linear-gradient(135deg, #dc2626, #ef4444) !important;
+  color: #fff;
+}
+
+.progress-bar.bg-success {
+  background: linear-gradient(135deg, #059669, #10b981) !important;
+  color: #fff;
+}
+
+/* ============= INTERVENANTS (Client / Agent / Expert) ============= */
+.text-muted.small i {
+  color: #d4af37 !important;
+  margin-right: 4px;
+}
+
+/* Quand "Aucun agent affecté" / "Aucun expert affecté" */
+.text-muted i.fa-user-tie,
+.text-muted i.fa-user-graduate {
+  color: #aaa !important;
+}
+
+/* ============= LIENS ROUTERS ============= */
+a.btn-secondary,
+a.btn-primary,
+a.btn-info {
+  text-decoration: none !important;
+}
+
+/* ============= ANIMATIONS ============= */
+.card.shadow {
+  transition: box-shadow 0.2s;
+}
+
+.card.shadow:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08) !important;
+}

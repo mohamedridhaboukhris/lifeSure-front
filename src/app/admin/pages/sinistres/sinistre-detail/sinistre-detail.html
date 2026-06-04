@@ -1,0 +1,247 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Détails du sinistre</h1>
+  <a routerLink="/admin/sinistres" class="btn btn-secondary shadow-sm">
+    <i class="fas fa-arrow-left fa-sm me-2"></i> Retour
+
+
+
+
+    <button class="btn btn-info me-2"
+        *ngIf="sinistre"
+        (click)="telechargerRapport(sinistre.id!)">
+  <i class="fas fa-file-pdf me-2"></i>Télécharger PDF
+</button>
+  </a>
+</div>
+
+<!-- Loading -->
+<div *ngIf="loading" class="text-center py-5">
+  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+</div>
+
+<!-- Error -->
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+<!-- Details -->
+<div *ngIf="!loading && sinistre" class="row">
+
+  <!-- COLONNE PRINCIPALE -->
+  <div class="col-lg-8">
+
+    <!-- Infos générales -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">
+          <i class="fas fa-info-circle me-2"></i>
+          {{ sinistre.numeroSinistre }}
+        </h6>
+        <span class="badge" [ngClass]="getStatutBadge(sinistre.statut)">
+          {{ sinistre.statut }}
+        </span>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="text-muted small">Type de sinistre</label>
+            <p class="mb-0">
+              <span class="badge badge-info">{{ sinistre.typeSinistre }}</span>
+            </p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="text-muted small">Date du sinistre</label>
+            <p class="mb-0 font-weight-bold">{{ sinistre.dateSinistre }}</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="text-muted small">Date de déclaration</label>
+            <p class="mb-0">{{ sinistre.dateDeclaration | date:'short' }}</p>
+          </div>
+          <div class="col-md-6 mb-3" *ngIf="sinistre.dateCloture">
+            <label class="text-muted small">Date de clôture</label>
+            <p class="mb-0">{{ sinistre.dateCloture | date:'short' }}</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="text-muted small">Délai de déclaration</label>
+            <p class="mb-0">{{ sinistre.delaiDeclaration }} jour(s)</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <label class="text-muted small">Description</label>
+        <p class="mb-0">{{ sinistre.description }}</p>
+      </div>
+    </div>
+
+    <!-- Contrat concerné -->
+    <div class="card shadow mb-4" *ngIf="sinistre.contrat">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+          <i class="fas fa-file-contract me-2"></i>Contrat concerné
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-2">
+            <label class="text-muted small">Numéro du contrat</label>
+            <p class="mb-0 font-weight-bold">{{ sinistre.contrat.numeroContrat }}</p>
+          </div>
+          <div class="col-md-6 mb-2">
+            <label class="text-muted small">Type</label>
+            <p class="mb-0">
+              <span class="badge badge-primary">{{ sinistre.contrat.typeContrat }}</span>
+            </p>
+          </div>
+          <div class="col-md-6 mb-2">
+            <label class="text-muted small">Statut</label>
+            <p class="mb-0">{{ sinistre.contrat.statut }}</p>
+          </div>
+          <div class="col-md-6 mb-2">
+            <label class="text-muted small">Prime mensuelle</label>
+            <p class="mb-0">{{ sinistre.contrat.primeMensuelle | number:'1.2-2' }} DT</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Documents joints -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+          <i class="fas fa-paperclip me-2"></i>
+          Documents joints ({{ documents.length }})
+        </h6>
+      </div>
+      <div class="card-body">
+        <div *ngIf="documents.length === 0" class="text-center text-muted py-3">
+          <i class="fas fa-folder-open fa-2x mb-2 d-block"></i>
+          Aucun document joint
+        </div>
+        <ul class="list-group" *ngIf="documents.length > 0">
+          <li *ngFor="let doc of documents"
+              class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <i class="fas me-2 text-primary" [ngClass]="getFileIcon(doc.fileType)"></i>
+              <strong>{{ doc.fileName }}</strong>
+              <small class="text-muted d-block ms-4">{{ doc.fileType }}</small>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLONNE LATÉRALE -->
+  <div class="col-lg-4">
+
+    <!-- Montants -->
+    <div class="card shadow mb-4 border-left-primary">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+          <i class="fas fa-money-bill-wave me-2"></i>Montants
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="text-muted small">Montant estimé</label>
+          <h4 class="mb-0 text-warning">
+            {{ sinistre.montantEstime | number:'1.2-2' }} DT
+          </h4>
+        </div>
+        <div *ngIf="sinistre.montantIndemnisation">
+          <label class="text-muted small">Indemnisation finale</label>
+          <h3 class="mb-0 text-success">
+            {{ sinistre.montantIndemnisation | number:'1.2-2' }} DT
+          </h3>
+        </div>
+        <div *ngIf="!sinistre.montantIndemnisation" class="text-muted">
+          <i>En attente d'expertise</i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analyse IA (visible pour AGENT et EXPERT) -->
+    <div class="card shadow mb-4"
+         *ngIf="(auth.isAgent() || auth.isExpert()) && sinistre.scoreFraude !== null && sinistre.scoreFraude !== undefined">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+          <i class="fas fa-robot me-2"></i>Analyse IA
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="mb-2">
+          <label class="text-muted small">Score de fraude</label>
+          <div class="progress" style="height: 25px;">
+            <div class="progress-bar"
+                 [class.bg-danger]="sinistre.fraude"
+                 [class.bg-success]="!sinistre.fraude"
+                 [style.width.%]="(sinistre.scoreFraude || 0) * 100">
+              {{ (sinistre.scoreFraude || 0) * 100 | number:'1.0-0' }}%
+            </div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <span class="badge" [class.badge-danger]="sinistre.fraude" [class.badge-success]="!sinistre.fraude">
+            <i class="fas" [class.fa-exclamation-triangle]="sinistre.fraude" [class.fa-check]="!sinistre.fraude"></i>
+            {{ sinistre.fraude ? 'Suspicion de fraude' : 'Sinistre légitime' }}
+          </span>
+        </div>
+        <hr>
+        <small class="text-muted d-block">
+          <strong>{{ sinistre.nbSinistresClient }}</strong> sinistre(s) antérieur(s) du client
+        </small>
+      </div>
+    </div>
+
+    <!-- Personnes impliquées (visible pour AGENT et EXPERT uniquement) -->
+<div class="card shadow mb-4" *ngIf="auth.isAgent() || auth.isExpert()">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">
+      <i class="fas fa-users me-2"></i>Intervenants
+    </h6>
+  </div>
+  <div class="card-body">
+
+    <!-- Client -->
+    <div class="mb-3 pb-3 border-bottom" *ngIf="sinistre.client">
+      <label class="text-muted small">
+        <i class="fas fa-user me-1"></i> Client
+      </label>
+      <p class="mb-0 font-weight-bold">
+        {{ sinistre.client.prenom }} {{ sinistre.client.nom }}
+      </p>
+      <small class="text-muted">{{ sinistre.client.email }}</small>
+    </div>
+
+    <!-- Agent -->
+    <div class="mb-3 pb-3 border-bottom" *ngIf="sinistre.agent">
+      <label class="text-muted small">
+        <i class="fas fa-user-tie me-1"></i> Agent
+      </label>
+      <p class="mb-0 font-weight-bold">
+        {{ sinistre.agent.prenom }} {{ sinistre.agent.nom }}
+      </p>
+      <small class="text-muted">{{ sinistre.agent.email }}</small>
+    </div>
+    <div class="mb-3 pb-3 border-bottom text-muted" *ngIf="!sinistre.agent">
+      <i class="fas fa-user-tie me-1"></i> Aucun agent affecté
+    </div>
+
+    <!-- Expert -->
+    <div class="mb-0" *ngIf="sinistre.expert">
+      <label class="text-muted small">
+        <i class="fas fa-user-graduate me-1"></i> Expert
+      </label>
+      <p class="mb-0 font-weight-bold">
+        {{ sinistre.expert.prenom }} {{ sinistre.expert.nom }}
+      </p>
+      <small class="text-muted">{{ sinistre.expert.email }}</small>
+    </div>
+    <div class="mb-0 text-muted" *ngIf="!sinistre.expert">
+      <i class="fas fa-user-graduate me-1"></i> Aucun expert affecté
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>

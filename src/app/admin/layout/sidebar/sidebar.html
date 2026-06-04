@@ -1,0 +1,139 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+  
+
+ <a class="sidebar-brand d-flex align-items-center justify-content-center"
+   routerLink="/admin/dashboard">
+
+  <i class="fas fa-shield-alt logo-or"></i>
+
+  <div class="sidebar-brand-text mx-2">LifeSure</div>
+
+</a>
+
+  <hr class="sidebar-divider my-0">
+
+  <!-- Dashboard - PAS pour le client -->
+  <li *ngIf="!auth.isClient()" class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/dashboard">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>{{ 'menu.dashboard' | translate }}</span>
+    </a>
+  </li>
+
+  <hr class="sidebar-divider">
+  <div class="sidebar-heading">{{ 'common.actions' | translate }}</div>
+
+  <!-- Contrats -->
+<li *ngIf="!auth.isExpert()" class="nav-item" routerLinkActive="active">    <a class="nav-link" routerLink="/admin/contrats">
+      <i class="fas fa-fw fa-file-contract"></i>
+      <span>
+        {{ auth.isClient() ? ('menu.myContracts' | translate) : ('menu.contracts' | translate) }}
+      </span>
+    </a>
+  </li>
+
+  <!-- Taux - AGENT uniquement -->
+  <li *ngIf="auth.isAgent()" class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/taux">
+      <i class="fas fa-fw fa-percentage"></i>
+      <span>{{ 'menu.rates' | translate }}</span>
+    </a>
+  </li>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Sinistres CLIENT -->
+  <li *ngIf="auth.isClient()" class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/sinistres">
+      <i class="fas fa-fw fa-exclamation-triangle"></i>
+      <span>{{ 'menu.myClaims' | translate }}</span>
+    </a>
+  </li>
+
+  <!-- Sinistres AGENT -->
+  <li *ngIf="auth.isAgent()" class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/sinistres/agent">
+      <i class="fas fa-fw fa-exclamation-triangle"></i>
+      <span>{{ 'menu.claims' | translate }}</span>
+    </a>
+  </li>
+
+  <!-- Sinistres EXPERT -->
+  <li *ngIf="auth.isExpert()" class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/sinistres/expert">
+      <i class="fas fa-fw fa-clipboard-check"></i>
+      <span>{{ 'menu.expertises' | translate }}</span>
+    </a>
+  </li>
+
+  <!-- Paiements CLIENT -->
+  <li *ngIf="auth.isClient()" class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/paiements">
+      <i class="fas fa-fw fa-receipt"></i>
+      <span>{{ 'menu.myPayments' | translate }}</span>
+    </a>
+  </li>
+
+  <!-- ✅ Médecins partenaires CLIENT -->
+  <li class="nav-item" *ngIf="auth.isClient()">
+    <a routerLink="/admin/medecins" routerLinkActive="active" class="nav-link">
+      <i class="fas fa-user-md"></i>
+      <span>Médecins partenaires</span>
+    </a>
+  </li>
+
+  <!-- Réclamations CLIENT -->
+  <li *ngIf="auth.isClient()" class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/reclamations">
+      <i class="fas fa-fw fa-comment-dots"></i>
+      <span>{{ 'menu.myComplaints' | translate }}</span>
+    </a>
+  </li>
+
+  <!-- Réclamations EXPERT -->
+  <li *ngIf="auth.isExpert()" class="nav-item" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/reclamations/expert">
+      <i class="fas fa-fw fa-gavel"></i>
+      <span>{{ 'menu.complaints' | translate }}</span>
+    </a>
+  </li>
+
+  <li class="nav-item" *ngIf="auth.isAgent() || auth.isExpert()">
+    <a routerLink="/admin/carte-sinistres" routerLinkActive="active" class="nav-link">
+      <i class="fas fa-map-marked-alt"></i>
+      <span>Carte des sinistres</span>
+    </a>
+  </li>
+
+<li class="nav-item" *ngIf="auth.isAgent() || auth.isAgent()">
+  <a routerLink="/admin/calendrier" routerLinkActive="active" class="nav-link">
+    <i class="fas fa-calendar-alt"></i>
+    <span>Calendrier des échéances</span>
+  </a>
+</li>
+
+
+
+
+  <hr class="sidebar-divider d-none d-md-block">
+
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle" type="button"></button>
+  </div>
+
+</ul>

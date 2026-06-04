@@ -1,0 +1,72 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Mes Sinistres</h1>
+  <a routerLink="/admin/sinistres/declarer" class="btn btn-primary shadow-sm">
+    <i class="fas fa-plus fa-sm me-2"></i> Déclarer un sinistre
+  </a>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+<div *ngIf="loading" class="text-center py-5">
+  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+</div>
+
+<div *ngIf="!loading" class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">
+      Mes sinistres ({{ sinistres.length }})
+    </h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>N° Sinistre</th>
+            <th>Type</th>
+            <th>Date Sinistre</th>
+            <th>Montant Estimé</th>
+            <th>Indemnisation</th>
+            <th>Statut</th>
+            <th>Détails</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="sinistres.length === 0">
+            <td colspan="7" class="text-center text-muted py-4">
+              Aucun sinistre déclaré.
+              <br>
+              <a routerLink="/admin/sinistres/declarer" class="btn btn-primary mt-3">
+                Déclarer maintenant
+              </a>
+            </td>
+          </tr>
+          <tr *ngFor="let s of sinistres">
+            <td><strong>{{ s.numeroSinistre }}</strong></td>
+            <td><span class="badge badge-info">{{ s.typeSinistre }}</span></td>
+            <td>{{ s.dateSinistre }}</td>
+            <td>{{ s.montantEstime | number:'1.2-2' }} DT</td>
+            <td>
+              <span *ngIf="s.montantIndemnisation">
+                {{ s.montantIndemnisation | number:'1.2-2' }} DT
+              </span>
+              <span *ngIf="!s.montantIndemnisation" class="text-muted">—</span>
+            </td>
+            <td>
+              <span class="badge" [ngClass]="getStatutBadge(s.statut)">{{ s.statut }}</span>
+            </td>
+            <td>
+              <a [routerLink]="['/admin/sinistres', s.id]" class="btn btn-sm btn-info">
+                <i class="fas fa-eye"></i>
+              </a>
+
+
+
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

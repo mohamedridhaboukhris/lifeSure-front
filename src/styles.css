@@ -1,1 +1,170 @@
 /* You can add global styles to this file, and also import other style files */
+/* ====================================== */
+/* 🌙 MODE SOMBRE - Variables globales */
+/* ====================================== */
+
+body.dark-mode {
+  background-color: #1a1a2e !important;
+  color: #e4e6eb !important;
+}
+
+/* Cards */
+body.dark-mode .card {
+  background-color: #16213e !important;
+  border-color: #0f3460 !important;
+  color: #e4e6eb !important;
+}
+
+body.dark-mode .card-header {
+  background-color: #0f3460 !important;
+  border-color: #1a1a2e !important;
+  color: #e4e6eb !important;
+}
+
+body.dark-mode .card-body {
+  color: #e4e6eb !important;
+}
+
+/* Tables */
+body.dark-mode .table {
+  color: #e4e6eb !important;
+  background-color: #16213e !important;
+}
+
+body.dark-mode .table thead th {
+  background-color: #0f3460 !important;
+  color: #ffffff !important;
+  border-color: #1a1a2e !important;
+}
+
+body.dark-mode .table tbody tr {
+  background-color: #16213e !important;
+  border-color: #0f3460 !important;
+}
+
+body.dark-mode .table-hover tbody tr:hover {
+  background-color: #0f3460 !important;
+}
+
+body.dark-mode .table-bordered td,
+body.dark-mode .table-bordered th {
+  border-color: #2a3a5c !important;
+}
+
+/* Forms */
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background-color: #0f3460 !important;
+  border-color: #2a3a5c !important;
+  color: #e4e6eb !important;
+}
+
+body.dark-mode .form-control:focus {
+  background-color: #16213e !important;
+  border-color: #4e73df !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .form-control::placeholder {
+  color: #8a8d96 !important;
+}
+
+body.dark-mode .form-label {
+  color: #e4e6eb !important;
+}
+
+/* Sidebar - garder son style original */
+body.dark-mode .sidebar {
+  background: linear-gradient(180deg, #0f3460 10%, #16213e 100%) !important;
+}
+
+/* Topbar */
+body.dark-mode .topbar {
+  background-color: #16213e !important;
+  border-color: #0f3460 !important;
+}
+
+body.dark-mode .navbar-light .navbar-nav .nav-link {
+  color: #e4e6eb !important;
+}
+
+/* Boutons - garder leurs couleurs */
+body.dark-mode .btn-secondary {
+  background-color: #2a3a5c !important;
+  border-color: #2a3a5c !important;
+}
+
+/* Texte */
+body.dark-mode .text-gray-800,
+body.dark-mode .text-dark {
+  color: #e4e6eb !important;
+}
+
+body.dark-mode .text-muted,
+body.dark-mode .text-gray-600,
+body.dark-mode .text-gray-500 {
+  color: #a8aaae !important;
+}
+
+/* Alerts */
+body.dark-mode .alert-info {
+  background-color: #1e3a5f !important;
+  border-color: #2c5282 !important;
+  color: #cce4f7 !important;
+}
+
+body.dark-mode .alert-success {
+  background-color: #1c4532 !important;
+  border-color: #276749 !important;
+  color: #c6f6d5 !important;
+}
+
+body.dark-mode .alert-warning {
+  background-color: #5c4519 !important;
+  border-color: #7b5c1f !important;
+  color: #fff3cd !important;
+}
+
+body.dark-mode .alert-danger {
+  background-color: #5a1d1d !important;
+  border-color: #742a2a !important;
+  color: #fed7d7 !important;
+}
+
+/* Borders */
+body.dark-mode .border,
+body.dark-mode .border-bottom,
+body.dark-mode .border-top {
+  border-color: #2a3a5c !important;
+}
+
+/* Background */
+body.dark-mode .bg-light {
+  background-color: #0f3460 !important;
+  color: #e4e6eb !important;
+}
+
+body.dark-mode .bg-white {
+  background-color: #16213e !important;
+  color: #e4e6eb !important;
+}
+
+/* Modal */
+body.dark-mode .modal-content {
+  background-color: #16213e !important;
+  color: #e4e6eb !important;
+}
+
+/* ====================================== */
+/* 🌍 RTL pour l'arabe */
+/* ====================================== */
+
+[dir="rtl"] .me-1 { margin-right: 0 !important; margin-left: 0.25rem !important; }
+[dir="rtl"] .me-2 { margin-right: 0 !important; margin-left: 0.5rem !important; }
+[dir="rtl"] .me-3 { margin-right: 0 !important; margin-left: 1rem !important; }
+[dir="rtl"] .ms-1 { margin-left: 0 !important; margin-right: 0.25rem !important; }
+[dir="rtl"] .ms-2 { margin-left: 0 !important; margin-right: 0.5rem !important; }
+[dir="rtl"] .ms-3 { margin-left: 0 !important; margin-right: 1rem !important; }
+
+[dir="rtl"] .text-end { text-align: left !important; }
+[dir="rtl"] .text-start { text-align: right !important; }

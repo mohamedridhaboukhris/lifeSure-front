@@ -1,0 +1,204 @@
+/* ═══════════════════════════════════════════ */
+/* 🎨 CONTRAT FORM - NOIR + OR PREMIUM        */
+/* ═══════════════════════════════════════════ */
+
+/* Titres de sections (AUTO, HABITATION, etc.) */
+.card-body h5.text-primary {
+  color: #b8860b !important;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.08), transparent);
+  padding: 12px 16px;
+  border-left: 4px solid #d4af37;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 1.25rem !important;
+}
+
+.card-body h5.text-primary i {
+  color: #d4af37 !important;
+  margin-right: 8px;
+}
+
+/* Séparateur horizontal */
+hr {
+  border-color: rgba(212, 175, 55, 0.2) !important;
+  margin: 2rem 0 !important;
+}
+
+/* Labels */
+.form-label {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 8px !important;
+  letter-spacing: 0.3px;
+}
+
+/* Inputs et selects */
+.form-control,
+.form-select {
+  border: 1.5px solid #e5e5e0 !important;
+  border-radius: 8px !important;
+  padding: 11px 14px !important;
+  font-size: 0.9rem !important;
+  transition: all 0.2s !important;
+  background: #ffffff !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+}
+
+.form-control:disabled {
+  background: #f5f5f0 !important;
+  cursor: not-allowed;
+}
+
+.form-control.is-invalid {
+  border-color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.03) !important;
+}
+
+.form-control.is-invalid:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Messages d'erreur sous champ */
+.invalid-feedback {
+  color: #dc2626 !important;
+  font-size: 0.8rem !important;
+  margin-top: 6px !important;
+  padding: 8px 12px;
+  background: rgba(239, 68, 68, 0.06);
+  border-radius: 6px;
+  border-left: 3px solid #ef4444;
+}
+
+/* Card avec bordure dorée subtile */
+.card.shadow {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #fafaf7, #ffffff) !important;
+  border-bottom: 2px solid #d4af37 !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.card-header h6 {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+/* Alert info (client connecté) */
+.alert-info {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.04)) !important;
+  border: 1px solid rgba(212, 175, 55, 0.25) !important;
+  border-left: 4px solid #d4af37 !important;
+  color: #b8860b !important;
+  padding: 14px 18px !important;
+  border-radius: 10px !important;
+  font-size: 0.9rem;
+}
+
+.alert-info i {
+  color: #d4af37 !important;
+}
+
+.alert-info strong {
+  color: #1a1a1a !important;
+}
+
+/* Boutons */
+.btn-primary {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border: 2px solid #d4af37 !important;
+  font-weight: 600 !important;
+  padding: 10px 24px !important;
+  border-radius: 8px !important;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2) !important;
+  transition: all 0.2s !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4) !important;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* Boutons Retour / Annuler */
+.btn-secondary {
+  background: #d4af37 !important;
+  color: white !important;
+  border: 1.5px solid #d4af37 !important;
+
+  font-weight: 500 !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+  transition: none !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background: #d4af37 !important;
+  color: white !important;
+  border-color: #d4af37 !important;
+
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Heading principal */
+h1.h3 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px;
+}
+
+/* Inputs date avec icône dorée */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(70%) sepia(50%) saturate(800%) hue-rotate(360deg) brightness(0.85);
+  cursor: pointer;
+}
+
+/* Animation focus */
+.form-control:focus,
+.form-select:focus {
+  transform: translateY(-1px);
+}

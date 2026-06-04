@@ -1,0 +1,123 @@
+<h1 class="h3 mb-4 text-gray-800">Gestion des Taux d'Assurance</h1>
+
+<!-- Messages -->
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+<div class="row">
+
+  <!-- Taux actifs par type -->
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Taux actifs</h6>
+      </div>
+      <div class="card-body">
+        <div *ngFor="let type of typesContrat" class="mb-3 p-3 border rounded">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="mb-1">
+                <i class="fas me-2" [ngClass]="{
+                  'fa-car': type === 'AUTO',
+                  'fa-home': type === 'HABITATION',
+                  'fa-heartbeat': type === 'SANTE',
+                  'fa-plane': type === 'VOYAGE'
+                }"></i>
+                {{ type }}
+              </h5>
+              <small class="text-muted">
+                {{ getActifTauxForType(type) ? 'Taux actif' : 'Aucun taux défini' }}
+              </small>
+            </div>
+            <div class="text-end">
+              <span *ngIf="getActifTauxForType(type)"
+                    class="h4 text-primary font-weight-bold">
+                {{ getActifTauxForType(type)?.taux }}
+              </span>
+              <span *ngIf="!getActifTauxForType(type)" class="text-muted">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Définir un nouveau taux -->
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Définir un taux</h6>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="onSetTaux()" #f="ngForm">
+
+          <div class="mb-3">
+            <label class="form-label">Type de contrat</label>
+            <select class="form-control" name="type"
+                    [(ngModel)]="newTaux.typeContrat" required>
+              <option *ngFor="let t of typesContrat" [value]="t">{{ t }}</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Taux (ex: 0.05 pour 5%)</label>
+            <input type="number" class="form-control" name="taux"
+                   [(ngModel)]="newTaux.taux" step="0.001" min="0" required>
+            <small class="text-muted">Le taux doit être entre 0 et 1 (ex: 0.05 = 5%)</small>
+          </div>
+
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Cette action <strong>désactivera l'ancien taux</strong> pour ce type.
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100"
+                  [disabled]="!f.valid">
+            <i class="fas fa-save me-2"></i>Appliquer le taux
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Historique -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Historique des taux</h6>
+  </div>
+  <div class="card-body">
+    <div *ngIf="loading" class="text-center">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+    <div *ngIf="!loading" class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Taux</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="tauxList.length === 0">
+            <td colspan="4" class="text-center text-muted">Aucun taux défini</td>
+          </tr>
+          <tr *ngFor="let t of tauxList">
+            <td>{{ t.id }}</td>
+            <td><span class="badge badge-info">{{ t.typeContrat }}</span></td>
+            <td><strong>{{ t.taux }}</strong></td>
+            <td>
+              <span class="badge" [ngClass]="t.actif ? 'badge-success' : 'badge-secondary'">
+                {{ t.actif ? 'ACTIF' : 'INACTIF' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

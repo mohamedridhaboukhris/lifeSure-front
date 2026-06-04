@@ -1,0 +1,188 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+
+          <!-- Logo + Titre -->
+          <div class="text-center mb-4">
+            <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i>LifeSure</h1>
+            <p class="text-muted mt-2">Créer un nouveau compte</p>
+          </div>
+
+          <form (ngSubmit)="onRegister()" #f="ngForm">
+<!-- Nom + Prénom en ligne -->
+<div class="row">
+  <div class="col-md-6 mb-3">
+    <label for="nom" class="form-label">Nom</label>
+    <input
+      type="text"
+      id="nom"
+      name="nom"
+      class="form-control form-control-lg"
+      [class.is-invalid]="nom.invalid && nom.touched"
+      [class.is-valid]="nom.valid && nom.touched"
+      placeholder="Ex: Ben Salah"
+      [(ngModel)]="user.nom"
+      #nom="ngModel"
+      required
+      pattern="^[a-zA-ZÀ-ÿ\s'-]+$">
+    <div *ngIf="nom.invalid && nom.touched" class="invalid-feedback d-block">
+      <i class="fas fa-exclamation-circle me-1"></i>
+      Lettres uniquement (pas de chiffres)
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <label for="prenom" class="form-label">Prénom</label>
+    <input
+      type="text"
+      id="prenom"
+      name="prenom"
+      class="form-control form-control-lg"
+      [class.is-invalid]="prenom.invalid && prenom.touched"
+      [class.is-valid]="prenom.valid && prenom.touched"
+      placeholder="Ex: Ahmed"
+      [(ngModel)]="user.prenom"
+      #prenom="ngModel"
+      required
+      pattern="^[a-zA-ZÀ-ÿ\s'-]+$">
+    <div *ngIf="prenom.invalid && prenom.touched" class="invalid-feedback d-block">
+      <i class="fas fa-exclamation-circle me-1"></i>
+      Lettres uniquement (pas de chiffres)
+    </div>
+  </div>
+</div>
+            
+
+<!-- Email -->
+<div class="mb-3">
+  <label for="email" class="form-label">Email</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    class="form-control form-control-lg"
+    [class.is-invalid]="email.invalid && email.touched"
+    [class.is-valid]="email.valid && email.touched"
+    placeholder="exemple@gmail.com"
+    [(ngModel)]="user.email"
+    #email="ngModel"
+    required
+    pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$">
+  
+  <div *ngIf="email.invalid && email.touched" class="invalid-feedback d-block">
+    <i class="fas fa-exclamation-circle me-1"></i>
+    L'email doit se terminer par <strong>&#64;gmail.com</strong>
+  </div>
+  
+  <small *ngIf="email.valid && email.touched" class="text-success">
+    <i class="fas fa-check-circle me-1"></i>Email valide ✓
+  </small>
+  
+  <small *ngIf="!email.touched" class="text-muted">
+    Exemple : ahmed&#64;gmail.com
+  </small>
+</div>
+            <!-- Téléphone -->
+<div class="mb-3">
+   <label for="telephone" class="form-label">Téléphone</label>
+   <input
+    type="tel"
+    id="telephone"
+    name="telephone"
+    class="form-control form-control-lg"
+    [class.is-invalid]="telephone.invalid && telephone.touched"
+    [class.is-valid]="telephone.valid && telephone.touched"
+    placeholder="Ex: 98123456"
+    [(ngModel)]="user.telephone"
+    #telephone="ngModel"
+    required
+    pattern="^\d{8}$"
+    maxlength="8">
+  
+  <div *ngIf="telephone.invalid && telephone.touched" class="invalid-feedback d-block">
+    <i class="fas fa-exclamation-circle me-1"></i>
+    Le téléphone doit contenir exactement <strong>8 chiffres</strong>
+  </div>
+  
+  <small *ngIf="telephone.valid && telephone.touched" class="text-success">
+    <i class="fas fa-check-circle me-1"></i>Téléphone valide ✓
+  </small>
+  
+  <small *ngIf="!telephone.touched" class="text-muted">
+    Exemple : 98123456 (8 chiffres)
+  </small>
+</div>
+
+            <!-- Mot de passe -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Mot de passe</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control form-control-lg"
+                placeholder="••••••••"
+                [(ngModel)]="user.password"
+                required
+                minlength="6">
+              <small class="text-muted">Minimum 6 caractères</small>
+            </div>
+
+            <!-- Message d'erreur -->
+            <div *ngIf="errorMessage" class="alert alert-danger py-2">
+              <i class="fas fa-exclamation-circle me-2"></i>{{ errorMessage }}
+            </div>
+
+            <!-- Message de succès -->
+            <div *ngIf="successMessage" class="alert alert-success py-2">
+              <i class="fas fa-check-circle me-2"></i>{{ successMessage }}
+            </div>
+
+            <!-- Bouton -->
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg w-100 rounded-pill"
+              [disabled]="loading || !f.valid">
+              <span *ngIf="!loading">
+                <i class="fas fa-user-plus me-2"></i>Créer mon compte
+              </span>
+              <span *ngIf="loading">
+                <i class="fas fa-spinner fa-spin me-2"></i>Création...
+              </span>
+            </button>
+
+          </form>
+
+          <hr class="my-4">
+
+          <!-- Lien vers Login -->
+          <div class="text-center">
+            <p class="mb-0">Vous avez déjà un compte ?
+              <a routerLink="/login" class="text-primary fw-bold">Se connecter</a>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

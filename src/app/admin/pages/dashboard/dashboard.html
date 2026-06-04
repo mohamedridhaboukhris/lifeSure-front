@@ -1,0 +1,286 @@
+<!-- Loading -->
+<div *ngIf="loading" class="text-center py-5">
+  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+</div>
+
+<!-- ====================================== -->
+<!-- 🟡 DASHBOARD AGENT -->
+<!-- ====================================== -->
+<div *ngIf="!loading && isAgentRole">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+      <i class="fas fa-tachometer-alt me-2"></i>Tableau de bord Agent
+    </h1>
+  </div>
+
+  <!-- Cards stats -->
+  <div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                Contrats actifs
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ stats.contratsActifs || 0 }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-file-contract fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                Revenus mensuels
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ stats.revenusMensuels | number:'1.2-2' }} DT
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                Sinistres déclarés
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ stats.sinistresDeclares || 0 }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                Clients
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ stats.totalClients || 0 }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-users fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graphiques -->
+  <div class="row">
+    <div class="col-xl-6 col-lg-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">
+            Répartition des contrats par type
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="chart-area" style="height: 300px; position: relative;">
+            <canvas id="chartContratsType"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">
+            Revenus par type de contrat (DT)
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="chart-area" style="height: 300px; position: relative;">
+            <canvas id="chartRevenusType"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================== -->
+<!-- 🟢 DASHBOARD EXPERT -->
+<!-- ====================================== -->
+<div *ngIf="!loading && isExpertRole">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+      <i class="fas fa-tachometer-alt me-2"></i>Tableau de bord Expert
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                À traiter
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ stats.sinistresEnAttente || 0 }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-clock fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                Sinistres acceptés
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ stats.sinistresAcceptes || 0 }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-danger shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                Fraudes détectées
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ stats.fraudesDetectees || 0 }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-shield-alt fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                Total indemnisations
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ stats.totalIndemnisations | number:'1.2-2' }} DT
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+<!-- ====================================== -->
+<!-- 📊 GRAPHIQUES EXPERT -->
+<!-- ====================================== -->
+<div *ngIf="!loading && isExpertRole" class="row">
+
+  <!-- Sinistres -->
+  <div class="col-xl-6 col-lg-6">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+          Répartition des sinistres
+        </h6>
+      </div>
+      <div class="card-body">
+        <div style="height: 300px;">
+          <canvas id="chartSinistres"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indemnisations -->
+  <div class="col-xl-6 col-lg-6">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+          Indemnisations (DT)
+        </h6>
+      </div>
+      <div class="card-body">
+        <div style="height: 300px;">
+          <canvas id="chartIndemnisation"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

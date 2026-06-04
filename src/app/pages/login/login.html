@@ -1,0 +1,68 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+
+          <div class="text-center mb-4">
+            <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i>LifeSure</h1>
+            <p class="text-muted mt-2">Connectez-vous à votre compte</p>
+          </div>
+
+          <form (ngSubmit)="login()" #f="ngForm">
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control form-control-lg"
+                placeholder="exemple@mail.com"
+                [(ngModel)]="email"
+                required>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Mot de passe</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control form-control-lg"
+                placeholder="••••••••"
+                [(ngModel)]="password"
+                required>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger py-2">
+              {{ errorMessage }}
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg w-100 rounded-pill"
+              [disabled]="loading || !f.valid">
+              <span *ngIf="!loading">Se connecter</span>
+              <span *ngIf="loading">
+                <i class="fas fa-spinner fa-spin me-2"></i> Connexion...
+              </span>
+            </button>
+
+          </form>
+
+          <hr class="my-4">
+
+          <div class="text-center">
+            <p class="mb-0">Pas encore de compte ?
+              <a routerLink="/register" class="text-primary fw-bold">Créer un compte</a>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

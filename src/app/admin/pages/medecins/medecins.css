@@ -1,0 +1,633 @@
+/*.medecin-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+}
+
+.medecin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #4e73df;
+}
+
+.medecin-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4e73df, #224abe);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3em;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.info h5 {
+  font-weight: bold;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.specialite {
+  color: #4e73df;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.badge-conventionne {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #1cc88a;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7em;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.rating {
+  margin-bottom: 12px;
+  font-size: 0.95em;
+}
+
+.description {
+  color: #666;
+  font-size: 0.9em;
+  line-height: 1.4;
+  min-height: 40px;
+  margin-bottom: 12px;
+}
+
+.coordonnees {
+  background: #f8f9fc;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.85em;
+}
+
+.coordonnees p {
+  margin: 4px 0;
+  color: #555;
+}
+
+.tarifs {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.tarif-row {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.tarif-partenaire {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #1cc88a;
+}
+
+.economie {
+  color: #2e7d32;
+  font-size: 0.85em;
+}
+
+.btn-rdv {
+  background: linear-gradient(135deg, #4e73df, #224abe);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: auto;
+  transition: all 0.3s;
+}
+
+.btn-rdv:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(78, 115, 223, 0.4);
+  color: white;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── Variables ── */
+:root {
+  --gold:        #c9a84c;
+  --gold-light:  #e8c96b;
+  --gold-pale:   rgba(201,168,76,0.10);
+  --gold-border: rgba(201,168,76,0.25);
+  --gold-shadow: rgba(201,168,76,0.25);
+}
+ 
+/* ── Retour Button — OR ── */
+a.btn.btn-secondary,
+button.btn.btn-secondary {
+  background: linear-gradient(135deg, #e8c96b, #c9a84c) !important;
+  border: none !important;
+  color: #fff !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 9px 22px !important;
+  border-radius: 50px !important;
+  box-shadow: 0 4px 16px rgba(201,168,76,0.40) !important;
+  transition: all 0.25s !important;
+}
+a.btn.btn-secondary:hover,
+button.btn.btn-secondary:hover {
+  background: linear-gradient(135deg, #c9a84c, #a8872e) !important;
+  box-shadow: 0 6px 24px rgba(201,168,76,0.55) !important;
+  color: #fff !important;
+  transform: translateX(-3px) !important;
+}
+ 
+/* ── Page Title ── */
+h1.h3.mb-4.text-gray-800 {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  letter-spacing: -0.01em !important;
+}
+ 
+/* ── Banner ── */
+.alert.alert-info {
+  background: #fffdf5 !important;
+  border: 1px solid #e8d98a !important;
+  border-radius: 12px !important;
+  color: #7a5e1a !important;
+  font-size: 13.5px !important;
+}
+.alert.alert-info strong {
+  color: #b8963c !important;
+}
+ 
+/* ── Filter Card ── */
+.card.shadow.mb-4 {
+  border: 1px solid #ede8dc !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05) !important;
+}
+.card.shadow.mb-4 .card-body {
+  padding: 20px !important;
+}
+.card.shadow.mb-4 .form-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #9a8a6a !important;
+}
+.card.shadow.mb-4 .form-control,
+.card.shadow.mb-4 .form-select {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 13px !important;
+  background: #fafaf8 !important;
+  border: 1px solid #e0d9c8 !important;
+  border-radius: 9px !important;
+  color: #1a1a1a !important;
+  padding: 10px 13px !important;
+  transition: all 0.25s !important;
+}
+.card.shadow.mb-4 .form-control:focus,
+.card.shadow.mb-4 .form-select:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.12) !important;
+  background: #fff !important;
+}
+.card.shadow.mb-4 .btn.btn-outline-secondary {
+  background: #fafaf8 !important;
+  border: 1px solid #e0d9c8 !important;
+  color: var(--gold) !important;
+  border-radius: 9px !important;
+  transition: all 0.25s !important;
+}
+.card.shadow.mb-4 .btn.btn-outline-secondary:hover {
+  background: var(--gold) !important;
+  border-color: var(--gold) !important;
+  color: #fff !important;
+  transform: rotate(180deg) !important;
+}
+ 
+/* ── Medecin Card ── */
+.medecin-card {
+  background: #ffffff !important;
+  border: 1.5px solid #ede8dc !important;
+  border-radius: 18px !important;
+  padding: 22px !important;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.05) !important;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+.medecin-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0; left: 0; right: 0 !important;
+  height: 3px !important;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent) !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s !important;
+}
+.medecin-card:hover::before {
+  opacity: 1 !important;
+}
+.medecin-card:hover {
+  border-color: var(--gold) !important;
+  box-shadow: 0 12px 40px rgba(201,168,76,0.18), 0 2px 8px rgba(0,0,0,0.07) !important;
+  transform: translateY(-5px) !important;
+}
+ 
+/* ── Card Header ── */
+.medecin-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+}
+ 
+/* Avatar — cercle OR */
+.medecin-header .avatar {
+  width: 54px !important;
+  height: 54px !important;
+  min-width: 54px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #e8c96b, #c9a84c) !important;
+  color: #fff !important;
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 4px 16px var(--gold-shadow) !important;
+  letter-spacing: 0.02em !important;
+}
+ 
+.medecin-header .info {
+  flex: 1 !important;
+}
+.medecin-header .info h5 {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1.15rem !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  letter-spacing: 0.01em !important;
+  margin-bottom: 5px !important;
+}
+.medecin-header .specialite {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  color: var(--gold) !important;
+  background: var(--gold-pale) !important;
+  border: 1px solid var(--gold-border) !important;
+  padding: 3px 11px !important;
+  border-radius: 50px !important;
+}
+ 
+/* Badge LifeSure */
+.badge-conventionne {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  background: linear-gradient(135deg, var(--gold), #a8872e) !important;
+  color: #fff !important;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  padding: 5px 10px !important;
+  border-radius: 6px !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+  margin-left: auto !important;
+}
+ 
+/* ── Étoiles — OR ── */
+.rating {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 3px !important;
+  margin-bottom: 12px !important;
+}
+.rating .star { line-height: 1 !important; }
+ 
+.rating .fa-star,
+.rating .fas.fa-star,
+.rating .fa-star-half-alt,
+.rating .fas.fa-star-half-alt,
+.fa-star.text-warning,
+.fa-star-half-alt.text-warning,
+.text-warning {
+  color: #c9a84c !important;
+  font-size: 15px !important;
+}
+.rating .far.fa-star,
+.far.fa-star.text-warning {
+  color: #c9a84c !important;
+  opacity: 0.3 !important;
+  font-size: 15px !important;
+}
+.rating strong {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+}
+.rating small {
+  font-size: 12px !important;
+  color: #9a8a6a !important;
+}
+ 
+/* ── Description ── */
+.description {
+  font-size: 13px !important;
+  color: #7a7470 !important;
+  line-height: 1.6 !important;
+  margin-bottom: 14px !important;
+  border-top: 1px solid rgba(201,168,76,0.15) !important;
+  padding-top: 12px !important;
+}
+ 
+/* ── Coordonnées ── */
+.coordonnees {
+  background: #fafaf8 !important;
+  border: 1px solid #ede8dc !important;
+  border-radius: 10px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 14px !important;
+}
+.coordonnees p {
+  font-size: 12.5px !important;
+  color: #7a7470 !important;
+  margin: 0 0 6px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.coordonnees p:last-child { margin-bottom: 0 !important; }
+.coordonnees .fa-map-marker-alt { color: #e5484d !important; }
+.coordonnees .fa-phone          { color: var(--gold) !important; }
+.coordonnees .fa-clock          { color: #7a8a8a !important; }
+ 
+/* ── Tarifs — gris ── */
+.tarifs {
+  background: linear-gradient(135deg, #f5f5f5, #eeeeee) !important;
+  border: 1px solid #ddd !important;
+  border-radius: 10px !important;
+  padding: 13px 16px !important;
+  text-align: center !important;
+  margin-bottom: 14px !important;
+}
+.tarif-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  margin-bottom: 5px !important;
+}
+.tarif-row .text-muted {
+  font-size: 13px !important;
+  color: #aaa !important;
+}
+.tarif-partenaire {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1.8rem !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1 !important;
+}
+.economie {
+  font-size: 12px !important;
+  color: #777 !important;
+  font-weight: 500 !important;
+}
+.economie strong {
+  font-weight: 700 !important;
+  color: #555 !important;
+}
+ 
+/* ── Bouton RDV — NOIR ── */
+.btn.btn-rdv {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  padding: 13px 18px !important;
+  background: #0a0a0a !important;
+  color: #fff !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em !important;
+  border: none !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25) !important;
+  transition: all 0.25s !important;
+  margin-top: auto !important;
+}
+.btn.btn-rdv:hover {
+  background: #222222 !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.40) !important;
+  transform: translateY(-2px) !important;
+  color: #fff !important;
+}
+ 
+/* ── Loading / Empty ── */
+.fa-spinner { color: var(--gold) !important; }

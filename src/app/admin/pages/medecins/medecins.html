@@ -1,0 +1,133 @@
+<div class="container-fluid">
+    <a routerLink="/admin/contrats" class="btn btn-secondary shadow-sm">
+      <i class="fas fa-arrow-left fa-sm me-2"></i> Retour 
+    </a>
+  <h1 class="h3 mb-4 text-gray-800">
+    🏥 Réseau de Médecins Partenaires
+  </h1>
+
+  <!-- Banner -->
+  <div class="alert alert-info">
+    <i class="fas fa-info-circle me-2"></i>
+    Bénéficiez de <strong>tarifs préférentiels</strong> chez nos médecins partenaires conventionnés LifeSure.
+  </div>
+
+  <!-- Filtres -->
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+
+        <div class="col-md-5">
+          <label class="form-label small fw-bold">🔍 Recherche</label>
+          <input type="text" class="form-control"
+                 placeholder="Nom, prénom, spécialité ou ville..."
+                 [(ngModel)]="searchTerm"
+                 (input)="applyFilters()">
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label small fw-bold">📋 Spécialité</label>
+          <select class="form-select" [(ngModel)]="filterSpecialite" (change)="applyFilters()">
+            <option value="">-- Toutes --</option>
+            <option *ngFor="let s of specialites" [value]="s">{{ s }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label small fw-bold">📍 Ville</label>
+          <select class="form-select" [(ngModel)]="filterVille" (change)="applyFilters()">
+            <option value="">-- Toutes --</option>
+            <option *ngFor="let v of villes" [value]="v">{{ v }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-1 d-flex align-items-end">
+          <button class="btn btn-outline-secondary w-100" (click)="resetFilters()" title="Réinitialiser">
+            <i class="fas fa-undo"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <div class="mt-3">
+        <small class="text-muted">
+          <strong>{{ filteredMedecins.length }}</strong> médecin(s) trouvé(s) sur {{ medecins.length }}
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <i class="fas fa-spinner fa-spin fa-3x text-primary"></i>
+  </div>
+
+  <!-- Aucun résultat -->
+  <div *ngIf="!loading && filteredMedecins.length === 0" class="text-center py-5">
+    <i class="fas fa-user-md fa-3x text-muted mb-3"></i>
+    <p class="text-muted">Aucun médecin ne correspond à vos critères</p>
+  </div>
+
+  <!-- Liste des médecins -->
+  <div class="row">
+    <div *ngFor="let m of filteredMedecins" class="col-md-6 col-lg-4 mb-4">
+      <div class="medecin-card">
+
+        <!-- Header avec avatar -->
+        <div class="medecin-header">
+          <div class="avatar">
+            {{ m.prenom.charAt(0) }}{{ m.nom.charAt(0) }}
+          </div>
+          <div class="info">
+            <h5 class="mb-0">Dr. {{ m.prenom }} {{ m.nom }}</h5>
+            <span class="specialite">
+              <i class="fas fa-stethoscope me-1"></i>{{ m.specialite }}
+            </span>
+          </div>
+          <span class="badge-conventionne" *ngIf="m.conventionne">
+            ✓ LifeSure
+          </span>
+        </div>
+
+        <!-- Note -->
+        <div class="rating">
+          <span *ngFor="let star of getStars(m.note)" class="star">
+            <i *ngIf="star === 'full'" class="fas fa-star text-warning"></i>
+            <i *ngIf="star === 'half'" class="fas fa-star-half-alt text-warning"></i>
+            <i *ngIf="star === 'empty'" class="far fa-star text-warning"></i>
+          </span>
+          <strong class="ms-2">{{ m.note }}/5</strong>
+          <small class="text-muted ms-1">({{ m.nbAvis }} avis)</small>
+        </div>
+
+        <!-- Description -->
+        <p class="description">{{ m.description }}</p>
+
+        <!-- Coordonnées -->
+        <div class="coordonnees">
+          <p><i class="fas fa-map-marker-alt text-danger me-2"></i>{{ m.adresse }}, {{ m.ville }}</p>
+          <p><i class="fas fa-phone text-primary me-2"></i>{{ m.telephone }}</p>
+          <p><i class="fas fa-clock text-secondary me-2"></i>{{ m.horaires }}</p>
+        </div>
+
+        <!-- Tarifs -->
+        <div class="tarifs">
+          <div class="tarif-row">
+            <span class="text-muted text-decoration-line-through">{{ m.tarifNormal }} DT</span>
+            <span class="tarif-partenaire">{{ m.tarifPartenaire }} DT</span>
+          </div>
+          <div class="economie">
+            💰 Économisez <strong>{{ getEconomy(m) }} DT</strong> ({{ getEconomyPercent(m) }}%)
+          </div>
+        </div>
+
+        <!-- Bouton RDV -->
+        <button class="btn btn-rdv w-100" (click)="prendreRdv(m)">
+          <i class="fas fa-calendar-check me-2"></i>Prendre rendez-vous
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+</div>

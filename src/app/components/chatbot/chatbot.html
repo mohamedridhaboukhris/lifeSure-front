@@ -1,0 +1,91 @@
+<!-- 💬 Bouton flottant -->
+<button class="chatbot-toggle" (click)="toggleChat()" *ngIf="!isOpen">
+  <i class="fas fa-comments"></i>
+  <span class="chatbot-badge">IA</span>
+</button>
+
+<!-- 🪟 Fenêtre du chat -->
+<div class="chatbot-window" *ngIf="isOpen">
+
+  <!-- Header -->
+  <div class="chatbot-header">
+    <div class="d-flex align-items-center">
+      <div class="bot-avatar">
+        <i class="fas fa-robot"></i>
+      </div>
+      <div class="ms-2">
+        <div class="bot-name">LifeSure AI </div>
+        <small class="bot-status">
+          <span class="status-dot"></span> En ligne
+        </small>
+      </div>
+    </div>
+    <div>
+      <button class="btn-icon" (click)="clearChat()" title="Effacer">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+      <button class="btn-icon" (click)="toggleChat()" title="Fermer">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="chatbot-messages" #messagesContainer>
+    <div *ngFor="let msg of messages"
+         class="message"
+         [class.message-user]="msg.role === 'user'"
+         [class.message-bot]="msg.role === 'bot'">
+
+      <div class="message-bubble">
+        <div *ngIf="msg.role === 'bot'" class="message-author">
+          <i class="fas fa-robot me-1"></i> LifeBot
+        </div>
+        <div class="message-text" [innerHTML]="msg.text"></div>
+        <div class="message-time">
+          {{ msg.timestamp | date:'HH:mm' }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Indicateur "en train d'écrire" -->
+    <div *ngIf="loading" class="message message-bot">
+      <div class="message-bubble">
+        <div class="typing">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Suggestions (si conversation vide) -->
+  <div class="chatbot-suggestions" *ngIf="messages.length === 1">
+    <small class="text-muted">Suggestions :</small>
+    <div class="suggestions-list">
+      <button *ngFor="let s of suggestions"
+              class="suggestion-btn"
+              (click)="sendSuggestion(s)">
+        {{ s }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="chatbot-input">
+    <input type="text"
+           class="form-control"
+           placeholder="Tapez votre message..."
+           [(ngModel)]="userInput"
+           (keypress)="onKeyPress($event)"
+           [disabled]="loading">
+    <button class="btn-send"
+            (click)="send()"
+            [disabled]="loading || !userInput.trim()">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </div>
+
+  <!-- Footer -->
+<div class="chatbot-footer">
+  <small>Propulsé par <strong>Groq AI ⚡</strong></small>
+</div>

@@ -1,0 +1,314 @@
+<!-- Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">
+    {{ isEdit ? 'Modifier Contrat' : 'Nouveau Contrat' }}
+  </h1>
+  <a routerLink="/admin/contrats" class="btn btn-secondary shadow-sm">
+    <i class="fas fa-arrow-left fa-sm me-2"></i> Retour
+  </a>
+</div>
+
+<!-- Messages -->
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Informations du contrat</h6>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #f="ngForm">
+
+      <!-- === CHAMPS COMMUNS === -->
+      <div class="row">
+
+        <div class="col-md-12 mb-3">
+  <label class="form-label">Type de contrat *</label>
+  <select class="form-control" name="type"
+          [(ngModel)]="contrat.typeContrat"
+          (change)="onTypeChange()"
+          required>
+    <option *ngFor="let t of typesContrat" [value]="t">{{ t }}</option>
+  </select>
+</div>
+
+<!-- Info client connecté -->
+<div class="col-12 mb-3">
+  <div class="alert alert-info mb-0">
+    <i class="fas fa-user me-2"></i>
+    Ce contrat sera créé pour <strong>le client actuellement connecté</strong>.
+  </div>
+</div>
+
+        
+<div class="col-md-6 mb-3">
+  <label class="form-label">Date début *</label>
+  <input type="date" class="form-control" name="dateDebut"
+         [(ngModel)]="contrat.dateDebut"
+         [min]="isEdit ? null : today"
+         required>
+</div>
+
+<div class="col-md-6 mb-3">
+  <label class="form-label">Date fin *</label>
+  <input type="date" class="form-control" name="dateFin"
+         [class.is-invalid]="contrat.dateDebut && contrat.dateFin && !isDateValid()"
+         [(ngModel)]="contrat.dateFin"
+         [min]="contrat.dateDebut || today"
+         required>
+  
+  <!-- 🆕 Message d'erreur en temps réel -->
+  <div *ngIf="contrat.dateDebut && contrat.dateFin && !isDateValid()" 
+       class="invalid-feedback d-block">
+    <i class="fas fa-exclamation-circle me-1"></i>
+    La date de fin doit être <strong>après</strong> la date de début
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="col-12 mb-3">
+             <label class="form-label">Description*</label>
+             <input type="text" class="form-control" name="description"
+               [(ngModel)]="contrat.description" required>
+          </div>
+
+      </div>
+
+      <hr>
+
+      <!-- === AUTO === -->
+<div *ngIf="contrat.typeContrat === 'AUTO'">
+  <h5 class="text-primary mb-3">
+    <i class="fas fa-car me-2"></i>Informations véhicule
+  </h5>
+  <div class="row">
+    
+    <!-- 🆕 MARQUE en liste déroulante -->
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Marque *</label>
+      <select class="form-control" name="marque"
+              [(ngModel)]="contrat.vehiculeMarque"
+              (change)="onMarqueChange()"
+              required>
+        <option value="">-- Sélectionner une marque --</option>
+        <option *ngFor="let m of listeMarques" [value]="m">{{ m }}</option>
+      </select>
+    </div>
+    
+    <!-- 🆕 MODÈLE en liste déroulante (cascade) -->
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Modèle *</label>
+      <select class="form-control" name="modele"
+              [(ngModel)]="contrat.vehiculeModele"
+              [disabled]="!contrat.vehiculeMarque"
+              required>
+        <option value="">
+          {{ contrat.vehiculeMarque ? '-- Sélectionner un modèle --' : '⚠️ Choisissez d\'abord une marque' }}
+        </option>
+        <option *ngFor="let mod of modelesDisponibles" [value]="mod">{{ mod }}</option>
+      </select>
+      <small *ngIf="!contrat.vehiculeMarque" class="text-muted">
+        <i class="fas fa-info-circle me-1"></i>
+        Choisissez d'abord la marque pour voir les modèles
+      </small>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Immatriculation *</label>
+      <input type="text" class="form-control" name="immat"
+             [(ngModel)]="contrat.vehiculeImmatriculation"
+             placeholder="Ex: 1234 TUN 5678"
+             required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Montant garantie (DT) *</label>
+      <input type="number" class="form-control" name="garantieAuto"
+             [(ngModel)]="contrat.montantGarantie" required min="0">
+    </div>
+  </div>
+</div>
+
+     <!-- === HABITATION === -->
+<div *ngIf="contrat.typeContrat === 'HABITATION'">
+  <h5 class="text-primary mb-3">
+    <i class="fas fa-home me-2"></i>Informations habitation
+  </h5>
+  <div class="row">
+
+    <!-- 🆕 GOUVERNORAT -->
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Gouvernorat *</label>
+      <select class="form-control" name="gouvernorat"
+              [(ngModel)]="gouvernoratSelectionne"
+              (change)="onGouvernoratChange()"
+              required>
+        <option value="">🇹🇳 -- Sélectionner un gouvernorat --</option>
+        <option *ngFor="let g of listeGouvernorats" [value]="g">{{ g }}</option>
+      </select>
+    </div>
+
+    <!-- 🆕 DÉLÉGATION (cascade) -->
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Délégation / Ville *</label>
+      <select class="form-control" name="delegation"
+              [(ngModel)]="delegationSelectionnee"
+              (change)="updateAdresseBien()"
+              [disabled]="!gouvernoratSelectionne"
+              required>
+        <option value="">
+          {{ gouvernoratSelectionne ? '-- Sélectionner une délégation --' : '⚠️ Choisissez d\'abord un gouvernorat' }}
+        </option>
+        <option *ngFor="let d of delegationsDisponibles" [value]="d">{{ d }}</option>
+      </select>
+      <small *ngIf="!gouvernoratSelectionne" class="text-muted">
+        <i class="fas fa-info-circle me-1"></i>
+        Choisissez d'abord le gouvernorat
+      </small>
+    </div>
+
+    <!-- 🆕 RUE / DÉTAIL ADRESSE -->
+    <div class="col-md-12 mb-3">
+      <label class="form-label">Adresse précise (rue, numéro, étage...) *</label>
+      <input type="text" class="form-control" name="rueDetail"
+             [(ngModel)]="rueDetail"
+             (input)="updateAdresseBien()"
+             placeholder="Ex: 12, Rue des Roses, Apt 4B"
+             required>
+      <small class="text-muted" *ngIf="contrat.adresseBien">
+        <i class="fas fa-check-circle me-1 text-success"></i>
+        Adresse complète : <strong>{{ contrat.adresseBien }}</strong>
+      </small>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Type de bien *</label>
+      <select class="form-control" name="typeBien"
+              [(ngModel)]="contrat.typeBien" required>
+        <option value="">-- Choisir --</option>
+        <option value="APPARTEMENT">🏢 Appartement</option>
+        <option value="MAISON">🏠 Maison</option>
+        <option value="VILLA">🏡 Villa</option>
+        <option value="STUDIO">🛋️ Studio</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Superficie (m²) *</label>
+      <input type="number" class="form-control" name="superficie"
+             [(ngModel)]="contrat.superficieBien" required min="1"
+             placeholder="Ex: 120">
+    </div>
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Montant garantie (DT) *</label>
+      <input type="number" class="form-control" name="garantieHab"
+             [(ngModel)]="contrat.montantGarantie" required min="0"
+             placeholder="Ex: 100000">
+    </div>
+  </div>
+</div>
+
+      <!-- === SANTE === -->
+      <div *ngIf="contrat.typeContrat === 'SANTE'">
+        <h5 class="text-primary mb-3">
+          <i class="fas fa-heartbeat me-2"></i>Informations santé
+        </h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Âge de l'assuré *</label>
+            <input type="number" class="form-control" name="age"
+                   [(ngModel)]="contrat.ageAssure" required min="0" max="120">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Plafond annuel (DT) *</label>
+            <input type="number" class="form-control" name="plafondAn"
+                   [(ngModel)]="contrat.plafondAnnuel" required min="0">
+          </div>
+        </div>
+      </div>
+<!-- === VOYAGE === -->
+<div *ngIf="contrat.typeContrat === 'VOYAGE'">
+  <h5 class="text-primary mb-3">
+    <i class="fas fa-plane me-2"></i>Informations voyage
+  </h5>
+  <div class="row">
+    
+    <!-- 🆕 DESTINATION en liste déroulante avec drapeaux -->
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Destination *</label>
+      <select class="form-control" name="destination"
+              [(ngModel)]="contrat.destination" required>
+        <option value="">🌍 -- Sélectionner une destination --</option>
+        <option *ngFor="let pays of destinations" [value]="pays">{{ pays }}</option>
+      </select>
+      <small class="text-muted">
+        <i class="fas fa-info-circle me-1"></i>
+        {{ destinations.length }} destinations disponibles
+      </small>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Durée (jours) *</label>
+      <input type="number" class="form-control" name="duree"
+             [(ngModel)]="contrat.dureeVoyage" required min="1" max="365"
+             placeholder="Ex: 7">
+      <small class="text-muted">
+        <i class="fas fa-info-circle me-1"></i>
+        Maximum 365 jours
+      </small>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Plafond assurance (DT) *</label>
+      <input type="number" class="form-control" name="plafondAss"
+             [(ngModel)]="contrat.plafondAssurance" required min="0"
+             placeholder="Ex: 10000">
+    </div>
+  </div>
+</div>
+
+      <!-- === INFO === -->
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        La <strong>prime mensuelle</strong> sera calculée automatiquement par le système
+        selon le type de contrat et le taux en vigueur.
+      </div>
+
+      <!-- === BOUTONS === -->
+      <div class="text-end">
+        <a routerLink="/admin/contrats" class="btn btn-secondary me-2">Annuler</a>
+        <button type="submit" class="btn btn-primary" [disabled]="loading || !f.valid">
+          <span *ngIf="!loading">
+            <i class="fas fa-save me-2"></i>
+            {{ isEdit ? 'Modifier' : 'Créer le contrat' }}
+          </span>
+          <span *ngIf="loading">
+            <i class="fas fa-spinner fa-spin me-2"></i>Enregistrement...
+          </span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

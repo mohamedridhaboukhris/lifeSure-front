@@ -1,0 +1,161 @@
+<div class="container-fluid">
+
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+      <i class="fas fa-map-marked-alt me-2"></i>Carte des Sinistres en Tunisie
+    </h1>
+    <a [routerLink]="auth.isExpert() ? '/admin/sinistres/expert' : '/admin/contrats'"
+       class="btn btn-secondary shadow-sm">
+      <i class="fas fa-arrow-left fa-sm me-2"></i>
+      Retour
+    </a>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card stat-total">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="stat-icon">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <small class="text-muted d-block">TOTAL</small>
+              <h3 class="mb-0 stat-value">{{ stats.total }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card stat-rouge">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="stat-icon">
+              <i class="fas fa-hourglass-half"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <small class="text-muted d-block">EN COURS</small>
+              <h3 class="mb-0 stat-value">{{ stats.enCours }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card stat-vert">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="stat-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <small class="text-muted d-block">ACCEPTÉS</small>
+              <h3 class="mb-0 stat-value">{{ stats.acceptes }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card stat-noir">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="stat-icon">
+              <i class="fas fa-times-circle"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <small class="text-muted d-block">REFUSÉS</small>
+              <h3 class="mb-0 stat-value">{{ stats.refuses }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtres + Carte -->
+  <div class="row">
+
+    <!-- Sidebar filtres -->
+    <div class="col-md-3 mb-3">
+      <div class="card shadow">
+        <div class="card-header">
+          <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-filter me-2"></i>FILTRES
+          </h6>
+        </div>
+        <div class="card-body">
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Type de sinistre</label>
+            <select class="form-select" [(ngModel)]="filterType" (change)="applyFilters()">
+              <option value="">-- Tous --</option>
+              <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Statut</label>
+            <select class="form-select" [(ngModel)]="filterStatut" (change)="applyFilters()">
+              <option value="">-- Tous --</option>
+              <option *ngFor="let s of statuts" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+
+          <button class="btn btn-reset w-100" (click)="resetFilters()">
+            <i class="fas fa-undo me-2"></i>Réinitialiser
+          </button>
+
+          <hr>
+
+          <h6 class="fw-bold mb-3 legend-title">LÉGENDE</h6>
+          <div class="legende-item">
+            <span class="dot dot-rouge"></span> En cours / Déclaré
+          </div>
+          <div class="legende-item">
+            <span class="dot dot-vert"></span> Accepté
+          </div>
+          <div class="legende-item">
+            <span class="dot dot-noir"></span> Refusé
+          </div>
+          <div class="legende-item">
+            <span class="dot dot-bleu"></span> Clôturé
+          </div>
+
+          <hr>
+
+          <small class="text-muted">
+            <i class="fas fa-users me-1"></i>
+            <strong>{{ filteredSinistres.length }}</strong> sinistre(s) affiché(s)
+          </small>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte -->
+    <div class="col-md-9 mb-3">
+      <div class="card shadow">
+        <div class="card-body p-0">
+          <div *ngIf="loading" class="text-center py-5">
+            <i class="fas fa-spinner fa-spin fa-3x text-primary"></i>
+            <p class="mt-3">Chargement de la carte...</p>
+          </div>
+          <div id="map" style="height: 600px; border-radius: 8px;"></div>
+        </div>
+      </div>
+
+      <div *ngIf="!loading && filteredSinistres.length === 0" class="alert alert-info mt-3">
+        <i class="fas fa-info-circle me-2"></i>
+        Aucun sinistre géolocalisé pour les filtres actuels.
+      </div>
+    </div>
+
+  </div>
+
+</div>

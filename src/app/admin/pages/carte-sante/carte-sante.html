@@ -1,0 +1,106 @@
+<div class="container-fluid">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 text-gray-800">
+      💳 Ma carte santé digitale
+    </h1>
+    <button class="btn btn-outline-secondary" (click)="retour()">
+      <i class="fas fa-arrow-left me-2"></i>Retour
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <i class="fas fa-spinner fa-spin fa-3x text-primary"></i>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Carte santé -->
+  <div *ngIf="!loading && carte" class="carte-container">
+
+    <!-- LA CARTE -->
+    <div class="carte-sante" id="carteAImprimer">
+
+      <!-- Header de la carte -->
+      <div class="carte-header">
+        <div class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <span>LIFESURE SANTÉ</span>
+        </div>
+        <span class="carte-type">Carte digitale</span>
+      </div>
+
+      <!-- Corps de la carte -->
+      <div class="carte-body">
+        <div class="carte-info">
+          <small class="label">ASSURÉ</small>
+          <h2 class="nom">{{ carte.nomComplet }}</h2>
+
+          <small class="label mt-2">N° ADHÉRENT</small>
+          <p class="numero">{{ carte.numeroAdherent }}</p>
+
+          <div class="plafond-section">
+            <small class="label">PLAFOND ANNUEL</small>
+            <p class="plafond">{{ carte.plafondAnnuel | number:'1.2-2' }} DT</p>
+
+            <div class="progress mt-2">
+              <div class="progress-bar bg-warning"
+                   [style.width.%]="getPourcentageUtilise()">
+                {{ getPourcentageUtilise() }}%
+              </div>
+            </div>
+
+            <div class="plafond-detail mt-2">
+              <small>Utilisé : <strong>{{ carte.plafondUtilise | number:'1.2-2' }} DT</strong></small>
+              <small class="text-success">Reste : <strong>{{ carte.plafondRestant | number:'1.2-2' }} DT</strong></small>
+            </div>
+          </div>
+        </div>
+
+        <!-- QR Code -->
+        <div class="qr-section">
+          <img [src]="qrCodeUrl" alt="QR Code" class="qr-image">
+          <small class="qr-label">Scannez pour vérifier</small>
+        </div>
+      </div>
+
+      <!-- Footer de la carte -->
+      <div class="carte-footer">
+        <div>
+          <small>VALIDITÉ</small>
+          <p>{{ carte.dateDebut | date:'MM/yyyy' }} - {{ carte.dateFin | date:'MM/yyyy' }}</p>
+        </div>
+        <div class="status-badge">
+          ✓ {{ carte.statut }}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Actions -->
+    <div class="actions mt-4 text-center no-print">
+      <button class="btn btn-primary me-2" (click)="imprimer()">
+        <i class="fas fa-print me-2"></i>Imprimer / Sauvegarder PDF
+      </button>
+    </div>
+
+    <!-- Info -->
+    <div class="alert alert-info mt-4 no-print">
+      <i class="fas fa-info-circle me-2"></i>
+      <strong>Comment utiliser votre carte ?</strong>
+      <ul class="mb-0 mt-2">
+        <li>Présentez cette carte chez votre médecin ou pharmacien</li>
+        <li>Le QR Code permet de vérifier instantanément la validité</li>
+        <li>Le tiers payant s'applique chez les médecins partenaires LifeSure</li>
+        <li>Vous pouvez l'imprimer ou la sauvegarder en PDF</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,57 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Nouvelle Réclamation</h1>
+  <a routerLink="/admin/reclamations" class="btn btn-secondary">
+    <i class="fas fa-arrow-left me-2"></i>Retour
+  </a>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">
+      <i class="fas fa-comment-dots me-2"></i>Déposer une réclamation
+    </h6>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #f="ngForm">
+
+      <div class="mb-3">
+        <label class="form-label">Sujet *</label>
+        <input type="text" class="form-control" name="sujet"
+               [(ngModel)]="reclamation.sujet"
+               placeholder="Ex: Contestation de mon sinistre SIN-1234"
+               required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description détaillée *</label>
+        <textarea class="form-control" name="description" rows="6"
+                  [(ngModel)]="reclamation.description"
+                  placeholder="Décrivez précisément votre réclamation..."
+                  required></textarea>
+        <small class="text-muted">
+          Soyez précis pour que l'expert puisse traiter votre demande efficacement.
+        </small>
+      </div>
+
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        Votre réclamation sera traitée par un expert. Vous recevrez un email avec la réponse.
+      </div>
+
+      <div class="text-end">
+        <a routerLink="/admin/reclamations" class="btn btn-secondary me-2">Annuler</a>
+        <button type="submit" class="btn btn-primary" [disabled]="loading || !f.valid">
+          <span *ngIf="!loading">
+            <i class="fas fa-paper-plane me-2"></i>Soumettre
+          </span>
+          <span *ngIf="loading">
+            <i class="fas fa-spinner fa-spin me-2"></i>Envoi...
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

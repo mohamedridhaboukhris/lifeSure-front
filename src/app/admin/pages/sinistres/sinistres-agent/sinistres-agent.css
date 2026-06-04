@@ -1,0 +1,431 @@
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 SINISTRES AGENT - NOIR + OR PREMIUM LUXE                */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ============= TITRE DE LA PAGE ============= */
+h1.h3.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* ============= LOADING SPINNER ============= */
+.fa-spinner.text-primary {
+  color: #d4af37 !important;
+}
+
+/* ============= ALERTES ============= */
+.alert {
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  border-left: 4px solid !important;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.08) !important;
+  color: #047857 !important;
+  border-left-color: #10b981 !important;
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08) !important;
+  color: #991b1b !important;
+  border-left-color: #ef4444 !important;
+}
+
+.alert-info {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.04)) !important;
+  color: #b8860b !important;
+  border-left-color: #d4af37 !important;
+}
+
+/* ============= CARTES ============= */
+.card.shadow {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #ffffff !important;
+  overflow: hidden;
+}
+
+.card-header {
+  background: #fafaf7 !important;
+  border-bottom: 1px solid #f0f0eb !important;
+  padding: 1.2rem 1.5rem !important;
+}
+
+.card-header h6,
+.card-header .font-weight-bold,
+.text-primary {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 BARRE DE RECHERCHE                                       */
+/* ═══════════════════════════════════════════════════════════ */
+
+.input-group .input-group-text.bg-primary {
+  background: #ffffff !important; /* blanc */
+  color: #b8860b !important;      /* icône or */
+  border: 1.5px solid #e5e5e0 !important;
+  border-right: none !important;
+  border-radius: 8px 0 0 8px !important;
+}
+
+.input-group .form-control {
+  border: 1.5px solid #e5e5e0 !important;
+  border-left: none !important;
+  border-radius: 0 8px 8px 0 !important;
+  padding: 11px 14px !important;
+  font-size: 0.9rem !important;
+}
+
+.input-group .form-control:focus {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+}
+
+/* ============= LABELS FILTRES ============= */
+.form-label {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 6px !important;
+  letter-spacing: 0.3px;
+}
+
+.form-label.small {
+  font-size: 0.75rem !important;
+  color: #888 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.form-control,
+.form-select {
+  border: 1.5px solid #e5e5e0 !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 0.88rem !important;
+  transition: all 0.2s !important;
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+  outline: none !important;
+}
+
+.text-muted {
+  color: #888 !important;
+}
+
+/* Compteur résultats */
+.mt-3 small.text-muted i.text-primary {
+  color: #d4af37 !important;
+}
+
+.mt-3 small.text-muted strong {
+  color: #b8860b !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 CARTES SINISTRES (chaque sinistre)                       */
+/* ═══════════════════════════════════════════════════════════ */
+
+.card.mb-3.border-left-primary {
+  border: 1px solid #f0f0eb !important;
+  border-left: 4px solid #d4af37 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  background: #ffffff !important;
+  transition: all 0.2s;
+}
+
+.card.mb-3.border-left-primary:hover {
+  transform: translateX(4px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.18) !important;
+  border-left-color: #f4d03f !important;
+}
+
+/* Titre du sinistre */
+.card.border-left-primary h5.mb-1 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.05rem !important;
+  letter-spacing: 0.3px;
+}
+
+.card.border-left-primary strong {
+  color: #1a1a1a !important;
+  font-weight: 600;
+}
+
+.card.border-left-primary small.text-muted {
+  color: #888 !important;
+  font-size: 0.78rem !important;
+}
+
+.card.border-left-primary small.text-danger {
+  color: #b91c1c !important;
+  font-weight: 500;
+}
+
+.card.border-left-primary p small {
+  color: #555 !important;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ============= BADGES TYPE (ACCIDENT, etc.) ============= */
+.badge {
+  padding: 5px 14px !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  letter-spacing: 0.5px;
+}
+
+.badge-info {
+  background: rgba(180, 180, 180, 0.2) !important;
+  color: #555 !important;
+  border: 1px solid #d0d0d0 !important;
+  font-weight: 500 !important;
+}
+
+/* ============= BADGES STATUTS ============= */
+/* DECLARE = OR */
+.badge-warning {
+  background: rgba(212, 175, 55, 0.15) !important;
+  color: #b8860b !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+/* EN_COURS = gris */
+.badge.badge-info {
+  background: rgba(180, 180, 180, 0.2) !important;
+  color: #555 !important;
+}
+
+/* ACCEPTE = vert sobre */
+.badge-success {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #047857 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+/* REFUSE = rouge sobre */
+.badge-danger {
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #b91c1c !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+/* CLOTURE = gris foncé */
+.badge-secondary {
+  background: rgba(80, 80, 80, 0.1) !important;
+  color: #1a1a1a !important;
+  border: 1px solid #d0d0d0 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.badge-light {
+  background: transparent !important;
+  color: #888 !important;
+  border: 1px solid #e5e5e0 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 BOUTONS D'ACTIONS                                        */
+/* ═══════════════════════════════════════════════════════════ */
+
+.btn-sm {
+  padding: 7px 14px !important;
+  font-size: 0.78rem !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s !important;
+}
+
+/* Prendre en charge */
+.btn-sm.btn-primary {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border: 1px solid #d4af37 !important;
+}
+
+
+
+/* Prendre en charge */
+.btn-sm.btn-primary {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border: 1px solid #d4af37 !important;
+  font-weight: 600 !important;
+}
+
+
+
+
+
+
+
+
+
+
+/* Vérifier plafond */
+.btn-sm.btn-info {
+  background: rgba(212, 175, 55, 0.12) !important;
+  color: #b8860b !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+.btn-sm.btn-info:hover {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border-color: #d4af37 !important;
+}
+
+/* Refuser */
+.btn-sm.btn-danger {
+  background: linear-gradient(135deg, #dc2626, #ef4444) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+.btn-sm.btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35) !important;
+}
+
+/* Clôturer */
+.btn-sm.btn-success {
+  background: linear-gradient(135deg, #059669, #10b981) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+.btn-sm.btn-success:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Bouton outline-secondary (Réinitialiser) */
+.btn-outline-secondary {
+  background: transparent !important;
+  color: #555 !important;
+  border: 1.5px solid #e5e5e0 !important;
+  padding: 7px 14px !important;
+  border-radius: 6px !important;
+  font-size: 0.78rem !important;
+}
+
+.btn-outline-secondary:hover {
+  background: #1a1a1a !important;
+  color: #d4af37 !important;
+  border-color: #1a1a1a !important;
+}
+
+/* ============= BOUTON AFFECTER EXPERT ============= */
+.input-group .btn-primary {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border: 1.5px solid #d4af37 !important;
+  border-radius: 0 8px 8px 0 !important;
+  font-weight: 600 !important;
+  padding: 10px 16px !important;
+}
+
+.input-group .btn-primary:hover {
+  background: linear-gradient(135deg, #c9a227, #e5c23a) !important;
+  color: #000 !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35) !important;
+}
+
+/* ============= LIEN (bouton link) ============= */
+.btn-link {
+  color: #b8860b !important;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: #d4af37 !important;
+}
+
+/* ============= EMPTY STATE ============= */
+.text-center.text-muted.py-5 {
+  color: #888 !important;
+}
+
+.text-center.text-muted.py-5 i.fa-search {
+  color: #d4af37 !important;
+  opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 PAGINATION                                               */
+/* ═══════════════════════════════════════════════════════════ */
+
+.pagination {
+  margin: 0;
+}
+
+.page-item .page-link {
+  color: #555 !important;
+  border: 1px solid #e5e5e0 !important;
+  background: #ffffff !important;
+  padding: 6px 12px !important;
+  font-size: 0.85rem !important;
+  margin: 0 2px;
+  border-radius: 6px !important;
+  transition: all 0.2s;
+}
+
+.page-item .page-link:hover {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #b8860b !important;
+  border-color: #d4af37 !important;
+}
+
+.page-item.active .page-link {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border-color: #1a1a1a !important;
+  font-weight: 600;
+}
+
+.page-item.disabled .page-link {
+  background: #f5f5f0 !important;
+  color: #ccc !important;
+  cursor: not-allowed;
+}
+
+/* ============= RÉSULTAT VÉRIF PLAFOND ============= */
+.alert.alert-success strong,
+.alert.alert-danger strong {
+  font-size: 0.95rem;
+  display: block;
+  margin-bottom: 4px;
+}

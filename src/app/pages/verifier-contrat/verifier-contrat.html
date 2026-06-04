@@ -1,0 +1,128 @@
+<div class="verification-container">
+  <div class="verification-card">
+
+    <!-- Header LifeSure -->
+    <div class="lifesure-header">
+      <h1>🛡️ LifeSure</h1>
+      <p>Vérification d'attestation</p>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-state">
+      <i class="fas fa-spinner fa-spin fa-3x"></i>
+      <p>Vérification en cours...</p>
+    </div>
+
+    <!-- Résultat -->
+    <div *ngIf="!loading && result">
+
+      <!-- ✅ Cas VALIDE et ACTIF -->
+      <div *ngIf="result.valide && isContratActif() && !isContratExpire()"
+           class="result-success">
+        <div class="status-icon success">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Attestation Authentique</h2>
+        <p class="status-text">Ce contrat est valide et actif</p>
+
+        <div class="info-grid">
+          <div class="info-row">
+            <span class="label">📋 N° Contrat</span>
+            <span class="value">{{ result.numeroContrat }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">📦 Type</span>
+            <span class="value">{{ result.typeContrat }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">👤 Assuré</span>
+            <span class="value">{{ result.clientNom }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">📅 Du</span>
+            <span class="value">{{ result.dateDebut | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">📅 Au</span>
+            <span class="value">{{ result.dateFin | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">💰 Prime</span>
+            <span class="value">{{ result.primeMensuelle | number:'1.2-2' }} DT/mois</span>
+          </div>
+          <div class="info-row">
+            <span class="label">🏢 Compagnie</span>
+            <span class="value">{{ result.compagnie }}</span>
+          </div>
+        </div>
+
+        <div class="verification-footer">
+          <small>
+            <i class="fas fa-clock"></i>
+            Vérifié le {{ dateVerification | date:'dd/MM/yyyy à HH:mm' }}
+          </small>
+        </div>
+      </div>
+
+      <!-- ⚠️ Cas EXPIRÉ -->
+      <div *ngIf="result.valide && isContratExpire()" class="result-warning">
+        <div class="status-icon warning">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h2>Attestation Expirée</h2>
+        <p class="status-text">Ce contrat n'est plus valide</p>
+        <div class="info-grid">
+          <div class="info-row">
+            <span class="label">📋 N° Contrat</span>
+            <span class="value">{{ result.numeroContrat }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">📅 Expiré le</span>
+            <span class="value">{{ result.dateFin | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⚠️ Cas SUSPENDU/RÉSILIÉ -->
+      <div *ngIf="result.valide && !isContratActif() && !isContratExpire()"
+           class="result-warning">
+        <div class="status-icon warning">
+          <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <h2>Contrat {{ result.statut }}</h2>
+        <p class="status-text">Ce contrat n'est pas actuellement valide</p>
+        <div class="info-grid">
+          <div class="info-row">
+            <span class="label">📋 N° Contrat</span>
+            <span class="value">{{ result.numeroContrat }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">📊 Statut</span>
+            <span class="value">{{ result.statut }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ❌ Cas INVALIDE -->
+      <div *ngIf="!result.valide" class="result-error">
+        <div class="status-icon error">
+          <i class="fas fa-times-circle"></i>
+        </div>
+        <h2>Attestation Non Valide</h2>
+        <p class="status-text">{{ result.message || 'Ce contrat n\'existe pas dans notre système' }}</p>
+        <p class="warning-message">
+          ⚠️ Cette attestation pourrait être falsifiée. Contactez la compagnie pour vérification.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Footer commun -->
+    <div class="card-footer">
+      <small>
+        © 2026 LifeSure Assurances - Service de vérification officiel
+      </small>
+    </div>
+
+  </div>
+</div>

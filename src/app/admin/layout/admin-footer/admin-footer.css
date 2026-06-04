@@ -1,0 +1,64 @@
+/*.sticky-footer {
+  background: #ffffff !important;
+  border-top: 1px solid #f0f0eb !important;
+  padding: 1.2rem !important;
+  text-align: center;
+}
+
+.sticky-footer .copyright {
+  color: #888 !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.5px;
+}
+
+.sticky-footer .copyright span::before {
+  content: '✨ ';
+  color: #d4af37;
+}
+
+.sticky-footer .copyright span::after {
+  content: ' ✨';
+  color: #d4af37;
+}*/
+
+
+
+
+
+
+
+
+
+
+/* ═══════════════════════════════════════════ */
+/* 🎨 FOOTER - STYLE CAPTURE 1 (BLANC + OR)  */
+/* ═══════════════════════════════════════════ */
+ 
+.sticky-footer {
+  background: #ffffff !important;
+  border-top: 1px solid #f0ede0 !important;
+  padding: 1rem !important;
+  text-align: center;
+}
+ 
+.sticky-footer .copyright {
+  color: #aaa !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.5px;
+}
+ 
+.sticky-footer .copyright span::before {
+  content: '';
+}
+ 
+.sticky-footer .copyright span::after {
+  content: '';
+}
+ 
+
+
+
+
+
+
+

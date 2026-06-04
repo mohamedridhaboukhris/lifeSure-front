@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -16,6 +17,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "www",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -24,24 +26,55 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ]
+          
+  
+
+"styles": [
+  "src/styles.css",
+  "node_modules/leaflet/dist/leaflet.css",
+  "src/assets/css/bootstrap.min.css",
+  "src/assets/lib/animate/animate.min.css",
+  "src/assets/lib/owlcarousel/assets/owl.carousel.min.css",
+  "src/assets/lib/lightbox/css/lightbox.min.css",
+  "src/assets/css/style.css"
+],
+"scripts": [
+  "src/assets/lib/jquery/jquery.min.js",
+   "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+  "src/assets/lib/wow/wow.min.js",
+  "src/assets/lib/easing/easing.min.js",
+  "src/assets/lib/waypoints/waypoints.min.js",
+  "src/assets/lib/counterup/counterup.min.js",
+  "src/assets/lib/owlcarousel/owl.carousel.min.js",
+  "src/assets/js/main.js"
+],
+"assets": [
+  {
+    "glob": "**/*",
+    "input": "src/assets",
+    "output": "assets"
+  }
+]
+
+
+
+
+
           },
           "configurations": {
             "production": {
               "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
-                }
-              ],
+  {
+    "type": "initial",
+    "maximumWarning": "2MB",
+    "maximumError": "5MB"
+  },
+  {
+    "type": "anyComponentStyle",
+    "maximumWarning": "10kB",
+    "maximumError": "20kB"
+  }
+],
               "outputHashing": "all"
             },
             "development": {

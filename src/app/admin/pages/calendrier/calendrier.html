@@ -1,0 +1,202 @@
+<div class="container-fluid">
+
+  <h1 class="h3 mb-4 text-gray-800">
+    📅 Calendrier des Échéances
+  </h1>
+
+
+          <a routerLink="/admin/contrats" class="btn btn-secondary shadow-sm">
+           <i class="fas fa-arrow-left fa-sm me-2"></i> Retour 
+          </a>
+
+  <!-- Stats Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card stat-total">
+        <div class="card-body">
+          <small class="text-muted d-block">📊 TOTAL</small>
+          <h3 class="mb-0">{{ stats.total }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card stat-paiement">
+        <div class="card-body">
+          <small class="text-muted d-block">💰 PAIEMENTS</small>
+          <h3 class="mb-0">{{ stats.paiements }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card stat-expiration">
+        <div class="card-body">
+          <small class="text-muted d-block">📅 EXPIRATIONS</small>
+          <h3 class="mb-0">{{ stats.expirations }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card stat-rappel">
+        <div class="card-body">
+          <small class="text-muted d-block">📧 RAPPELS ENVOYÉS</small>
+          <h3 class="mb-0">{{ stats.rappelsEnvoyes }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <!-- Sidebar : Filtres + Légende -->
+    <div class="col-md-3 mb-3">
+
+      <!-- Filtres -->
+      <div class="card shadow mb-3">
+        <div class="card-header">
+          <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-filter me-2"></i>Filtres
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Type d'événement</label>
+            <select class="form-select" [(ngModel)]="filterType" (change)="applyFilters()">
+              <option value="">-- Tous --</option>
+              <option value="PAIEMENT">💰 Paiements</option>
+              <option value="EXPIRATION">📅 Expirations</option>
+            </select>
+          </div>
+
+          <button class="btn btn-secondary w-100" (click)="resetFilters()">
+            <i class="fas fa-undo me-2"></i>Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      <!-- Légende -->
+      <div class="card shadow">
+        <div class="card-header">
+          <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-info-circle me-2"></i>Légende
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="legende-item">
+            <span class="dot dot-bleu"></span>
+            <small>💰 Paiement à venir</small>
+          </div>
+          <div class="legende-item">
+            <span class="dot dot-vert"></span>
+            <small>✅ Paiement effectué</small>
+          </div>
+          <div class="legende-item">
+            <span class="dot dot-rouge"></span>
+            <small>⚠️ Échéance proche / retard</small>
+          </div>
+          <div class="legende-item">
+            <span class="dot dot-jaune"></span>
+            <small>📧 Rappel envoyé</small>
+          </div>
+          <div class="legende-item">
+            <span class="dot dot-gris"></span>
+            <small>⏱️ Contrat expiré</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Calendrier -->
+    <div class="col-md-9">
+      <div class="card shadow">
+        <div class="card-body">
+
+          <!-- Loading -->
+          <div *ngIf="loading" class="text-center py-5">
+            <i class="fas fa-spinner fa-spin fa-3x text-primary"></i>
+            <p class="mt-3">Chargement du calendrier...</p>
+          </div>
+
+          <!-- Calendrier -->
+          <full-calendar *ngIf="!loading" [options]="calendarOptions"></full-calendar>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 📋 Modal Détails -->
+<div *ngIf="showModal && selectedEvent" class="modal-overlay" (click)="fermerModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+
+    <div class="modal-header" [style.background]="selectedEvent.couleur">
+      <h5 class="text-white">
+        <i class="fas" [class.fa-money-bill]="selectedEvent.type === 'PAIEMENT'"
+           [class.fa-calendar-times]="selectedEvent.type === 'EXPIRATION'"></i>
+        {{ selectedEvent.type === 'PAIEMENT' ? 'Échéance de paiement' : 'Expiration de contrat' }}
+      </h5>
+      <button class="btn-close-custom" (click)="fermerModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="info-grid">
+        <div class="info-row">
+          <span class="label">📋 Contrat</span>
+          <span class="value">{{ selectedEvent.numeroContrat }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">📦 Type</span>
+          <span class="value">{{ selectedEvent.typeContrat }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">👤 Client</span>
+          <span class="value">{{ selectedEvent.clientNom }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">📧 Email</span>
+          <span class="value">{{ selectedEvent.clientEmail }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">📅 Date</span>
+          <span class="value">{{ selectedEvent.date | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">💰 Montant</span>
+          <span class="value">{{ selectedEvent.montant | number:'1.2-2' }} DT</span>
+        </div>
+        <div class="info-row">
+          <span class="label">📊 Statut</span>
+          <span class="value">
+            <span class="badge bg-secondary">{{ selectedEvent.statut }}</span>
+          </span>
+        </div>
+        <div class="info-row" *ngIf="selectedEvent.rappelEnvoye">
+          <span class="label">📧 Rappel</span>
+          <span class="value text-warning">
+            <i class="fas fa-check-circle"></i> Déjà envoyé
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="fermerModal()" [disabled]="loadingRappel">
+        Fermer
+      </button>
+      <button class="btn btn-primary"
+              (click)="envoyerRappel()"
+              [disabled]="loadingRappel">
+        <span *ngIf="!loadingRappel">
+          <i class="fas fa-envelope me-2"></i>Envoyer rappel maintenant
+        </span>
+        <span *ngIf="loadingRappel">
+          <i class="fas fa-spinner fa-spin me-2"></i>Envoi en cours...
+        </span>
+      </button>
+    </div>
+
+  </div>
+</div>

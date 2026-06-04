@@ -1,0 +1,199 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Déclarer un sinistre</h1>
+  <a routerLink="/admin/sinistres" class="btn btn-secondary">
+    <i class="fas fa-arrow-left me-2"></i>Retour
+  </a>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Informations du sinistre</h6>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #f="ngForm">
+
+      <div class="row">
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Contrat concerné *</label>
+          <select class="form-control" name="contrat"
+                  [(ngModel)]="dto.numeroContrat"
+                  (change)="onContratChange()" required>
+            <option value="">-- Choisir un contrat --</option>
+            <option *ngFor="let c of mesContrats" [value]="c.numeroContrat">
+              {{ c.numeroContrat }} ({{ c.typeContrat }})
+            </option>
+          </select>
+          <small *ngIf="mesContrats.length === 0" class="text-danger">
+            Aucun contrat actif. Souscrivez d'abord.
+          </small>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Type de sinistre *</label>
+          <select class="form-control" name="type"
+                  [(ngModel)]="dto.typeSinistre" required>
+            <option *ngFor="let t of typesDispo" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+
+<div class="col-md-6 mb-3">
+  <label class="form-label">Date du sinistre *</label>
+  <input type="date" class="form-control" name="dateSinistre"
+         [class.is-invalid]="dto.dateSinistre && !isDateSinistreValide()"
+         [(ngModel)]="dto.dateSinistre"
+         [min]="dateMinSinistre"
+         [max]="dateMaxSinistre"
+         [disabled]="!contratSelectionne"
+         required>
+  
+  <!-- 🆕 Info période du contrat -->
+  <small *ngIf="contratSelectionne" class="text-muted">
+    <i class="fas fa-info-circle me-1"></i>
+    Période du contrat : du {{ contratSelectionne.dateDebut }} au {{ contratSelectionne.dateFin }}
+  </small>
+  
+  <small *ngIf="!contratSelectionne" class="text-warning">
+    <i class="fas fa-exclamation-circle me-1"></i>
+    Sélectionnez d'abord un contrat
+  </small>
+  
+  <!-- 🆕 Message d'erreur -->
+  <div *ngIf="dto.dateSinistre && !isDateSinistreValide()" class="invalid-feedback d-block">
+    <i class="fas fa-exclamation-circle me-1"></i>
+    La date doit être <strong>dans la période du contrat</strong>
+  </div>
+</div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Montant estimé (DT) *</label>
+          <input type="number" class="form-control" name="montant"
+                 [(ngModel)]="dto.montantEstime" required min="0">
+        </div>
+
+        <div class="col-12 mb-3">
+          <label class="form-label">Description *</label>
+          <textarea class="form-control" name="description" rows="4"
+                    [(ngModel)]="dto.description" required
+                    placeholder="Décrivez les circonstances..."></textarea>
+        </div>
+
+        <!-- 📍 LIEU DU SINISTRE (NOUVEAU) -->
+        <div class="col-12 mb-4">
+          <div class="card border-primary">
+            <div class="card-header bg-primary text-white py-2">
+              <h6 class="m-0">
+                <i class="fas fa-map-marker-alt me-2"></i>📍 Lieu du sinistre
+              </h6>
+            </div>
+            <div class="card-body">
+
+              <!-- Boutons villes Tunisie -->
+              <label class="form-label small fw-bold mb-2">🇹🇳 Sélection rapide :</label>
+              <div class="mb-3">
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Tunis', 36.8065, 10.1815)">
+                  🏛️ Tunis
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Sousse', 35.8245, 10.6346)">
+                  🏖️ Sousse
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Sfax', 34.7406, 10.7603)">
+                  🌆 Sfax
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Bizerte', 37.2746, 9.8740)">
+                  ⚓ Bizerte
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Hammamet', 36.4513, 10.7357)">
+                  🏝️ Hammamet
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Gabès', 33.8815, 10.0982)">
+                  🏜️ Gabès
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Djerba', 33.8076, 10.8451)">
+                  🏖️ Djerba
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Kairouan', 35.6781, 10.0963)">
+                  🕌 Kairouan
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Monastir', 35.7780, 10.8262)">
+                  🌴 Monastir
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary me-1 mb-1"
+                        (click)="selectionnerVille('Nabeul', 36.4561, 10.7376)">
+                  🍊 Nabeul
+                </button>
+              </div>
+
+              <!-- Saisie manuelle -->
+              <div class="mb-3">
+                <label class="form-label fw-bold small">📝 Adresse précise / Description du lieu</label>
+                <input type="text"
+                       class="form-control"
+                       [(ngModel)]="dto.lieuSinistre"
+                       name="lieuSinistre"
+                       placeholder="Ex: Avenue Habib Bourguiba, Tunis">
+              </div>
+
+              <!-- Géolocalisation automatique -->
+              <button type="button"
+                      class="btn btn-info btn-sm"
+                      (click)="detecterPosition()"
+                      [disabled]="loadingGeo">
+                <span *ngIf="!loadingGeo">
+                  <i class="fas fa-crosshairs me-1"></i> 📡 Détecter ma position
+                </span>
+                <span *ngIf="loadingGeo">
+                  <i class="fas fa-spinner fa-spin me-1"></i> Recherche...
+                </span>
+              </button>
+
+              <!-- Message géolocalisation -->
+              <div *ngIf="geoMessage" class="alert alert-info mt-2 small mb-0">
+                {{ geoMessage }}
+              </div>
+
+              <!-- Affichage coordonnées -->
+              <div *ngIf="dto.latitude && dto.longitude" class="small text-success mt-2">
+                <i class="fas fa-check-circle"></i>
+                📍 GPS : {{ dto.latitude.toFixed(4) }}, {{ dto.longitude.toFixed(4) }}
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 mb-3">
+          <label class="form-label">
+            <i class="fas fa-paperclip me-2"></i>Documents / Photos (optionnel)
+          </label>
+          <input type="file" class="form-control" multiple
+                 (change)="onFichiersChange($event)"
+                 accept="image/*,.pdf">
+          <small class="text-muted">
+            {{ fichiers.length }} fichier(s) sélectionné(s)
+          </small>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <a routerLink="/admin/sinistres" class="btn btn-secondary me-2">Annuler</a>
+        <button type="submit" class="btn btn-primary" [disabled]="loading || !f.valid">
+          <span *ngIf="!loading"><i class="fas fa-save me-2"></i>Déclarer</span>
+          <span *ngIf="loading"><i class="fas fa-spinner fa-spin me-2"></i>Envoi...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

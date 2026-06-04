@@ -1,0 +1,338 @@
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 SINISTRES LIST - NOIR + OR PREMIUM LUXE                 */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ============= TITRE DE LA PAGE ============= */
+h1.h3.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+}
+
+/* ============= BOUTON "DÉCLARER UN SINISTRE" ============= */
+/*.btn-primary {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border: 2px solid #d4af37 !important;
+  font-weight: 600 !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+  transition: all 0.2s !important;
+}*/
+
+/* BOUTON DÉCLARER UN SINISTRE */
+.btn-primary {
+  background: #d4af37 !important;
+  color: white !important;
+  border: 2px solid #d4af37 !important;
+
+  font-weight: 600 !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+
+  transition: none !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:visited {
+  background: #d4af37 !important;
+  color: white !important;
+  border-color: #d4af37 !important;
+
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4) !important;
+}
+
+/* ============= ALERTE ERREUR ============= */
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08) !important;
+  color: #991b1b !important;
+  border: none !important;
+  border-left: 4px solid #ef4444 !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+}
+
+/* ============= LOADING SPINNER ============= */
+.fa-spinner.text-primary {
+  color: #d4af37 !important;
+}
+
+/* ============= CARTE PRINCIPALE ============= */
+.card.shadow {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #ffffff !important;
+  overflow: hidden;
+}
+
+.card-header {
+  background: #fafaf7 !important;
+  border-bottom: 1px solid #f0f0eb !important;
+  padding: 1.2rem 1.5rem !important;
+}
+
+.card-header h6,
+.card-header .font-weight-bold,
+.text-primary {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+/* ============= TABLEAU ============= */
+.table {
+  margin-bottom: 0 !important;
+}
+
+.table-bordered {
+  border: none !important;
+}
+
+.table-bordered td,
+.table-bordered th {
+  border-color: #f5f5f0 !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.table thead th {
+  background: transparent !important;
+  color: #888 !important;
+  text-transform: uppercase;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px;
+  border-top: none !important;
+  border-bottom: 2px solid #f0f0eb !important;
+  padding: 14px 16px !important;
+}
+
+.table tbody td {
+  padding: 16px !important;
+  vertical-align: middle !important;
+  font-size: 0.9rem !important;
+  color: #1a1a1a !important;
+}
+
+.table tbody td strong {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+}
+
+.table tbody tr {
+  transition: all 0.15s;
+}
+
+.table tbody tr:hover {
+  background: rgba(212, 175, 55, 0.04) !important;
+}
+
+/* ============= BADGES TYPES (ACCIDENT, VOL, etc.) ============= */
+.badge-info {
+  background: rgba(180, 180, 180, 0.2) !important;
+  color: #555 !important;
+  border: 1px solid #d0d0d0 !important;
+  font-weight: 500 !important;
+  padding: 5px 14px !important;
+  font-size: 0.7rem !important;
+  border-radius: 20px !important;
+  letter-spacing: 0.5px;
+}
+
+/* ============= BADGES STATUTS ============= */
+.badge {
+  padding: 5px 14px !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  letter-spacing: 0.5px;
+}
+
+/* DECLARE = OR */
+.badge-warning {
+  background: rgba(212, 175, 55, 0.15) !important;
+  color: #b8860b !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+/* EN_COURS = bleu doux */
+.badge-info {
+  background: rgba(180, 180, 180, 0.2) !important;
+  color: #555 !important;
+  border: 1px solid #d0d0d0 !important;
+}
+
+/* ACCEPTE = vert sobre */
+/*.badge-success {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #047857 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+/* REFUSE = rouge sobre */
+/*.badge-danger {
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #b91c1c !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}*/
+
+
+
+
+
+
+
+
+/* ACCEPTE */
+.badge-success {
+  background: #f1f1f1 !important;
+  color: #16a34a !important;
+  border: 1px solid #d6d6d6 !important;
+}
+
+/* REFUSE */
+.badge-danger {
+  background: #f1f1f1 !important;
+  color: #dc2626 !important;
+  border: 1px solid #d6d6d6 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CLOTURE = gris foncé */
+.badge-secondary {
+  background: rgba(80, 80, 80, 0.1) !important;
+  color: #1a1a1a !important;
+  border: 1px solid #d0d0d0 !important;
+}
+
+.badge-light {
+  background: transparent !important;
+  color: #888 !important;
+  border: none !important;
+  font-weight: 500 !important;
+}
+
+/* ============= TEXT MUTED (—) ============= */
+.text-muted {
+  color: #888 !important;
+}
+
+/* ============= BOUTON DÉTAILS (œil) ============= */
+.btn-sm {
+  padding: 6px 12px !important;
+  font-size: 0.75rem !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s !important;
+}
+
+/*.btn-info {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border: 1px solid #d4af37 !important;
+  border-radius: 6px !important;
+}
+
+.btn-info:hover {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border-color: #d4af37 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3) !important;
+}
+
+.btn-info i {
+  color: inherit !important;
+}*/
+
+/* ============= EMPTY STATE (Aucun sinistre) ============= */
+.btn-info {
+  background: #fff8e1 !important;
+  border: 1px solid #d4af37 !important;
+  color: #d4af37 !important;
+}
+
+.btn-info i {
+  color: #d4af37 !important;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active {
+  background: #fff8e1 !important;
+  color: #d4af37 !important;
+  border-color: #d4af37 !important;
+}
+
+.btn-info:hover i,
+.btn-info:focus i,
+.btn-info:active i {
+  color: #d4af37 !important;
+}
+
+
+
+
+
+
+.text-center.text-muted.py-4 {
+  color: #888 !important;
+  font-size: 0.95rem;
+}
+
+.text-center.text-muted.py-4 a.btn-primary {
+  margin-top: 12px !important;
+  display: inline-block;
+}

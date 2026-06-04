@@ -1,0 +1,268 @@
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 PAIEMENT STRIPE - NOIR + OR PREMIUM LUXE                */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ============= TITRE DE LA PAGE ============= */
+h1.h3.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+}
+
+h1.h3.text-gray-800 i {
+  color: #d4af37 !important;
+  margin-right: 12px;
+}
+
+/* ============= BOUTONS PRINCIPAUX ============= */
+/* Boutons Retour et Payer */
+.btn-primary {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border: 2px solid #d4af37 !important;
+
+  font-weight: 600 !important;
+  padding: 12px 28px !important;
+  border-radius: 10px !important;
+
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #b8860b, #d4af37) !important;
+  color: #ffffff !important;
+  border-color: #b8860b !important;
+
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45) !important;
+}
+
+.btn-primary i {
+  color: inherit !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45) !important;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary.btn-lg {
+  font-size: 1rem !important;
+  padding: 14px 28px !important;
+}
+
+.btn-primary i {
+  color: inherit !important;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border: 2px solid #d4af37 !important;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #b8860b, #d4af37) !important;
+  color: #ffffff !important;
+  border-color: #b8860b !important;
+}
+
+
+
+/* ============= LOADING SPINNER ============= */
+.fa-spinner.text-primary {
+  color: #d4af37 !important;
+}
+
+/* ============= ALERTES ============= */
+.alert {
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  border-left: 4px solid !important;
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08) !important;
+  color: #991b1b !important;
+  border-left-color: #ef4444 !important;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.08) !important;
+  color: #047857 !important;
+  border-left-color: #10b981 !important;
+}
+
+.alert-info {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.04)) !important;
+  color: #b8860b !important;
+  border-left-color: #d4af37 !important;
+}
+
+.alert-info i {
+  color: #d4af37 !important;
+}
+
+.alert-info code {
+  background: #1a1a1a !important;
+  color: #d4af37 !important;
+  padding: 3px 10px !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  font-family: 'Courier New', monospace !important;
+  letter-spacing: 1px;
+  margin: 0 4px;
+}
+
+.alert-info strong {
+  color: #b8860b !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 CARTE RÉCAPITULATIF (COLONNE GAUCHE)                     */
+/* ═══════════════════════════════════════════════════════════ */
+
+.card.shadow {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #ffffff !important;
+  overflow: hidden;
+}
+
+/* Carte récap avec bordure OR */
+.card.border-left-primary {
+  border-left: 4px solid #d4af37 !important;
+}
+
+.card-header {
+  background: #fafaf7 !important;
+  border-bottom: 1px solid #f0f0eb !important;
+  padding: 1.2rem 1.5rem !important;
+}
+
+.card-header h6 {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+.card-header h6 i {
+  color: #d4af37 !important;
+}
+
+.text-primary {
+  color: #b8860b !important;
+}
+
+/* Contenu carte récap */
+.card-body p {
+  margin-bottom: 12px !important;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+}
+
+.card-body p strong {
+  color: #555 !important;
+  font-weight: 500;
+}
+
+/* Séparateur */
+hr {
+  border-color: rgba(212, 175, 55, 0.2) !important;
+  margin: 1rem 0 !important;
+}
+
+/* Prime mensuelle XL */
+h4.text-primary {
+  color: #b8860b !important;
+  font-weight: 700 !important;
+  font-size: 2rem !important;
+  margin: 8px 0 4px !important;
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-muted {
+  color: #888 !important;
+}
+
+small.text-muted {
+  font-size: 0.78rem !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ============= BADGES ============= */
+.badge {
+  padding: 5px 14px !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  letter-spacing: 0.5px;
+}
+
+.badge-info {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  font-weight: 600 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 STRIPE PAYMENT ELEMENT                                   */
+/* ═══════════════════════════════════════════════════════════ */
+
+#payment-element {
+  background: #fafaf8;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1.5px solid #f0f0eb;
+  transition: all 0.2s;
+}
+
+#payment-element:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: #ffffff;
+}
+
+/* Texte chargement */
+.text-center.py-4 p {
+  color: #888 !important;
+  margin-top: 12px;
+}
+
+/* ============= LIENS ============= */
+a.btn-secondary {
+  text-decoration: none !important;
+}
+
+/* ============= EFFETS ============= */
+.card.shadow {
+  transition: all 0.2s;
+}
+
+.card.shadow:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Animation paiement */
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25); }
+  50% { box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5); }
+}
+
+.btn-primary.btn-lg:not(:disabled):hover {
+  animation: pulseGold 1.5s infinite;
+}

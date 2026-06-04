@@ -1,0 +1,393 @@
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 SINISTRE FORM - NOIR + OR PREMIUM LUXE                  */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ============= TITRE DE LA PAGE ============= */
+h1.h3.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+}
+
+/* ============= BOUTONS PRINCIPAUX ============= */
+.btn-primary {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border: 2px solid #d4af37 !important;
+  font-weight: 600 !important;
+  padding: 10px 24px !important;
+  border-radius: 8px !important;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+  transition: all 0.2s !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4) !important;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+
+
+/* ============= BOUTONS RETOUR / ANNULER ============= */
+.btn-secondary {
+  background: #d4af37 !important;
+  color: white !important;
+  border: 1.5px solid #d4af37 !important;
+
+  font-weight: 500 !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+  transition: none !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background: #d4af37 !important;
+  color: white !important;
+  border-color: #d4af37 !important;
+
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============= CARTE PRINCIPALE ============= */
+.card.shadow {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #ffffff !important;
+  overflow: hidden;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #fafaf7, #ffffff) !important;
+  border-bottom: 2px solid #d4af37 !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.card-header h6,
+.card-header .font-weight-bold,
+.text-primary {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+/* ============= LABELS ============= */
+.form-label {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 8px !important;
+  letter-spacing: 0.3px;
+}
+
+.form-label.small {
+  color: #555 !important;
+  font-size: 0.8rem !important;
+}
+
+.form-label.fw-bold {
+  color: #b8860b !important;
+  font-weight: 600 !important;
+}
+
+/* ============= INPUTS / SELECTS / TEXTAREA ============= */
+.form-control,
+.form-select {
+  border: 1.5px solid #e5e5e0 !important;
+  border-radius: 8px !important;
+  padding: 11px 14px !important;
+  font-size: 0.9rem !important;
+  transition: all 0.2s !important;
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+  outline: none !important;
+  transform: translateY(-1px);
+}
+
+.form-control:disabled {
+  background: #f5f5f0 !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.form-control.is-invalid {
+  border-color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.03) !important;
+}
+
+.form-control.is-invalid:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Textarea */
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Inputs date avec icône dorée */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(70%) sepia(50%) saturate(800%) hue-rotate(360deg) brightness(0.85);
+  cursor: pointer;
+}
+
+/* ============= MESSAGES SOUS LES CHAMPS ============= */
+.text-muted {
+  color: #888 !important;
+  font-size: 0.78rem !important;
+}
+
+.text-muted i.fa-info-circle {
+  color: #d4af37 !important;
+}
+
+.text-warning {
+  color: #92400e !important;
+}
+
+.text-warning i {
+  color: #f59e0b !important;
+}
+
+.text-danger {
+  color: #b91c1c !important;
+}
+
+.text-success {
+  color: #047857 !important;
+}
+
+.text-success i {
+  color: #10b981 !important;
+}
+
+.invalid-feedback {
+  color: #b91c1c !important;
+  font-size: 0.8rem !important;
+  margin-top: 6px !important;
+  padding: 8px 12px;
+  background: rgba(239, 68, 68, 0.06);
+  border-radius: 6px;
+  border-left: 3px solid #ef4444;
+}
+
+/* ============= ALERTES (success / danger / info) ============= */
+.alert {
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  border-left: 4px solid !important;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.08) !important;
+  color: #047857 !important;
+  border-left-color: #10b981 !important;
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08) !important;
+  color: #991b1b !important;
+  border-left-color: #ef4444 !important;
+}
+
+.alert-info {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.04)) !important;
+  color: #b8860b !important;
+  border-left-color: #d4af37 !important;
+}
+
+.alert-info i {
+  color: #d4af37 !important;
+}
+
+/* ============= 📍 CARTE LIEU DU SINISTRE (style premium) ============= */
+.card.border-primary {
+  border: 2px solid #d4af37 !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.1) !important;
+}
+
+.card.border-primary .card-header.bg-primary {
+  background: #f5f5f5 !important;
+  color: #b8860b !important;
+  border-bottom: 1px solid #d4af37 !important;
+}
+
+.card.border-primary .card-header.bg-primary h6,
+.card.border-primary .card-header.bg-primary i {
+  color: #b8860b !important;
+}
+
+.card.border-primary .card-header.bg-primary h6 {
+  color: #d4af37 !important;
+  text-transform: none !important;
+  letter-spacing: 0.3px !important;
+  font-size: 0.95rem !important;
+}
+
+.card.border-primary .card-header.bg-primary i {
+  color: #d4af37 !important;
+}
+
+/* Body de la carte lieu */
+.card.border-primary .card-body {
+  background: #fafaf8;
+  padding: 18px !important;
+}
+
+/* ============= BOUTONS VILLES (Sélection rapide) ============= */
+.btn-outline-primary {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  border: 1.5px solid #e5e5e0 !important;
+  border-radius: 20px !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  padding: 6px 14px !important;
+  transition: all 0.2s !important;
+}
+
+.btn-outline-primary:hover {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border-color: #d4af37 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3) !important;
+}
+
+/* ============= BOUTON "DÉTECTER MA POSITION" ============= */
+.btn-info {
+  background: #d4af37 !important;
+  color: white !important;
+  border: 1.5px solid #d4af37 !important;
+
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  padding: 8px 16px !important;
+
+  transition: none !important;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active {
+  background: #d4af37 !important;
+  color: white !important;
+  border-color: #d4af37 !important;
+}
+
+.btn-info:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+}
+
+.btn-info:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============= INPUT FILE ============= */
+input[type="file"].form-control {
+  padding: 8px 12px !important;
+  cursor: pointer;
+}
+
+input[type="file"].form-control::file-selector-button {
+  background: #d4af37 !important;
+  color: white !important;
+
+  border: 1px solid #d4af37 !important;
+  border-radius: 6px;
+
+  padding: 6px 14px;
+  margin-right: 12px;
+
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+input[type="file"].form-control::file-selector-button:hover {
+  background: #d4af37 !important;
+  color: white !important;
+}
+
+input[type="file"].form-control::file-selector-button:hover {
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #0a0a0a;
+}
+
+/* ============= MESSAGE GÉOLOCALISATION ============= */
+.alert-info.small {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #b8860b !important;
+  border-left: 3px solid #d4af37 !important;
+  font-size: 0.85rem !important;
+  padding: 10px 14px !important;
+}
+
+/* ============= AFFICHAGE GPS ============= */
+.small.text-success {
+  background: rgba(16, 185, 129, 0.08);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 3px solid #10b981;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* ============= SECTION VALIDATION DATE ============= */
+small.text-muted i.fa-info-circle,
+small.text-warning i.fa-exclamation-circle {
+  margin-right: 4px;
+}
+
+/* Animation focus inputs */
+.form-control:focus,
+.form-select:focus,
+textarea.form-control:focus {
+  transform: translateY(-1px);
+}
+
+/* ============= LIENS SECONDAIRES ============= */
+a.btn-secondary {
+  text-decoration: none;
+}

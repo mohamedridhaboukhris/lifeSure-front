@@ -1,0 +1,247 @@
+<h1 class="h3 mb-4 text-gray-800">Gestion des Sinistres (Agent)</h1>
+
+<!-- ============================== -->
+<!-- 🔍 BARRE DE RECHERCHE + FILTRES -->
+<!-- ============================== -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+   
+    <button *ngIf="hasActiveFilters()"
+            class="btn btn-sm btn-outline-secondary"
+            (click)="resetFilters()">
+      <i class="fas fa-times me-1"></i>Réinitialiser
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+
+      <!-- Recherche texte -->
+      <div class="col-md-12 mb-2">
+        <div class="input-group">
+          <span class="input-group-text bg-primary text-white">
+            <i class="fas fa-search"></i>
+          </span>
+          <input type="text" class="form-control"
+                 placeholder=""
+                 [(ngModel)]="searchTerm"
+                 (input)="applyFilters()">
+        </div>
+      </div>
+
+      <!-- Filtre Type -->
+      <div class="col-md-3">
+        <label class="form-label small text-muted">Type de sinistre</label>
+        <select class="form-select" [(ngModel)]="filterType" (change)="applyFilters()">
+          <option value="">-- Tous --</option>
+          <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+        </select>
+      </div>
+
+      <!-- Filtre Statut -->
+      <div class="col-md-3">
+        <label class="form-label small text-muted">Statut</label>
+        <select class="form-select" [(ngModel)]="filterStatut" (change)="applyFilters()">
+          <option value="">-- Tous --</option>
+          <option *ngFor="let s of statuts" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+
+      <!-- Filtre Fraude IA -->
+      <div class="col-md-2">
+        <label class="form-label small text-muted">🤖 Fraude IA</label>
+        <select class="form-select" [(ngModel)]="filterFraude" (change)="applyFilters()">
+          <option value="">-- Tous --</option>
+          <option value="oui">⚠️ Suspicion</option>
+          <option value="non">✅ Légitime</option>
+        </select>
+      </div>
+
+      <!-- Date depuis -->
+      <div class="col-md-2">
+        <label class="form-label small text-muted">Date debut</label>
+        <input type="date" class="form-control" [(ngModel)]="filterDateDebut"
+               (change)="applyFilters()">
+      </div>
+
+      <!-- Date jusqu'à -->
+      <div class="col-md-2">
+        <label class="form-label small text-muted">Date fin</label>
+        <input type="date" class="form-control" [(ngModel)]="filterDateFin"
+               (change)="applyFilters()">
+      </div>
+
+    </div>
+
+    <!-- Compteur résultats -->
+    <div class="mt-3" *ngIf="hasActiveFilters()">
+      <small class="text-muted">
+        <i class="fas fa-filter me-1 text-primary"></i>
+        <strong>{{ filteredSinistres.length }}</strong> résultat(s) sur
+        <strong>{{ sinistres.length }}</strong> sinistre(s)
+      </small>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Errors -->
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+<!-- Loading -->
+<div *ngIf="loading" class="text-center py-5">
+  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+</div>
+
+<!-- ============================== -->
+<!-- 📋 LISTE DES SINISTRES (cartes) -->
+<!-- ============================== -->
+<div *ngIf="!loading" class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">
+      Tous les sinistres ({{ filteredSinistres.length }})
+    </h6>
+  </div>
+  <div class="card-body">
+
+    <!-- Aucun résultat -->
+    <div *ngIf="filteredSinistres.length === 0" class="text-center text-muted py-5">
+      <i class="fas fa-search fa-2x mb-2 d-block"></i>
+      <ng-container *ngIf="hasActiveFilters()">
+        Aucun sinistre ne correspond à vos critères.
+        <br>
+        <button class="btn btn-link" (click)="resetFilters()">
+          Réinitialiser les filtres
+        </button>
+      </ng-container>
+      <ng-container *ngIf="!hasActiveFilters()">
+        Aucun sinistre dans le système.
+      </ng-container>
+    </div>
+
+    <!-- Cartes sinistres -->
+    <div *ngFor="let s of paginatedSinistres" class="card mb-3 border-left-primary">
+      <div class="card-body">
+        <div class="row align-items-center">
+
+          <div class="col-md-3">
+            <h5 class="mb-1">{{ s.numeroSinistre }}</h5>
+            <span class="badge badge-info">{{ s.typeSinistre }}</span>
+            <span class="badge ms-1" [ngClass]="getStatutBadge(s.statut)">{{ s.statut }}</span>
+          </div>
+
+          <div class="col-md-3">
+            <strong>Client:</strong>
+            {{ s.client?.prenom }} {{ s.client?.nom }}
+            <br>
+            <small class="text-muted">
+              Contrat: {{ s.contrat?.numeroContrat }}
+            </small>
+          </div>
+
+          <div class="col-md-2">
+            <strong>Montant:</strong> {{ s.montantEstime | number:'1.2-2' }} DT
+            <br>
+            <small *ngIf="s.fraude" class="text-danger">
+              <i class="fas fa-exclamation-triangle"></i>
+              Fraude probable ({{ (s.scoreFraude || 0) * 100 | number:'1.0-0' }}%)
+            </small>
+          </div>
+
+          <div class="col-md-4 text-end">
+            <button *ngIf="s.statut === 'DECLARE'"
+                    class="btn btn-sm btn-primary me-1"
+                    (click)="prendre(s.id!)">
+              <i class="fas fa-user-check"></i> Prendre en charge
+            </button>
+
+            <button *ngIf="s.statut === 'EN_COURS'"
+                    class="btn btn-sm btn-info me-1"
+                    (click)="checkPlafond(s.id!)">
+              <i class="fas fa-calculator"></i> Vérifier plafond
+            </button>
+
+            <button *ngIf="s.statut !== 'CLOTURE' && s.statut !== 'REFUSE'"
+                    class="btn btn-sm btn-danger me-1"
+                    (click)="refuser(s.id!)">
+              <i class="fas fa-ban"></i> Refuser
+            </button>
+
+            <button *ngIf="s.statut === 'ACCEPTE'"
+                    class="btn btn-sm btn-success"
+                    (click)="cloturer(s.id!)">
+              <i class="fas fa-check-double"></i> Clôturer
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Résultat vérif plafond -->
+        <div *ngIf="plafondResult[s.id!]" class="mt-3 alert"
+             [ngClass]="plafondResult[s.id!].depasse ? 'alert-danger' : 'alert-success'">
+          <strong>{{ plafondResult[s.id!].message }}</strong>
+          <br>
+          Plafond: {{ plafondResult[s.id!].plafond | number:'1.2-2' }} DT
+          | Déjà payé: {{ plafondResult[s.id!].montantDejaPaye | number:'1.2-2' }} DT
+          | Restant: {{ plafondResult[s.id!].restant | number:'1.2-2' }} DT
+        </div>
+
+        <!-- Affecter expert -->
+        <div *ngIf="s.statut === 'EN_COURS' && !s.expert" class="mt-3">
+          <label class="form-label">Affecter un expert :</label>
+          <div class="input-group">
+            <input type="number" class="form-control" placeholder="ID de l'expert"
+                   [(ngModel)]="expertIdToAffect[s.id!]" name="exp-{{s.id}}">
+            <button class="btn btn-primary" (click)="affecterExpert(s.id!)">
+              <i class="fas fa-user-tie"></i> Affecter
+            </button>
+          </div>
+        </div>
+
+        <!-- Expert affecté -->
+        <div *ngIf="s.expert" class="mt-2">
+          <small class="text-muted">
+            <i class="fas fa-user-tie"></i>
+            Expert assigné: {{ s.expert?.prenom }} {{ s.expert?.nom }}
+          </small>
+        </div>
+
+        <p class="mt-2 mb-0"><small>{{ s.description }}</small></p>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- 📃 PAGINATION -->
+    <!-- ============================== -->
+    <div *ngIf="totalPages > 1" class="d-flex justify-content-between align-items-center mt-3">
+      <small class="text-muted">
+        Page {{ currentPage }} / {{ totalPages }}
+        ({{ filteredSinistres.length }} résultat(s))
+      </small>
+
+      <nav>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(currentPage - 1)">
+              <i class="fas fa-chevron-left"></i>
+            </a>
+          </li>
+
+          <li *ngFor="let p of [].constructor(totalPages); let i = index"
+              class="page-item" [class.active]="currentPage === i + 1">
+            <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(i + 1)">
+              {{ i + 1 }}
+            </a>
+          </li>
+
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(currentPage + 1)">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+</div>

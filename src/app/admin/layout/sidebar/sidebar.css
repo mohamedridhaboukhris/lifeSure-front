@@ -1,0 +1,658 @@
+/* === SIDEBAR LIFESURE STYLE CLAUDE === */
+/*.ls-sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+
+.ls-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px 24px;
+  border-bottom: 1px solid #f3f4f6;
+  text-decoration: none;
+  color: inherit;
+  
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.ls-brand-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+}
+
+.ls-brand-text {
+  flex: 1;
+}
+
+.ls-brand-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.ls-brand-subtitle {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+
+.ls-section-title {
+  font-size: 10px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 20px 20px 8px;
+  margin: 0;
+  font-weight: 600;
+}
+
+
+.ls-nav {
+  flex: 1;
+  padding: 0 12px;
+}
+
+.ls-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  
+  i {
+    font-size: 15px;
+    width: 18px;
+    text-align: center;
+    color: #9ca3af;
+    transition: color 0.15s ease;
+  }
+  
+  &:hover {
+    background: #f9fafb;
+    color: #111827;
+    text-decoration: none;
+    
+    i {
+      color: #4b5563;
+    }
+  }
+  
+  &.active {
+    background: #eff6ff;
+    color: #2563eb;
+    
+    i {
+      color: #2563eb;
+    }
+  }
+}
+
+
+.ls-divider {
+  display: none;
+}
+
+
+.ls-sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #f3f4f6;
+  display: flex;
+  justify-content: center;
+}
+
+.ls-toggle-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  
+  &:hover {
+    background: #e5e7eb;
+    color: #111827;
+  }
+}
+
+:host-context(.dark-mode) .ls-sidebar {
+  background: #1f2937;
+  border-right-color: #374151;
+}
+
+:host-context(.dark-mode) .ls-brand-title {
+  color: #f9fafb;
+}
+
+:host-context(.dark-mode) .ls-brand,
+:host-context(.dark-mode) .ls-sidebar-footer {
+  border-color: #374151;
+}
+
+:host-context(.dark-mode) .ls-nav-item {
+  color: #9ca3af;
+  
+  &:hover {
+    background: #374151;
+    color: #f9fafb;
+  }
+  
+  &.active {
+    background: rgba(37, 99, 235, 0.15);
+    color: #60a5fa;
+    
+    i {
+      color: #60a5fa;
+    }
+  }
+}
+
+:host-context(.dark-mode) .ls-toggle-btn {
+  background: #374151;
+  color: #9ca3af;
+  
+  &:hover {
+    background: #4b5563;
+    color: #f9fafb;
+  }
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+/* ═══════════════════════════════════════════ */
+/* 🎨 SIDEBAR PREMIUM - NOIR + OR             */
+/* ═══════════════════════════════════════════ /
+
+#accordionSidebar.sidebar {
+  background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%) !important;
+  border-right: 1px solid rgba(212, 175, 55, 0.3);
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* Vague décorative dorée en bas /
+#accordionSidebar.sidebar::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, transparent 0%, rgba(212, 175, 55, 0.05) 100%);
+  pointer-events: none;
+}
+
+#accordionSidebar.sidebar::after {
+  content: '';
+  position: absolute;
+  bottom: 30px;
+  left: -20px;
+  right: -20px;
+  height: 80px;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Logo / Brand /
+.sidebar-brand {
+  padding: 1.5rem 1rem !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+  height: auto !important;
+  margin-bottom: 1rem;
+}
+
+.sidebar-brand-icon {
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #0a0a0a !important;
+  font-size: 1.3rem !important;
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.sidebar-brand-icon i {
+  color: #0a0a0a !important;
+  font-size: 1.3rem !important;
+}
+
+.sidebar-brand-text {
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  letter-spacing: 1px !important;
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+}
+
+.sidebar-brand-text::after {
+  content: 'PREMIUM ADMIN';
+  display: block;
+  font-size: 0.65rem;
+  color: #888;
+  letter-spacing: 1.5px;
+  font-weight: 400;
+  margin-top: 2px;
+  -webkit-text-fill-color: #888;
+}
+
+/* Section heading (ACTIONS / PARAMÈTRES) /
+.sidebar-heading {
+  color: #555 !important;
+  font-size: 0.65rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 2px !important;
+  padding: 1rem 1.25rem 0.5rem !important;
+  text-transform: uppercase;
+}
+
+/* Divider /
+.sidebar-divider {
+  border-color: rgba(212, 175, 55, 0.1) !important;
+  margin: 0.5rem 1rem !important;
+}
+
+/* Items du menu /
+#accordionSidebar .nav-item {
+  margin: 2px 12px;
+}
+
+#accordionSidebar .nav-item .nav-link {
+  color: #aaa !important;
+  padding: 0.7rem 0.9rem !important;
+  border-radius: 8px !important;
+  font-size: 0.85rem !important;
+  font-weight: 400 !important;
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+#accordionSidebar .nav-item .nav-link i {
+  color: #aaa !important;
+  font-size: 0.95rem !important;
+  width: 18px;
+  text-align: center;
+  margin-right: 0 !important;
+}
+
+#accordionSidebar .nav-item .nav-link:hover {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #f4d03f !important;
+}
+
+#accordionSidebar .nav-item .nav-link:hover i {
+  color: #f4d03f !important;
+}
+
+/* Item ACTIF (doré) /
+#accordionSidebar .nav-item.active .nav-link,
+#accordionSidebar .nav-item .nav-link.active {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  font-weight: 500 !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+#accordionSidebar .nav-item.active .nav-link i,
+#accordionSidebar .nav-item .nav-link.active i {
+  color: #0a0a0a !important;
+}
+
+#accordionSidebar .nav-item.active .nav-link span,
+#accordionSidebar .nav-item .nav-link.active span {
+  color: #0a0a0a !important;
+}
+
+/* Toggle button /
+#sidebarToggle {
+  background: rgba(212, 175, 55, 0.1) !important;
+  width: 32px !important;
+  height: 32px !important;
+  color: #d4af37 !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+#sidebarToggle::after {
+  color: #d4af37 !important;
+}
+
+#sidebarToggle:hover {
+  background: rgba(212, 175, 55, 0.2) !important;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ═══════════════════════════════════════════ */
+/* 🎨 SIDEBAR - STYLE CAPTURE 1 (OR + BLANC)  */
+/* ═══════════════════════════════════════════ */
+ 
+#accordionSidebar.sidebar {
+  background: #ffffff !important;
+  border-right: 1px solid #f0ede0 !important;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  box-shadow: 2px 0 8px rgba(212, 175, 55, 0.06) !important;
+
+}
+ 
+/* Logo / Brand */
+.sidebar-brand {
+  padding: 1.5rem 1rem !important;
+  background: transparent !important;
+  border-bottom: 1px solid #f0ede0 !important;
+  height: auto !important;
+  margin-bottom: 0.5rem;
+}
+ 
+.sidebar-brand-icon {
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #fff !important;
+  font-size: 1.3rem !important;
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+}
+ 
+.sidebar-brand-icon i {
+  color: #fff !important;
+  font-size: 1.3rem !important;
+}
+ 
+.logo-or{
+  color: #d4af37 !important;
+  font-size: 1.4rem;
+}
+
+.sidebar-brand-text{
+  color: #d4af37 !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  text-transform: uppercase;
+}
+
+ 
+/* Section heading */
+.sidebar-heading {
+  color: #aaa !important;
+  font-size: 0.65rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 2px !important;
+  padding: 1rem 1.25rem 0.5rem !important;
+  text-transform: uppercase;
+}
+ 
+/* Divider */
+.sidebar-divider {
+  border-color: #f0ede0 !important;
+  margin: 0.5rem 1rem !important;
+}
+ 
+/* Items du menu */
+#accordionSidebar .nav-item {
+  margin: 2px 10px;
+}
+ 
+#accordionSidebar .nav-item .nav-link {
+  color: #555 !important;
+  padding: 0.65rem 0.9rem !important;
+  border-radius: 8px !important;
+  font-size: 0.85rem !important;
+  font-weight: 400 !important;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+ 
+#accordionSidebar .nav-item .nav-link i {
+  color: #aaa !important;
+  font-size: 0.9rem !important;
+  width: 18px;
+  text-align: center;
+  margin-right: 0 !important;
+}
+ 
+#accordionSidebar .nav-item .nav-link:hover {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #b8860b !important;
+}
+ 
+#accordionSidebar .nav-item .nav-link:hover i {
+  color: #d4af37 !important;
+}
+ 
+/* Item ACTIF (doré) */
+#accordionSidebar .nav-item.active .nav-link,
+#accordionSidebar .nav-item .nav-link.active {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+}
+ 
+#accordionSidebar .nav-item.active .nav-link i,
+#accordionSidebar .nav-item .nav-link.active i {
+  color: #fff !important;
+}
+ 
+#accordionSidebar .nav-item.active .nav-link span,
+#accordionSidebar .nav-item .nav-link.active span {
+  color: #fff !important;
+}
+ 
+/* Toggle button */
+#sidebarToggle {
+  background: rgba(212, 175, 55, 0.1) !important;
+  width: 32px !important;
+  height: 32px !important;
+  color: #d4af37 !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+ 
+#sidebarToggle:hover {
+  background: rgba(212, 175, 55, 0.2) !important;
+}
+ 
+/* User footer en bas */
+#accordionSidebar .user-footer {
+  border-top: 1px solid #f0ede0;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

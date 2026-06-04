@@ -1,0 +1,251 @@
+/*.chart-area {
+  position: relative;
+  height: 20rem;
+  width: 100%;
+}
+
+.chart-pie {
+  position: relative;
+  height: 15rem;
+  width: 100%;
+}
+
+
+.border-left-primary  { border-left: 4px solid #4e73df !important; }
+.border-left-success  { border-left: 4px solid #1cc88a !important; }
+.border-left-warning  { border-left: 4px solid #f6c23e !important; }
+.border-left-info     { border-left: 4px solid #36b9cc !important; }
+.border-left-danger   { border-left: 4px solid #e74a3b !important; }
+
+.chart-area {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 DASHBOARD - NOIR + OR PREMIUM LUXE                      */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ============= TITRE DE LA PAGE ============= */
+h1.h3.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+}
+
+h1.h3.text-gray-800 i {
+  color: #d4af37 !important;
+  margin-right: 12px;
+}
+
+/* ============= LOADING SPINNER ============= */
+.fa-spinner.text-primary {
+  color: #d4af37 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 CARDS STATS (4 cartes du haut)                           */
+/* ═══════════════════════════════════════════════════════════ */
+
+.card.shadow.h-100 {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.2s;
+  overflow: hidden;
+}
+
+.card.shadow.h-100:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============= BORDURES GAUCHES COLORÉES ============= */
+
+/* Primary = OR */
+.border-left-primary {
+  border-left: 4px solid #d4af37 !important;
+}
+
+.border-left-primary .text-primary {
+  color: #b8860b !important;
+}
+
+/* Success = OR foncé */
+.border-left-success {
+  border-left: 4px solid #b8860b !important;
+}
+
+.border-left-success .text-success {
+  color: #b8860b !important;
+}
+
+/* Warning = OR clair */
+.border-left-warning {
+  border-left: 4px solid #f4d03f !important;
+}
+
+.border-left-warning .text-warning {
+  color: #b8860b !important;
+}
+
+/* Info = Beige doré */
+.border-left-info {
+  border-left: 4px solid #c4a26a !important;
+}
+
+.border-left-info .text-info {
+  color: #8b7355 !important;
+}
+
+/* Danger = Noir (au lieu de rouge) */
+.border-left-danger {
+  border-left: 4px solid #1a1a1a !important;
+}
+
+.border-left-danger .text-danger {
+  color: #1a1a1a !important;
+}
+
+/* ============= LABELS DES STATS ============= */
+.text-xs.font-weight-bold.text-uppercase {
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.2px !important;
+}
+
+/* ============= CHIFFRES GRANDS ============= */
+.h5.font-weight-bold.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+}
+
+/* ============= ICÔNES DÉCORATIVES ============= */
+.text-gray-300 {
+  color: rgba(212, 175, 55, 0.25) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 CARTES GRAPHIQUES                                        */
+/* ═══════════════════════════════════════════════════════════ */
+
+.card.shadow.mb-4 {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #ffffff !important;
+  overflow: hidden;
+}
+
+.card-header {
+  background: #fafaf7 !important;
+  border-bottom: 1px solid #f0f0eb !important;
+  padding: 1.2rem 1.5rem !important;
+}
+
+.card-header h6 {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+.text-primary {
+  color: #b8860b !important;
+}
+
+/* ============= ZONE DES GRAPHIQUES ============= */
+.chart-area {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.chart-pie {
+  position: relative;
+  height: 15rem;
+  width: 100%;
+}
+
+/* ============= CANVAS ============= */
+canvas {
+  max-width: 100%;
+}

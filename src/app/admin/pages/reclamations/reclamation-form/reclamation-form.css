@@ -1,0 +1,175 @@
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 RÉCLAMATION FORM - NOIR + OR PREMIUM LUXE               */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ============= TITRE DE LA PAGE ============= */
+h1.h3.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+}
+
+/* ============= BOUTONS ============= */
+.btn-primary {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border: 2px solid #d4af37 !important;
+  font-weight: 600 !important;
+  padding: 10px 24px !important;
+  border-radius: 8px !important;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+  transition: all 0.2s !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4) !important;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+
+
+/* ============= BOUTONS RETOUR / ANNULER ============= */
+.btn-secondary {
+  background: #d4af37 !important;
+  color: white !important;
+  border: 1.5px solid #d4af37 !important;
+
+  font-weight: 500 !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+  transition: none !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background: #d4af37 !important;
+  color: white !important;
+  border-color: #d4af37 !important;
+
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+}
+
+
+
+
+
+
+
+/* ============= ALERTES ============= */
+.alert {
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  border-left: 4px solid !important;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.08) !important;
+  color: #047857 !important;
+  border-left-color: #10b981 !important;
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08) !important;
+  color: #991b1b !important;
+  border-left-color: #ef4444 !important;
+}
+
+.alert-info {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.04)) !important;
+  color: #b8860b !important;
+  border-left-color: #d4af37 !important;
+}
+
+.alert-info i {
+  color: #d4af37 !important;
+}
+
+/* ============= CARTE ============= */
+.card.shadow {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #ffffff !important;
+  overflow: hidden;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #fafaf7, #ffffff) !important;
+  border-bottom: 2px solid #d4af37 !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.card-header h6 {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+.card-header h6 i {
+  color: #d4af37 !important;
+}
+
+.text-primary {
+  color: #b8860b !important;
+}
+
+/* ============= LABELS ============= */
+.form-label {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 8px !important;
+  letter-spacing: 0.3px;
+}
+
+/* ============= INPUTS / TEXTAREA ============= */
+.form-control {
+  border: 1.5px solid #e5e5e0 !important;
+  border-radius: 8px !important;
+  padding: 11px 14px !important;
+  font-size: 0.9rem !important;
+  transition: all 0.2s !important;
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+.form-control:focus {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+  outline: none !important;
+  transform: translateY(-1px);
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.text-muted {
+  color: #888 !important;
+  font-size: 0.78rem !important;
+}
+
+/* ============= LIENS ============= */
+a.btn-secondary,
+a.btn-primary {
+  text-decoration: none !important;
+}

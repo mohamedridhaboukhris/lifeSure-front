@@ -1,0 +1,687 @@
+
+<!-- ========================================== -->
+<!-- PAGE HEADING -->
+<!-- ========================================== -->
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+  <h1 class="h3 mb-0 text-gray-800">
+    {{ isAgent ? 'Tous les Contrats' : 'Mes Contrats' }}
+  </h1>
+
+  <a
+    *ngIf="!isAgent"
+    routerLink="/admin/contrats/nouveau"
+    class="btn btn-primary shadow-sm">
+
+    <i class="fas fa-plus fa-sm me-2"></i>
+    Nouveau Contrat
+
+  </a>
+
+</div>
+
+
+<!-- ========================================== -->
+<!-- ERROR -->
+<!-- ========================================== -->
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+
+<!-- ========================================== -->
+<!-- LOADING -->
+<!-- ========================================== -->
+
+<div *ngIf="loading" class="text-center py-5">
+
+  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+
+</div>
+
+
+<!-- ========================================== -->
+<!-- FILTRES -->
+<!-- ========================================== -->
+
+<div class="filtres-statut mb-4" *ngIf="isAgent">
+
+  <button
+    class="filtre-btn"
+    [class.active]="filtreStatut === 'TOUS'"
+    (click)="changerFiltre('TOUS')">
+
+    📋 Tous ({{ getCountByStatut('TOUS') }})
+
+  </button>
+
+  <button
+    class="filtre-btn filtre-validation"
+    [class.active]="filtreStatut === 'EN_ATTENTE_VALIDATION'"
+    (click)="changerFiltre('EN_ATTENTE_VALIDATION')">
+
+    ⏳ À valider ({{ getCountByStatut('EN_ATTENTE_VALIDATION') }})
+
+  </button>
+
+  <button
+    class="filtre-btn filtre-actif"
+    [class.active]="filtreStatut === 'ACTIF'"
+    (click)="changerFiltre('ACTIF')">
+
+    ✅ Actifs ({{ getCountByStatut('ACTIF') }})
+
+  </button>
+
+  <button
+    class="filtre-btn filtre-refuse"
+    [class.active]="filtreStatut === 'REFUSE'"
+    (click)="changerFiltre('REFUSE')">
+
+    ❌ Refusés ({{ getCountByStatut('REFUSE') }})
+
+  </button>
+
+</div>
+
+
+<!-- ========================================== -->
+<!-- TABLEAU -->
+<!-- ========================================== -->
+
+<div *ngIf="!loading" class="card shadow mb-4">
+
+  <div class="card-header py-3">
+
+    <h6 class="m-0 font-weight-bold text-primary">
+
+      {{ isAgent ? 'Liste complète' : 'Liste de mes contrats' }}
+      ({{ contrats.length }})
+
+    </h6>
+
+  </div>
+
+  <div class="card-body">
+
+    <div class="table-responsive">
+
+      <table
+        class="table table-bordered table-hover"
+        width="100%"
+        cellspacing="0">
+
+        <!-- ========================================== -->
+        <!-- HEAD -->
+        <!-- ========================================== -->
+
+        <thead>
+
+          <tr>
+
+            <th>N° Contrat</th>
+
+            <th>Type</th>
+
+            <th *ngIf="isAgent">Client</th>
+
+            <th>Date Début</th>
+
+            <th>Date Fin</th>
+
+            <th>Prime Mensuelle</th>
+
+            <th>Statut</th>
+
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+
+
+        <!-- ========================================== -->
+        <!-- BODY -->
+        <!-- ========================================== -->
+
+        <tbody>
+
+          <!-- Aucun contrat -->
+
+          <tr *ngIf="contrats.length === 0">
+
+            <td
+              [attr.colspan]="isAgent ? 8 : 7"
+              class="text-center text-muted py-4">
+
+              <i class="fas fa-file-alt fa-2x mb-2 d-block"></i>
+
+              <ng-container *ngIf="isAgent">
+
+                Aucun contrat dans le système.
+
+              </ng-container>
+
+              <ng-container *ngIf="!isAgent">
+
+                Vous n'avez encore aucun contrat.
+
+                <br>
+
+                <a
+                  routerLink="/admin/contrats/nouveau"
+                  class="btn btn-primary mt-3">
+
+                  Souscrire maintenant
+
+                </a>
+
+              </ng-container>
+
+            </td>
+
+          </tr>
+
+
+          <!-- ========================================== -->
+          <!-- LIGNE CONTRAT -->
+          <!-- ========================================== -->
+
+          <tr *ngFor="let c of contrats">
+
+            <!-- Numéro -->
+
+            <td>
+              <strong>{{ c.numeroContrat }}</strong>
+            </td>
+
+
+            <!-- Type -->
+
+            <td>
+
+              <span class="badge badge-info">
+
+                 {{ getTypeIcon(c.typeContrat) }} {{ c.typeContrat }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Client -->
+
+            <td *ngIf="isAgent">
+
+              <div>
+
+                <strong>
+                  {{ c.client?.prenom }}
+                  {{ c.client?.nom }}
+                </strong>
+
+              </div>
+
+              <small class="text-muted d-block">
+                {{ c.client?.email }}
+              </small>
+
+              <small class="text-muted">
+                ID: {{ c.client?.id }}
+              </small>
+
+            </td>
+
+
+            <!-- Dates -->
+
+            <td>{{ c.dateDebut }}</td>
+
+            <td>{{ c.dateFin }}</td>
+
+
+            <!-- Prime -->
+
+            <td>
+
+              {{ c.primeMensuelle | number:'1.2-2' }} DT
+
+            </td>
+
+
+            <!-- Statut -->
+
+            <td>
+
+              <span
+                class="badge"
+                [ngClass]="getStatutBadge(c.statut)">
+
+                {{ c.statut }}
+
+              </span>
+
+            </td>
+
+
+            <!-- ========================================== -->
+            <!-- ACTIONS -->
+            <!-- ========================================== -->
+
+            <td>
+
+              <!-- ========================================== -->
+              <!-- CLIENT -->
+              <!-- ========================================== -->
+
+              <!-- Signer -->
+
+              <button
+                *ngIf="!isAgent && c.statut === 'ACTIF' && !c.signature"
+                class="btn btn-sm btn-warning me-1"
+                (click)="ouvrirSignature(c)">
+
+                <i class="fas fa-signature"></i>
+                Signer
+
+              </button>
+
+
+              <!-- Déjà signé -->
+
+              <span
+                *ngIf="!isAgent && c.signature"
+                class="badge bg-success me-2">
+
+                <i class="fas fa-check me-1"></i>
+                Signé électroniquement
+
+              </span>
+
+
+              <!-- Payer -->
+
+              <a
+                *ngIf="!isAgent && c.statut === 'EN_ATTENTE'"
+                [routerLink]="['/admin/paiements/payer', c.id]"
+                class="btn btn-sm btn-success me-1">
+
+                <i class="fas fa-credit-card"></i>
+                Payer
+
+              </a>
+
+
+              <!-- PDF -->
+
+              <button
+                *ngIf="!isAgent && c.statut === 'ACTIF'"
+                class="btn btn-sm btn-info me-1"
+                (click)="telechargerAttestation(c.id!)">
+
+                <i class="fas fa-file-pdf"></i>
+
+              </button>
+
+
+              <!-- Santé -->
+
+              <div
+                *ngIf="!isAgent && c.typeContrat === 'SANTE' && c.statut === 'ACTIF'"
+                class="mt-2">
+
+                <button
+                  class="btn btn-sm btn-info me-2"
+                  [routerLink]="['/admin/carte-sante', c.id]">
+
+                  <i class="fas fa-id-card me-1"></i>
+                  Ma carte santé
+
+                </button>
+
+                <button
+                  class="btn btn-sm btn-medecin"
+                  routerLink="/admin/medecins">
+
+                  <i class="fas fa-user-md me-1"></i>
+                  Médecins partenaires
+
+                </button>
+
+              </div>
+
+
+              <!-- ========================================== -->
+              <!-- AGENT -->
+              <!-- ========================================== -->
+
+              <ng-container *ngIf="isAgent">
+
+                <!-- Examiner -->
+
+                <button
+                  *ngIf="c.statut === 'EN_ATTENTE_VALIDATION'"
+                  class="btn btn-sm btn-primary me-1"
+                  (click)="ouvrirValidation(c)">
+
+                  <i class="fas fa-eye"></i>
+                  Examiner
+
+                </button>
+
+
+                <!-- Activer -->
+
+                <button
+                  class="btn btn-sm btn-success me-1"
+                  (click)="activer(c.id)"
+                  *ngIf="c.statut !== 'ACTIF'">
+
+                  <i class="fas fa-check"></i>
+
+                </button>
+
+
+                <!-- Suspendre -->
+
+                <button
+                  class="btn btn-sm btn-warning me-1"
+                  (click)="suspendre(c.id)"
+                  *ngIf="c.statut === 'ACTIF'">
+
+                  <i class="fas fa-pause"></i>
+
+                </button>
+
+
+                <!-- Résilier -->
+
+                <button
+                  class="btn btn-sm btn-danger me-1"
+                  (click)="resilier(c.id)"
+                  *ngIf="c.statut !== 'RESILIE'">
+
+                  <i class="fas fa-ban"></i>
+
+                </button>
+
+
+                <!-- Supprimer -->
+
+                <button
+                  class="btn btn-sm btn-dark"
+                  (click)="supprimer(c.id)">
+
+                  <i class="fas fa-trash"></i>
+
+                </button>
+
+              </ng-container>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ========================================== -->
+<!-- SIGNATURE MODAL -->
+<!-- ========================================== -->
+
+<app-signature-modal
+  *ngIf="showSignatureModal && selectedContratForSignature"
+  [contratId]="selectedContratForSignature.id"
+  [contratNumero]="selectedContratForSignature.numeroContrat"
+  (signed)="signatureReussie()"
+  (closed)="fermerSignature()">
+
+</app-signature-modal>
+
+
+<!-- ========================================== -->
+<!-- MODAL VALIDATION -->
+<!-- ========================================== -->
+
+<div
+  *ngIf="showValidationModal && contratSelectionne"
+  class="modal-overlay-v"
+  (click)="fermerValidation()">
+
+  <div class="modal-large-v" (click)="$event.stopPropagation()">
+
+    <div
+      class="modal-header-v"
+      [style.background]="getTypeColor(contratSelectionne.typeContrat)">
+
+      <div>
+
+        <h2>
+          {{ getTypeIcon(contratSelectionne.typeContrat) }}
+          Examen du contrat
+        </h2>
+
+        <p>{{ contratSelectionne.numeroContrat }}</p>
+
+      </div>
+
+      <button
+        class="btn-close-v"
+        (click)="fermerValidation()">
+
+        ✕
+
+      </button>
+
+    </div>
+
+
+    <!-- BODY -->
+
+    <div class="modal-body-v">
+
+      <section class="detail-section-v">
+
+        <h3>👤 Informations Client</h3>
+
+        <div class="detail-grid-v">
+
+          <div>
+            <strong>Nom :</strong>
+            {{ contratSelectionne.client?.prenom }}
+            {{ contratSelectionne.client?.nom }}
+          </div>
+
+          <div>
+            <strong>Email :</strong>
+            {{ contratSelectionne.client?.email }}
+          </div>
+
+          <div>
+            <strong>Téléphone :</strong>
+            {{ contratSelectionne.client?.telephone || '-' }}
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- CONTRAT -->
+
+      <section class="detail-section-v">
+
+        <h3>📋 Détails du contrat</h3>
+
+        <div class="detail-grid-v">
+
+          <div>
+            <strong>Type :</strong>
+            {{ contratSelectionne.typeContrat }}
+          </div>
+
+          <div>
+            <strong>Date début :</strong>
+            {{ formatDate(contratSelectionne.dateDebut) }}
+          </div>
+
+          <div>
+            <strong>Date fin :</strong>
+            {{ formatDate(contratSelectionne.dateFin) }}
+          </div>
+
+          <div>
+            <strong>Prime :</strong>
+
+            <span class="highlight-v">
+              {{ contratSelectionne.primeMensuelle }} DT
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="modal-footer-v">
+
+      <button
+        class="btn-refuser-v"
+        (click)="ouvrirRefus()">
+
+        ❌ Refuser
+
+      </button>
+
+      <button
+        class="btn-accepter-v"
+        (click)="accepterContrat()">
+
+        ✅ Accepter le contrat
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ========================================== -->
+<!-- MODAL REFUS -->
+<!-- ========================================== -->
+
+<div
+  *ngIf="showRefusModal"
+  class="modal-overlay-v"
+  (click)="fermerRefus()">
+
+  <div class="modal-small-v" (click)="$event.stopPropagation()">
+
+    <div class="modal-header-v refus-header-v">
+
+      <h2>❌ Motif du refus</h2>
+
+      <button
+        class="btn-close-v"
+        (click)="fermerRefus()">
+
+        ✕
+
+      </button>
+
+    </div>
+
+
+    <!-- BODY -->
+
+    <div class="modal-body-v">
+
+      <p class="info-text-v">
+
+        Veuillez préciser les raisons du refus.
+
+      </p>
+
+      <label class="form-label-v">
+
+        📝 Motif détaillé
+        <span class="required-v">*</span>
+
+      </label>
+
+      <textarea
+        [(ngModel)]="motifRefus"
+        class="textarea-motif-v"
+        rows="6">
+
+      </textarea>
+
+      <div
+        class="char-counter-v"
+        [class.valid]="motifRefus.length >= 20">
+
+        {{ motifRefus.length }} / 20 caractères minimum
+
+      </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="modal-footer-v">
+
+      <button
+        class="btn-cancel-v"
+        (click)="fermerRefus()">
+
+        Annuler
+
+      </button>
+
+      <button
+        class="btn-confirm-refus-v"
+        (click)="confirmerRefus()"
+        [disabled]="motifRefus.length < 20">
+
+        ❌ Confirmer le refus
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ========================================== -->
+<!-- TOAST -->
+<!-- ========================================== -->
+
+<div
+  *ngIf="toast.show"
+  class="toast-v"
+  [class.toast-success-v]="toast.type === 'success'"
+  [class.toast-error-v]="toast.type === 'error'">
+
+  {{ toast.message }}
+
+</div>

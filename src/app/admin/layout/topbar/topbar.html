@@ -1,0 +1,235 @@
+
+
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+  <!-- Sidebar Toggle (Topbar) -->
+  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3" type="button">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <!-- Topbar Navbar -->
+  <ul class="navbar-nav ml-auto">
+
+    <!-- 🌙 Toggle Mode Sombre -->
+    <li class="nav-item mx-1">
+      <a class="nav-link" href="#"
+         (click)="$event.preventDefault(); toggleTheme()"
+         [title]="themeService.isDark() ? ('topbar.lightMode' | translate) : ('topbar.darkMode' | translate)">
+        <i class="fas" [class.fa-moon]="!themeService.isDark()" [class.fa-sun]="themeService.isDark()"
+           style="font-size: 1.2em;"></i>
+      </a>
+    </li>
+
+    <!-- 🌍 Sélecteur de Langue -->
+    <li class="nav-item dropdown no-arrow mx-1">
+      <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button"
+         (click)="toggleLangMenu($event)">
+        <span style="font-size: 1.3em;">{{ languageService.getCurrentLanguage().flag }}</span>
+        <span class="ms-1 d-none d-md-inline">
+          {{ languageService.getCurrentLanguage().code | uppercase }}
+        </span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+           [class.show]="showLangMenu"
+           aria-labelledby="langDropdown">
+        <h6 class="dropdown-header">{{ 'common.language' | translate }}</h6>
+        <a *ngFor="let lang of languageService.languages"
+           class="dropdown-item d-flex align-items-center"
+           href="#"
+           (click)="$event.preventDefault(); changeLanguage(lang.code)">
+          <span style="font-size: 1.3em;" class="me-2">{{ lang.flag }}</span>
+          <span>{{ lang.name }}</span>
+          <i *ngIf="languageService.getCurrentLanguage().code === lang.code"
+             class="fas fa-check ms-auto text-success"></i>
+        </a>
+      </div>
+    </li>
+
+    <!-- 🔔 NOTIFICATIONS -->
+    <li class="nav-item dropdown no-arrow mx-1">
+      <a class="nav-link dropdown-toggle position-relative" href="#" id="alertsDropdown" role="button"
+         (click)="toggleAlerts($event)">
+        <i class="fas fa-bell fa-fw"></i>
+        <span *ngIf="notifCount > 0"
+              class="badge badge-danger badge-counter"
+              style="animation: pulse 2s infinite;">
+          {{ notifCount > 99 ? '99+' : notifCount }}
+        </span>
+      </a>
+      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+           [class.show]="showAlerts"
+           aria-labelledby="alertsDropdown"
+           (click)="$event.stopPropagation()">
+
+        <!-- Header -->
+        <h6 class="dropdown-header d-flex justify-content-between align-items-center">
+          <span>📬 Notifications</span>
+          <a *ngIf="notifCount > 0"
+             href="#"
+             class="small text-white"
+             style="text-decoration: underline;"
+             (click)="marquerToutesCommeLues($event)">
+            ✓ Tout marquer lu
+          </a>
+        </h6>
+
+        <!-- Loading -->
+        <div *ngIf="loadingNotifs" class="text-center py-3">
+          <i class="fas fa-spinner fa-spin text-primary"></i>
+          <small class="ms-2">Chargement...</small>
+        </div>
+
+        <!-- Empty -->
+        <div *ngIf="!loadingNotifs && notifications.length === 0"
+             class="text-center py-4 text-muted">
+          <i class="fas fa-inbox fa-2x mb-2"></i>
+          <p class="mb-0 small">Aucune notification</p>
+        </div>
+
+        <!-- Liste des notifications -->
+        <a *ngFor="let notif of notifications"
+           class="dropdown-item d-flex align-items-center"
+           href="#"
+           [style.background]="notif.lue ? 'transparent' : '#e3f2fd'"
+           (click)="onNotificationClick(notif, $event)">
+
+          <div class="mr-3">
+            <div class="icon-circle" [style.background]="notif.couleur">
+              <span style="font-size: 1.2em;">{{ notif.icone }}</span>
+            </div>
+          </div>
+          <div style="flex: 1; min-width: 0;">
+            <div class="small text-gray-500">
+              <i class="far fa-clock"></i> {{ getTimeAgo(notif.dateCreation) }}
+            </div>
+            <span class="font-weight-bold" style="display: block; white-space: normal;">
+              {{ notif.titre }}
+            </span>
+            <small class="text-muted" style="display: block; white-space: normal;">
+              {{ notif.message }}
+            </small>
+          </div>
+          <span *ngIf="!notif.lue"
+                style="width: 8px; height: 8px; background: #4e73df; border-radius: 50%; flex-shrink: 0;">
+          </span>
+        </a>
+
+        <!-- Footer -->
+        <div *ngIf="notifications.length > 0"
+             class="dropdown-item text-center small text-gray-500">
+          🔄 Auto-actualisation toutes les 15s
+        </div>
+
+      </div>
+    </li>
+
+    <div class="topbar-divider d-none d-sm-block"></div>
+
+    <!-- 👤 User Profile -->
+    <li class="nav-item dropdown no-arrow">
+      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+         (click)="toggleUser($event)">
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ userName }}</span>
+        <div class="avatar-circle">
+          {{ userInitials }}
+        </div>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+           [class.show]="showUser"
+           aria-labelledby="userDropdown">
+        <a class="dropdown-item" href="#" (click)="openProfile($event)">
+          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+          {{ 'common.profile' | translate }}
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" (click)="logout($event)">
+          <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+          {{ 'common.logout' | translate }}
+        </a>
+      </div>
+    </li>
+
+  </ul>
+
+</nav>
+
+<!-- ===== MODAL PROFIL ===== -->
+<div class="modal-backdrop fade show" *ngIf="showProfileModal" (click)="closeProfile()"></div>
+
+<div class="modal fade show d-block" *ngIf="showProfileModal" tabindex="-1" role="dialog" style="z-index: 1060;">
+  <div class="modal-dialog modal-dialog-centered" role="document" (click)="$event.stopPropagation()">
+    <div class="modal-content profile-modal-content">
+
+      <!-- Header avec dégradé -->
+      <div class="modal-header profile-modal-header">
+        <div class="profile-header-bg"></div>
+        <h5 class="modal-title text-white position-relative">
+          <i class="fas fa-id-card mr-2"></i> Mon Profil
+        </h5>
+        <button type="button" class="close text-white position-relative" (click)="closeProfile()" style="opacity:1;">
+          <span>&times;</span>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body pb-4">
+
+        <!-- Avatar + Nom -->
+        <div class="text-center profile-avatar-section">
+          <div class="avatar-circle-lg mx-auto">
+            {{ userInitials }}
+          </div>
+          <h5 class="font-weight-bold mt-3 mb-0">{{ userName }}</h5>
+          <span class="badge profile-role-badge mt-1">{{ userRole }}</span>
+        </div>
+
+        <hr class="my-3">
+
+        <!-- Infos -->
+        <div class="profile-info-list px-2">
+
+          <div class="profile-info-item">
+            <div class="profile-info-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="profile-info-content">
+              <small class="text-muted d-block">Adresse email</small>
+              <span class="font-weight-600">{{ userEmail }}</span>
+            </div>
+          </div>
+
+          <div class="profile-info-item">
+            <div class="profile-info-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="profile-info-content">
+              <small class="text-muted d-block">Rôle</small>
+              <span class="font-weight-600">{{ userRole }}</span>
+            </div>
+          </div>
+
+          <div class="profile-info-item">
+            <div class="profile-info-icon">
+              <i class="fas fa-circle text-success" style="font-size: 0.7em; margin: auto;"></i>
+            </div>
+            <div class="profile-info-content">
+              <small class="text-muted d-block">Statut</small>
+              <span class="font-weight-600 text-success">Connecté</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="btn btn-outline-secondary btn-sm px-4" (click)="closeProfile()">
+          Fermer
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

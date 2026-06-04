@@ -1,0 +1,69 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "back": "Retour",
+    "loading": "Chargement...",
+    "search": "Rechercher",
+    "actions": "Actions",
+    "details": "Détails",
+    "yes": "Oui",
+    "no": "Non",
+    "confirm": "Confirmer",
+    "logout": "Déconnexion",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "language": "Langue",
+    "theme": "Thème"
+  },
+  "menu": {
+    "dashboard": "Tableau de bord",
+    "contracts": "Contrats",
+    "myContracts": "Mes contrats",
+    "newContract": "Nouveau contrat",
+    "claims": "Sinistres",
+    "myClaims": "Mes sinistres",
+    "declareClaim": "Déclarer un sinistre",
+    "rates": "Taux d'assurance",
+    "complaints": "Réclamations",
+    "myComplaints": "Mes réclamations",
+    "payments": "Paiements",
+    "myPayments": "Mes paiements",
+    "users": "Utilisateurs",
+    "expertises": "Mes expertises"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "email": "Email",
+    "password": "Mot de passe",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phone": "Téléphone",
+    "loginButton": "Se connecter",
+    "registerButton": "Créer un compte",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "createAccount": "Créer un compte",
+    "loginHere": "Se connecter"
+  },
+  "dashboard": {
+    "welcome": "Bienvenue",
+    "totalContracts": "Total contrats",
+    "activeContracts": "Contrats actifs",
+    "monthlyRevenue": "Revenus mensuels",
+    "claims": "Sinistres",
+    "pendingClaims": "À traiter",
+    "acceptedClaims": "Acceptés",
+    "fraudDetected": "Fraudes détectées",
+    "totalIndemnifications": "Total indemnisations"
+  },
+  "topbar": {
+    "darkMode": "Mode sombre",
+    "lightMode": "Mode clair",
+    "notifications": "Notifications",
+    "messages": "Messages"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "back": "رجوع",
+    "loading": "جاري التحميل...",
+    "search": "بحث",
+    "actions": "إجراءات",
+    "details": "التفاصيل",
+    "yes": "نعم",
+    "no": "لا",
+    "confirm": "تأكيد",
+    "logout": "تسجيل الخروج",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "language": "اللغة",
+    "theme": "المظهر"
+  },
+  "menu": {
+    "dashboard": "لوحة التحكم",
+    "contracts": "العقود",
+    "myContracts": "عقودي",
+    "newContract": "عقد جديد",
+    "claims": "المطالبات",
+    "myClaims": "مطالباتي",
+    "declareClaim": "تقديم مطالبة",
+    "rates": "أسعار التأمين",
+    "complaints": "الشكاوى",
+    "myComplaints": "شكاويي",
+    "payments": "المدفوعات",
+    "myPayments": "مدفوعاتي",
+    "users": "المستخدمون",
+    "expertises": "خبراتي"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "firstName": "الاسم",
+    "lastName": "اللقب",
+    "phone": "الهاتف",
+    "loginButton": "تسجيل الدخول",
+    "registerButton": "إنشاء حساب",
+    "noAccount": "ليس لديك حساب؟",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "createAccount": "إنشاء حساب",
+    "loginHere": "تسجيل الدخول"
+  },
+  "dashboard": {
+    "welcome": "مرحبا",
+    "totalContracts": "إجمالي العقود",
+    "activeContracts": "العقود النشطة",
+    "monthlyRevenue": "الإيرادات الشهرية",
+    "claims": "المطالبات",
+    "pendingClaims": "قيد المعالجة",
+    "acceptedClaims": "المقبولة",
+    "fraudDetected": "احتيال مكتشف",
+    "totalIndemnifications": "إجمالي التعويضات"
+  },
+  "topbar": {
+    "darkMode": "الوضع الداكن",
+    "lightMode": "الوضع الفاتح",
+    "notifications": "الإشعارات",
+    "messages": "الرسائل"
+  }
+}

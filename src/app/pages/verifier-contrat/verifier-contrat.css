@@ -1,0 +1,124 @@
+.verification-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.verification-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.lifesure-header {
+  background: linear-gradient(135deg, #4e73df, #224abe);
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.lifesure-header h1 {
+  margin: 0;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.lifesure-header p {
+  margin: 5px 0 0;
+  opacity: 0.9;
+}
+
+.loading-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: #4e73df;
+}
+
+.loading-state p {
+  margin-top: 20px;
+  font-size: 1.1em;
+}
+
+.status-icon {
+  text-align: center;
+  font-size: 5em;
+  margin: 30px 0 10px;
+}
+
+.status-icon.success { color: #1cc88a; }
+.status-icon.warning { color: #f6c23e; }
+.status-icon.error { color: #e74a3b; }
+
+.result-success, .result-warning, .result-error {
+  padding: 0 30px 30px;
+  text-align: center;
+}
+
+.result-success h2 { color: #1cc88a; margin: 0; }
+.result-warning h2 { color: #f6c23e; margin: 0; }
+.result-error h2 { color: #e74a3b; margin: 0; }
+
+.status-text {
+  color: #666;
+  margin: 10px 0 25px;
+  font-size: 1.1em;
+}
+
+.info-grid {
+  background: #f8f9fc;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row .label {
+  color: #666;
+  font-weight: 500;
+}
+
+.info-row .value {
+  color: #333;
+  font-weight: bold;
+}
+
+.verification-footer {
+  background: #e3f2fd;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  color: #1976d2;
+  margin-top: 20px;
+}
+
+.warning-message {
+  background: #fff3cd;
+  color: #856404;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.card-footer {
+  background: #f8f9fc;
+  padding: 15px;
+  text-align: center;
+  color: #888;
+  border-top: 1px solid #e0e0e0;
+}

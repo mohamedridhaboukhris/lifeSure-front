@@ -1,0 +1,288 @@
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 GESTION DES TAUX - NOIR + OR PREMIUM LUXE               */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ============= TITRE DE LA PAGE ============= */
+h1.h3.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* ============= ALERTES ============= */
+.alert {
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  border-left: 4px solid !important;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.08) !important;
+  color: #047857 !important;
+  border-left-color: #10b981 !important;
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08) !important;
+  color: #991b1b !important;
+  border-left-color: #ef4444 !important;
+}
+
+.alert-warning {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #b8860b !important;
+  border-left-color: #d4af37 !important;
+}
+
+.alert-warning i {
+  color: #d4af37 !important;
+}
+
+.alert-warning strong {
+  color: #1a1a1a !important;
+}
+
+/* ============= CARTES ============= */
+.card.shadow {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #ffffff !important;
+  overflow: hidden;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #fafaf7, #ffffff) !important;
+  border-bottom: 2px solid #d4af37 !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.card-header h6,
+.card-header .font-weight-bold,
+.text-primary {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 TAUX ACTIFS - Cartes par type                            */
+/* ═══════════════════════════════════════════════════════════ */
+
+.card-body .mb-3.p-3.border.rounded {
+  border: 1px solid #f0f0eb !important;
+  border-left: 4px solid #d4af37 !important;
+  border-radius: 12px !important;
+  background: #fafaf8 !important;
+  padding: 18px !important;
+  transition: all 0.2s;
+}
+
+.card-body .mb-3.p-3.border.rounded:hover {
+  transform: translateX(4px);
+  background: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15) !important;
+  border-left-color: #f4d03f !important;
+}
+
+/* Titre du type (AUTO, HABITATION, etc.) */
+.card-body h5.mb-1 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.05rem !important;
+  letter-spacing: 0.5px;
+}
+
+.card-body h5.mb-1 i {
+  color: #d4af37 !important;
+  margin-right: 10px;
+}
+
+.card-body small.text-muted {
+  color: #888 !important;
+  font-size: 0.78rem !important;
+}
+
+/* Valeur du taux affiché en gros */
+.h4.text-primary.font-weight-bold {
+  color: #b8860b !important;
+  font-size: 1.8rem !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 FORMULAIRE "Définir un taux"                             */
+/* ═══════════════════════════════════════════════════════════ */
+
+.form-label {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 8px !important;
+  letter-spacing: 0.3px;
+}
+
+.form-control,
+.form-select {
+  border: 1.5px solid #e5e5e0 !important;
+  border-radius: 8px !important;
+  padding: 11px 14px !important;
+  font-size: 0.9rem !important;
+  transition: all 0.2s !important;
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+  outline: none !important;
+  transform: translateY(-1px);
+}
+
+select.form-control {
+  cursor: pointer;
+}
+
+.text-muted {
+  color: #888 !important;
+  font-size: 0.78rem !important;
+}
+
+/* ============= BOUTON "Appliquer le taux" ============= */
+.btn-primary {
+  background: linear-gradient(135deg, #d4af37, #d4af37) !important;
+  color: #090909 !important;
+  border: 2px solid #d4af37 !important;
+  font-weight: 600 !important;
+  padding: 11px 24px !important;
+  border-radius: 8px !important;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+  transition: all 0.2s !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4) !important;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary i {
+  color: inherit !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 HISTORIQUE DES TAUX (Tableau)                            */
+/* ═══════════════════════════════════════════════════════════ */
+
+.fa-spinner {
+  color: #d4af37 !important;
+}
+
+.table {
+  margin-bottom: 0 !important;
+}
+
+.table-bordered {
+  border: none !important;
+}
+
+.table-bordered td,
+.table-bordered th {
+  border-color: #f5f5f0 !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.table thead th {
+  background: transparent !important;
+  color: #888 !important;
+  text-transform: uppercase;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px;
+  border-top: none !important;
+  border-bottom: 2px solid #f0f0eb !important;
+  padding: 14px 16px !important;
+}
+
+.table tbody td {
+  padding: 14px 16px !important;
+  vertical-align: middle !important;
+  font-size: 0.9rem !important;
+  color: #1a1a1a !important;
+}
+
+.table tbody td strong {
+  color: #b8860b !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem;
+}
+
+.table tbody tr {
+  transition: all 0.15s;
+}
+
+.table tbody tr:hover {
+  background: rgba(212, 175, 55, 0.04) !important;
+}
+
+/* ============= BADGES ============= */
+.badge {
+  padding: 5px 14px !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  letter-spacing: 0.5px;
+}
+
+/* Badge TYPE (AUTO, HABITATION, etc.) */
+.badge-info {
+  background: rgba(180, 180, 180, 0.2) !important;
+  color: #555 !important;
+  border: 1px solid #d0d0d0 !important;
+  font-weight: 500 !important;
+}
+
+/* Badge ACTIF = OR */
+.badge-success {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border: none !important;
+  font-weight: 600 !important;
+}
+
+/* Badge INACTIF = gris */
+.badge-secondary {
+  background: rgba(80, 80, 80, 0.1) !important;
+  color: #888 !important;
+  border: 1px solid #d0d0d0 !important;
+}
+
+.badge-light {
+  background: transparent !important;
+  color: #888 !important;
+  border: 1px solid #e5e5e0 !important;
+}
+
+/* ============= EMPTY STATE ============= */
+.text-center.text-muted {
+  color: #888 !important;
+  padding: 24px !important;
+}

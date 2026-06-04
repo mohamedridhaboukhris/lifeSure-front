@@ -1,0 +1,597 @@
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 SINISTRES EXPERT - NOIR + OR PREMIUM LUXE               */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ============= TITRE DE LA PAGE ============= */
+h1.h3.text-gray-800 {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* ============= LOADING SPINNER ============= */
+.fa-spinner.text-primary {
+  color: #d4af37 !important;
+}
+
+/* ============= ALERTES ============= */
+.alert {
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  border-left: 4px solid !important;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.08) !important;
+  color: #047857 !important;
+  border-left-color: #10b981 !important;
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08) !important;
+  color: #991b1b !important;
+  border-left-color: #ef4444 !important;
+}
+
+.alert-info {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.04)) !important;
+  color: #b8860b !important;
+  border-left-color: #d4af37 !important;
+}
+
+.alert-info i {
+  color: #d4af37 !important;
+}
+
+/* ============= CARTES ============= */
+.card.shadow {
+  border: 1px solid #f0f0eb !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #ffffff !important;
+  overflow: hidden;
+}
+
+.card-header {
+  background: #fafaf7 !important;
+  border-bottom: 1px solid #f0f0eb !important;
+  padding: 1.2rem 1.5rem !important;
+}
+
+.card-header h6,
+.card-header .font-weight-bold,
+.text-primary {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+.card-header h6 i {
+  color: #d4af37 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 BARRE DE RECHERCHE                                       */
+/* ═══════════════════════════════════════════════════════════ */
+
+.input-group .input-group-text.bg-primary {
+  background: #e5e7eb !important;
+  color: #6b7280 !important;
+  border: 1.5px solid #d1d5db !important;
+  border-right: none !important;
+  border-radius: 8px 0 0 8px !important;
+}
+
+.input-group .form-control {
+  border: 1.5px solid #e5e5e0 !important;
+  border-left: none !important;
+  border-radius: 0 8px 8px 0 !important;
+  padding: 11px 14px !important;
+}
+
+.input-group .form-control:focus {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+}
+
+/* ============= LABELS / INPUTS / SELECTS ============= */
+.form-label {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 6px !important;
+}
+
+.form-label.small {
+  font-size: 0.75rem !important;
+  color: #888 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.form-control,
+.form-select {
+  border: 1.5px solid #e5e5e0 !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 0.88rem !important;
+  transition: all 0.2s !important;
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+  outline: none !important;
+}
+
+.text-muted {
+  color: #888 !important;
+}
+
+/* ============= CONTENU CARTE SINISTRE ============= */
+.card-body p {
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.card-body p strong {
+  color: #555 !important;
+  font-weight: 500;
+}
+
+hr {
+  border-color: rgba(212, 175, 55, 0.2) !important;
+  margin: 1.25rem 0 !important;
+}
+
+/* ============= BADGES TYPE ============= */
+.badge {
+  padding: 5px 14px !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  letter-spacing: 0.5px;
+}
+
+.badge-info {
+  background: rgba(180, 180, 180, 0.2) !important;
+  color: #555 !important;
+  border: 1px solid #d0d0d0 !important;
+  font-weight: 500 !important;
+}
+
+/* ============= BADGES STATUTS ============= */
+.badge-warning {
+  background: rgba(212, 175, 55, 0.15) !important;
+  color: #b8860b !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #047857 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+.badge-danger {
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #b91c1c !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+.badge-secondary {
+  background: rgba(80, 80, 80, 0.1) !important;
+  color: #1a1a1a !important;
+  border: 1px solid #d0d0d0 !important;
+}
+
+.badge-light {
+  background: transparent !important;
+  color: #888 !important;
+  border: 1px solid #e5e5e0 !important;
+}
+
+/* ============= SCORE DE FRAUDE ============= */
+.text-danger {
+  color: #b91c1c !important;
+}
+
+.text-success {
+  color: #047857 !important;
+}
+
+.text-danger i.fa-exclamation-triangle {
+  color: #ef4444 !important;
+}
+
+/* ============= BOUTON VOIR LIEU ============= */
+.btn-outline-primary {
+  background: #ffffff !important;
+  color: #b8860b !important;
+  border: 1.5px solid #d4af37 !important;
+  border-radius: 6px !important;
+  padding: 5px 12px !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  transition: all 0.2s !important;
+}
+
+.btn-outline-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border-color: #d4af37 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3) !important;
+}
+
+.btn-outline-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: #f5f5f0 !important;
+  color: #888 !important;
+  border-color: #e5e5e0 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🤖 ZONE ANALYSE IA (premium)                                */
+/* ═══════════════════════════════════════════════════════════ */
+
+.ia-button {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border: 2px solid #d4af37 !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  font-size: 0.92rem !important;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25) !important;
+  transition: all 0.2s !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.ia-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.ia-button:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.ia-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45) !important;
+}
+
+.ia-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============= RÉSULTATS IA ============= */
+.ia-results-card {
+  background: linear-gradient(135deg, #fafaf8, #ffffff);
+  border: 2px solid #d4af37;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.15);
+  animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.ia-header {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #d4af37;
+}
+
+.ia-header h5 {
+  color: #d4af37;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.ia-header h5 i {
+  color: #d4af37;
+  margin-right: 8px;
+}
+
+.btn-close-ia {
+  background: rgba(212, 175, 55, 0.15);
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 300;
+  transition: all 0.2s;
+}
+
+.btn-close-ia:hover {
+  background: #d4af37;
+  color: #0a0a0a;
+}
+
+.ia-body {
+  padding: 20px;
+}
+
+.ia-stat {
+  background: #fafaf8;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border-left: 3px solid #d4af37;
+  transition: all 0.2s;
+}
+
+.ia-stat:hover {
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.15);
+}
+
+.ia-stat small {
+  display: block;
+  color: #888;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.ia-stat strong {
+  display: block;
+  color: #1a1a1a;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* Gravités */
+.gravite-faible {
+  color: #047857 !important;
+}
+
+.gravite-modere,
+.gravite-moyen {
+  color: #b8860b !important;
+}
+
+.gravite-grave,
+.gravite-eleve {
+  color: #ea580c !important;
+}
+
+.gravite-critique {
+  color: #b91c1c !important;
+}
+
+/* Barre de progression IA (Confiance) */
+.ia-stat .progress {
+  background: #f5f5f0 !important;
+  border-radius: 20px !important;
+  height: 24px !important;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.ia-stat .progress-bar {
+  font-weight: 600;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.6s ease;
+}
+
+.ia-stat .progress-bar.bg-info {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+}
+
+/* Détails techniques */
+.ia-details {
+  background: #fafaf8;
+  padding: 14px;
+  border-radius: 10px;
+  border-left: 3px solid #d4af37;
+}
+
+.ia-details small strong {
+  color: #b8860b;
+  font-size: 0.85rem;
+}
+
+.ia-details ul {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+}
+
+.ia-details ul li {
+  color: #555;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.ia-info small {
+  color: #888 !important;
+  font-style: italic;
+}
+
+.ia-info small i {
+  color: #d4af37 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ⚙️ ZONE ACTIONS EXPERT (Estimation & Décision)              */
+/* ═══════════════════════════════════════════════════════════ */
+
+.bg-light.p-3.rounded {
+  background: linear-gradient(135deg, #fafaf8, #ffffff) !important;
+  border: 1px solid #f0f0eb;
+  border-left: 4px solid #d4af37 !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+}
+
+.bg-light h6.text-primary {
+  color: #b8860b !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 16px !important;
+}
+
+.bg-light h6.text-primary i {
+  color: #d4af37 !important;
+}
+
+/* ============= BOUTON Calculer estimation ============= */
+.btn-info {
+  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
+  color: #0a0a0a !important;
+  border: 1.5px solid #d4af37 !important;
+  font-weight: 600 !important;
+  padding: 10px 18px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+}
+
+.btn-info:hover:not(:disabled) {
+  background: linear-gradient(135deg, #c9a227, #d4af37) !important;
+  color: #0a0a0a !important;
+  border-color: #d4af37 !important;
+}
+
+
+
+/* ============= BOUTONS ACCEPTER / REFUSER ============= */
+.btn-success {
+  background: #f3f4f6 !important;
+  border: 1px solid #d1d5db !important;
+  color: #10b981 !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+.btn-success:hover {
+  background: #e5e7eb !important;
+  color: #059669 !important;
+  transform: none !important;
+}
+.btn-danger {
+  background: #f3f4f6 !important;
+  border: 1px solid #d1d5db !important;
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+.btn-danger:hover {
+  background: #e5e7eb !important;
+  color: #b91c1c !important;
+  transform: none !important;
+}
+
+/* Bouton réinitialiser */
+.btn-outline-secondary {
+  background: transparent !important;
+  color: #555 !important;
+  border: 1.5px solid #e5e5e0 !important;
+  border-radius: 6px !important;
+}
+
+.btn-outline-secondary:hover {
+  background: #1a1a1a !important;
+  color: #d4af37 !important;
+  border-color: #1a1a1a !important;
+}
+
+/* ============= LINK BUTTON ============= */
+.btn-link {
+  color: #b8860b !important;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: #d4af37 !important;
+}
+
+/* ============= EMPTY STATE ============= */
+.text-center.py-5.text-muted {
+  color: #888 !important;
+}
+
+.text-center.py-5.text-muted i.fa-inbox {
+  color: #d4af37 !important;
+  opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 PAGINATION                                               */
+/* ═══════════════════════════════════════════════════════════ */
+
+.pagination {
+  margin: 0;
+}
+
+.page-item .page-link {
+  color: #555 !important;
+  border: 1px solid #e5e5e0 !important;
+  background: #ffffff !important;
+  padding: 6px 12px !important;
+  font-size: 0.85rem !important;
+  margin: 0 2px;
+  border-radius: 6px !important;
+  transition: all 0.2s;
+}
+
+.page-item .page-link:hover {
+  background: rgba(212, 175, 55, 0.08) !important;
+  color: #b8860b !important;
+  border-color: #d4af37 !important;
+}
+
+.page-item.active .page-link {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #d4af37 !important;
+  border-color: #1a1a1a !important;
+  font-weight: 600;
+}
+
+.page-item.disabled .page-link {
+  background: #f5f5f0 !important;
+  color: #ccc !important;
+  cursor: not-allowed;
+}

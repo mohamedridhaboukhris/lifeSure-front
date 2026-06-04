@@ -1,0 +1,69 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "loading": "Loading...",
+    "search": "Search",
+    "actions": "Actions",
+    "details": "Details",
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm",
+    "logout": "Logout",
+    "profile": "Profile",
+    "settings": "Settings",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "contracts": "Contracts",
+    "myContracts": "My contracts",
+    "newContract": "New contract",
+    "claims": "Claims",
+    "myClaims": "My claims",
+    "declareClaim": "Declare a claim",
+    "rates": "Insurance rates",
+    "complaints": "Complaints",
+    "myComplaints": "My complaints",
+    "payments": "Payments",
+    "myPayments": "My payments",
+    "users": "Users",
+    "expertises": "My expertises"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone",
+    "loginButton": "Sign in",
+    "registerButton": "Create account",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "createAccount": "Create account",
+    "loginHere": "Sign in"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "totalContracts": "Total contracts",
+    "activeContracts": "Active contracts",
+    "monthlyRevenue": "Monthly revenue",
+    "claims": "Claims",
+    "pendingClaims": "Pending",
+    "acceptedClaims": "Accepted",
+    "fraudDetected": "Fraud detected",
+    "totalIndemnifications": "Total indemnifications"
+  },
+  "topbar": {
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
+    "notifications": "Notifications",
+    "messages": "Messages"
+  }
+}
