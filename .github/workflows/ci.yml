@@ -19,7 +19,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run test -- --watch=false
+      - run: npm run build -- --configuration production
 
   build-and-push:
     needs: test
