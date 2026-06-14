@@ -38,5 +38,5 @@ jobs:
           context: .
           push: true
           tags: |
-            lifesureapp/lifesure-front:latest
-            lifesureapp/lifesure-front:${{ github.sha }}
+            hamma1925/lifesure-front:latest
+            hamma1925/lifesure-front:${{ github.sha }}
