@@ -1,6 +1,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Nouvelle Réclamation</h1>
-  <a routerLink="/admin/reclamations" class="btn btn-secondary">
+  <a [routerLink]="isClient ? '/client/reclamations' : '/admin/reclamations'"
+     class="btn btn-secondary">
     <i class="fas fa-arrow-left me-2"></i>Retour
   </a>
 </div>
@@ -42,7 +43,8 @@
       </div>
 
       <div class="text-end">
-        <a routerLink="/admin/reclamations" class="btn btn-secondary me-2">Annuler</a>
+        <a [routerLink]="isClient ? '/client/reclamations' : '/admin/reclamations'"
+           class="btn btn-secondary me-2">Annuler</a>
         <button type="submit" class="btn btn-primary" [disabled]="loading || !f.valid">
           <span *ngIf="!loading">
             <i class="fas fa-paper-plane me-2"></i>Soumettre

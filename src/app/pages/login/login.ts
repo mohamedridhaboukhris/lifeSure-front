@@ -41,7 +41,22 @@ export class LoginComponent {
         this.loading = false;
 
         // ✅ Redirection vers le dashboard admin
-        this.router.navigate(['/admin/dashboard']);
+        //this.router.navigate(['/admin/dashboard']);
+// ✅ Redirection selon le rôle
+const role = this.auth.getRole();
+
+if (role === 'CLIENT') {
+  this.router.navigate(['/client/contrats']);
+} else {
+  this.router.navigate(['/admin/dashboard']);
+}
+
+
+
+
+
+
+
       },
       error: (err) => {
         console.log("LOGIN ERROR:", err);

@@ -122,6 +122,11 @@ import { ReclamationsExpertComponent } from './admin/pages/reclamations/reclamat
 import { MesPaiementsComponent } from './admin/pages/paiements/mes-paiements/mes-paiements';
 import { PaiementStripeComponent } from './admin/pages/paiements/paiement-stripe/paiement-stripe';
 
+
+
+import { ClientLayoutComponent } from './admin/layout/client-layout/client-layout';
+
+
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -209,6 +214,76 @@ export const routes: Routes = [
       { path: 'paiements/payer/:id', component: PaiementStripeComponent },
     ]
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+    path: 'client',
+    component: ClientLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'contrats', pathMatch: 'full' },
+      { path: 'contrats',     component: ContratsListComponent },
+      { path: 'sinistres',    component: SinistresListComponent },
+      { path: 'sinistres/declarer', component: SinistreFormComponent },
+      { path: 'sinistres/:id', component: SinistreDetailComponent },
+      { path: 'paiements',    component: MesPaiementsComponent },
+      { path: 'paiements/payer/:id', component: PaiementStripeComponent },
+      { path: 'reclamations', component: ReclamationsListComponent },
+      { path: 'reclamations/nouvelle', component: ReclamationFormComponent },
+      { path: 'medecins',     loadComponent: () => import('./admin/pages/medecins/medecins').then(m => m.MedecinsComponent) },
+      { path: 'carte-sante/:id', loadComponent: () => import('./admin/pages/carte-sante/carte-sante').then(m => m.CarteSanteComponent) },
+
+      { path: 'contrats/nouveau', component: ContratFormComponent },
+      { path: 'contrats/edit/:id', component: ContratFormComponent },
+      
+    ]
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   { path: '**', redirectTo: 'home' }
 ];

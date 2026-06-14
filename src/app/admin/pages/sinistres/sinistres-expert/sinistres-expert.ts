@@ -1090,4 +1090,116 @@ export class SinistresExpertComponent implements OnInit {
       default:         return 'badge-light';
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ══════════════════════════════════════════════
+// AJOUTER CES 3 MÉTHODES dans sinistres-expert.ts
+// (garder tout le reste identique)
+// ══════════════════════════════════════════════
+
+// ── Compter par statut (pour les stats) ──
+getCountByStatut(statut: string): number {
+  return this.sinistres.filter(s => s.statut === statut).length;
+}
+
+// ── Icône selon type de sinistre ──
+getTypeIcon(type?: string): string {
+  if (!type) return '⚠️';
+  if (type.includes('AUTO') || type === 'ACCIDENT' || type.includes('DOMMAGES') || type === 'BRIS_DE_GLACE') return '🚗';
+  if (type.includes('HABITATION') || type.includes('DEGAT') || type.includes('CATASTROPHE')) return '🏠';
+  if (type === 'ANNULATION' || type.includes('VOYAGE') || type === 'PERTE_BAGAGES') return '✈️';
+  if (type.includes('HOSPITALISATION') || type.includes('CONSULTATION') || type.includes('MALADIE')) return '🏥';
+  if (type.includes('INCENDIE')) return '🔥';
+  return '⚠️';
+}
+
+// ── Classe CSS icône ──
+getSinIconClass(type?: string): string {
+  if (!type) return 'se-icon-autre';
+  if (type.includes('AUTO') || type === 'ACCIDENT' || type.includes('DOMMAGES')) return 'se-icon-auto';
+  if (type.includes('HABITATION') || type.includes('DEGAT')) return 'se-icon-hab';
+  if (type === 'ANNULATION' || type.includes('VOYAGE')) return 'se-icon-voyage';
+  if (type.includes('HOSPITALISATION') || type.includes('SANTE')) return 'se-icon-sante';
+  return 'se-icon-autre';
+}
+
+// ── Icône statut ──
+getStatutIcon(s?: string): string {
+  switch (s) {
+    case 'DECLARE':  return '📋';
+    case 'EN_COURS': return '⏳';
+    case 'ACCEPTE':  return '✅';
+    case 'REFUSE':   return '❌';
+    case 'CLOTURE':  return '🔒';
+    default: return '';
+  }
+}
+
+// ── Classe badge statut ──
+getStatutBadgeClass(s?: string): string {
+  switch (s) {
+    case 'DECLARE':  return 'se-badge-declare';
+    case 'EN_COURS': return 'se-badge-encours';
+    case 'ACCEPTE':  return 'se-badge-accepte';
+    case 'REFUSE':   return 'se-badge-refuse';
+    case 'CLOTURE':  return 'se-badge-cloture';
+    default: return '';
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -58,6 +58,6 @@ export class CarteSanteComponent implements OnInit {
   }
 
   retour(): void {
-    this.router.navigate(['/admin/contrats']);
+    this.router.navigate(['/client/contrats']);
   }
 }

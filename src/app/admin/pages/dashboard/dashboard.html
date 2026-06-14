@@ -1,286 +1,406 @@
 <!-- Loading -->
 <div *ngIf="loading" class="text-center py-5">
-  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+  <i class="fas fa-spinner fa-spin fa-2x" style="color:#d4af37;"></i>
 </div>
 
-<!-- ====================================== -->
-<!-- 🟡 DASHBOARD AGENT -->
-<!-- ====================================== -->
+<!-- ══ DASHBOARD AGENT ══ -->
 <div *ngIf="!loading && isAgentRole">
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">
-      <i class="fas fa-tachometer-alt me-2"></i>Tableau de bord Agent
-    </h1>
-  </div>
 
-  <!-- Cards stats -->
-  <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                Contrats actifs
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ stats.contratsActifs || 0 }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-file-contract fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-success shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                Revenus mensuels
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ stats.revenusMensuels | number:'1.2-2' }} DT
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-warning shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                Sinistres déclarés
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ stats.sinistresDeclares || 0 }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-info shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                Clients
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ stats.totalClients || 0 }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-users fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- HEADER -->
+  <div class="db-header">
+    <div class="db-header-icon">🛡️</div>
+    <div>
+      <div class="db-title">Tableau de bord <span>Agent</span></div>
+      <div class="db-subtitle">Bienvenue ! Voici un aperçu de votre activité</div>
     </div>
   </div>
 
-  <!-- Graphiques -->
-  <div class="row">
-    <div class="col-xl-6 col-lg-6">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">
-            Répartition des contrats par type
-          </h6>
-        </div>
-        <div class="card-body">
-          <div class="chart-area" style="height: 300px; position: relative;">
-            <canvas id="chartContratsType"></canvas>
-          </div>
-        </div>
+  <!-- STATS -->
+  <div class="db-stats">
+    <div class="db-stat">
+      <div class="db-stat-left">
+        <div class="db-stat-label">📄 Contrats actifs</div>
+        <div class="db-stat-val">{{ stats.contratsActifs || 0 }}</div>
+        <div class="db-stat-sub">Total contrats actifs</div>
       </div>
+      <div class="db-stat-icon si-or">📄</div>
     </div>
+    <div class="db-stat">
+      <div class="db-stat-left">
+        <div class="db-stat-label">💰 Revenus mensuels</div>
+        <div class="db-stat-val" style="font-size:1.1rem;">{{ stats.revenusMensuels | number:'1.2-2' }} DT</div>
+        <div class="db-stat-sub" style="color:#10b981;">↑ Ce mois</div>
+      </div>
+      <div class="db-stat-icon si-gr">💰</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-stat-left">
+        <div class="db-stat-label">⚠️ Sinistres déclarés</div>
+        <div class="db-stat-val">{{ stats.sinistresDeclares || 0 }}</div>
+        <div class="db-stat-sub">Total déclarés</div>
+      </div>
+      <div class="db-stat-icon si-re">⚠️</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-stat-left">
+        <div class="db-stat-label">👥 Clients</div>
+        <div class="db-stat-val">{{ stats.totalClients || 0 }}</div>
+        <div class="db-stat-sub">Total clients</div>
+      </div>
+      <div class="db-stat-icon si-bl">👥</div>
+    </div>
+  </div>
 
-    <div class="col-xl-6 col-lg-6">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">
-            Revenus par type de contrat (DT)
-          </h6>
-        </div>
-        <div class="card-body">
-          <div class="chart-area" style="height: 300px; position: relative;">
-            <canvas id="chartRevenusType"></canvas>
-          </div>
-        </div>
+
+ <!-- GRAPHIQUES -->
+<div class="db-charts">
+
+  <!-- DONUT + LÉGENDE CÔTE À CÔTE -->
+<div class="db-widget">
+  <div class="db-widget-title">🥧 Répartition des contrats</div>
+  <div class="db-chart-donut-wrap">
+    <div class="db-chart-donut-canvas">
+      <canvas id="chartContratsType"></canvas>
+    </div>
+    <div class="db-chart-donut-legend">
+      <div *ngFor="let item of getContratsParType()" class="db-donut-legend-item">
+        <span class="db-donut-dot" [style.background]="getLegendColor(item.type)"></span>
+        <span class="db-donut-icon">{{ item.icon }}</span>
+        <span class="db-donut-type">{{ item.type }}</span>
+        <span class="db-donut-count">{{ item.count }}</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ====================================== -->
-<!-- 🟢 DASHBOARD EXPERT -->
-<!-- ====================================== -->
+  <!-- BAR CHART REVENUS AVEC VALEURS AU-DESSUS -->
+  <div class="db-widget">
+    <div class="db-widget-title">📊 Revenus par type (DT)</div>
+    <div class="db-chart-bar-wrap">
+      <div class="db-bar-values">
+        <div *ngFor="let item of getContratsParType()" class="db-bar-col">
+          <span class="db-bar-val-top">{{ formatRevenu(item.revenu) }}</span>
+        </div>
+      </div>
+      <div style="height:160px;position:relative;">
+        <canvas id="chartRevenusType"></canvas>
+      </div>
+      <div class="db-bar-labels">
+        <div *ngFor="let item of getContratsParType()" class="db-bar-col">
+          <span class="db-bar-icon">{{ item.icon }}</span>
+          <span class="db-bar-lbl">{{ item.type.substring(0,3) }}</span>
+        </div>
+      </div>
+      <div class="db-bar-total">
+        Total : <strong>{{ stats.revenusMensuels | number:'1.0-0' }} DT</strong>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <!-- BOTTOM ROW -->
+  <div class="db-bottom">
+
+    <!-- ACTIVITÉ RÉCENTE -->
+    <div class="db-widget">
+      <div class="db-widget-title">🕐 Activité récente</div>
+      <div class="db-act-item">
+        <div class="db-act-dot" style="background:#10b981;"></div>
+        <div class="db-act-info">
+          <div class="db-act-title">Contrats actifs</div>
+          <div class="db-act-sub">📄 {{ stats.contratsActifs || 0 }} contrats en cours</div>
+        </div>
+      </div>
+      <div class="db-act-item">
+        <div class="db-act-dot" style="background:#d4af37;"></div>
+        <div class="db-act-info">
+          <div class="db-act-title">Revenus du mois</div>
+          <div class="db-act-sub">💰 {{ stats.revenusMensuels | number:'1.2-2' }} DT</div>
+        </div>
+      </div>
+      <div class="db-act-item">
+        <div class="db-act-dot" style="background:#ef4444;"></div>
+        <div class="db-act-info">
+          <div class="db-act-title">Sinistres à traiter</div>
+          <div class="db-act-sub">⚠️ {{ stats.sinistresDeclares || 0 }} déclarés</div>
+        </div>
+      </div>
+      <div class="db-act-item">
+        <div class="db-act-dot" style="background:#3b82f6;"></div>
+        <div class="db-act-info">
+          <div class="db-act-title">Base clients</div>
+          <div class="db-act-sub">👥 {{ stats.totalClients || 0 }} clients actifs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIONS RAPIDES -->
+    <div class="db-widget">
+      <div class="db-widget-title">⚡ Actions rapides</div>
+      <a routerLink="/admin/contrats/nouveau" class="db-qa">
+        <div class="db-qa-icon si-or">📄</div>
+        <span class="db-qa-text">Nouveau contrat</span>
+        <span class="db-qa-arrow">›</span>
+      </a>
+      <a routerLink="/admin/sinistres/agent" class="db-qa">
+        <div class="db-qa-icon si-re">⚠️</div>
+        <span class="db-qa-text">Sinistres en attente</span>
+        <span class="db-qa-arrow">›</span>
+      </a>
+      <a routerLink="/admin/paiements" class="db-qa">
+        <div class="db-qa-icon si-gr">💰</div>
+        <span class="db-qa-text">Vérifier paiements</span>
+        <span class="db-qa-arrow">›</span>
+      </a>
+      <a routerLink="/admin/calendrier" class="db-qa">
+        <div class="db-qa-icon si-or">📅</div>
+        <span class="db-qa-text">Calendrier échéances</span>
+        <span class="db-qa-arrow">›</span>
+      </a>
+      <a routerLink="/admin/carte-sinistres" class="db-qa">
+        <div class="db-qa-icon si-bl">🗺️</div>
+        <span class="db-qa-text">Carte des sinistres</span>
+        <span class="db-qa-arrow">›</span>
+      </a>
+    </div>
+
+    <!-- TOP CLIENTS -->
+    <div class="db-widget">
+      <div class="db-widget-title">👑 Top clients</div>
+
+      <div *ngIf="!stats.topClients || stats.topClients.length === 0" class="db-tc-empty">
+        Aucun client trouvé.
+      </div>
+
+      <div *ngFor="let client of stats.topClients" class="db-tc">
+        <div class="db-tc-av">
+          {{ (client.prenom || 'X').charAt(0).toUpperCase() }}
+        </div>
+        <div class="db-tc-info">
+          <div class="db-tc-name">{{ client.prenom }} {{ client.nom }}</div>
+          <div class="db-tc-nb">{{ client.nbContrats }} contrat(s)</div>
+        </div>
+        <div class="db-tc-amt">{{ client.totalPrimes | number:'1.0-0' }} DT</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ DASHBOARD EXPERT ══ -->
 <div *ngIf="!loading && isExpertRole">
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">
-      <i class="fas fa-tachometer-alt me-2"></i>Tableau de bord Expert
-    </h1>
-  </div>
 
-  <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-warning shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                À traiter
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ stats.sinistresEnAttente || 0 }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-clock fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-success shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                Sinistres acceptés
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ stats.sinistresAcceptes || 0 }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-danger shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                Fraudes détectées
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ stats.fraudesDetectees || 0 }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-shield-alt fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-info shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                Total indemnisations
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ stats.totalIndemnisations | number:'1.2-2' }} DT
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- HEADER -->
+  <div class="db-header">
+    <div class="db-header-icon" style="background:linear-gradient(135deg,#d4af37,#f4d03f);">🔬</div>
+    <div>
+      <div class="db-title">Tableau de bord <span>Expert</span></div>
+      <div class="db-subtitle">Suivi de vos expertises et indemnisations</div>
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-<!-- ====================================== -->
-<!-- 📊 GRAPHIQUES EXPERT -->
-<!-- ====================================== -->
-<div *ngIf="!loading && isExpertRole" class="row">
-
-  <!-- Sinistres -->
-  <div class="col-xl-6 col-lg-6">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">
-          Répartition des sinistres
-        </h6>
+  <!-- STATS EXPERT -->
+  <div class="db-stats">
+    <div class="db-stat">
+      <div class="db-stat-left">
+        <div class="db-stat-label">⏳ À traiter</div>
+        <div class="db-stat-val" style="color:#f59e0b;">{{ stats.sinistresEnAttente || 0 }}</div>
+        <div class="db-stat-sub" style="color:#f59e0b;">⚡ En attente</div>
       </div>
-      <div class="card-body">
-        <div style="height: 300px;">
+      <div class="db-stat-icon" style="background:rgba(245,158,11,0.1);">⏳</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-stat-left">
+        <div class="db-stat-label">✅ Sinistres acceptés</div>
+        <div class="db-stat-val" style="color:#10b981;">{{ stats.sinistresAcceptes || 0 }}</div>
+        <div class="db-stat-sub" style="color:#10b981;">Traités avec succès</div>
+      </div>
+      <div class="db-stat-icon si-gr">✅</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-stat-left">
+        <div class="db-stat-label">🛡️ Fraudes détectées</div>
+        <div class="db-stat-val">{{ stats.fraudesDetectees || 0 }}</div>
+        <div class="db-stat-sub" style="color:#10b981;">✅ Analyse IA</div>
+      </div>
+      <div class="db-stat-icon si-or">🛡️</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-stat-left">
+        <div class="db-stat-label">💰 Total indemnisations</div>
+        <div class="db-stat-val" style="font-size:1rem;color:#d4af37;">
+          {{ stats.totalIndemnisations | number:'1.2-2' }} DT
+        </div>
+        <div class="db-stat-sub">Versés aux clients</div>
+      </div>
+      <div class="db-stat-icon si-or">💰</div>
+    </div>
+  </div>
+
+  <!-- GRAPHIQUES EXPERT -->
+  <div class="db-charts">
+
+    <!-- DONUT SINISTRES + LÉGENDE -->
+    <div class="db-widget">
+      <div class="db-widget-title">🥧 Répartition des sinistres</div>
+      <div class="db-chart-donut-wrap">
+        <div class="db-chart-donut-canvas">
           <canvas id="chartSinistres"></canvas>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Indemnisations -->
-  <div class="col-xl-6 col-lg-6">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">
-          Indemnisations (DT)
-        </h6>
-      </div>
-      <div class="card-body">
-        <div style="height: 300px;">
-          <canvas id="chartIndemnisation"></canvas>
+        <div class="db-chart-donut-legend">
+          <div class="db-donut-legend-item">
+            <span class="db-donut-dot" style="background:#10b981;"></span>
+            <span class="db-donut-icon">✅</span>
+            <span class="db-donut-type">Acceptés</span>
+            <span class="db-donut-count">{{ stats.sinistresAcceptes || 0 }}</span>
+          </div>
+          <div class="db-donut-legend-item">
+            <span class="db-donut-dot" style="background:#d4af37;"></span>
+            <span class="db-donut-icon">⏳</span>
+            <span class="db-donut-type">En attente</span>
+            <span class="db-donut-count">{{ stats.sinistresEnAttente || 0 }}</span>
+          </div>
+          <div class="db-donut-legend-item">
+            <span class="db-donut-dot" style="background:#1a1a1a;"></span>
+            <span class="db-donut-icon">⚠️</span>
+            <span class="db-donut-type">Fraudes</span>
+            <span class="db-donut-count">{{ stats.fraudesDetectees || 0 }}</span>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- BAR INDEMNISATIONS -->
+    <div class="db-widget">
+      <div class="db-widget-title">📊 Indemnisations (DT)</div>
+      <div class="db-chart-bar-wrap">
+        <div class="db-bar-values">
+          <div class="db-bar-col">
+            <span class="db-bar-val-top">{{ formatRevenu(stats.totalIndemnisations || 0) }}</span>
+          </div>
+          <div class="db-bar-col">
+            <span class="db-bar-val-top">{{ stats.sinistresAcceptes || 0 }}</span>
+          </div>
+          <div class="db-bar-col">
+            <span class="db-bar-val-top">{{ stats.sinistresEnAttente || 0 }}</span>
+          </div>
+        </div>
+        <div style="height:160px;position:relative;">
+          <canvas id="chartIndemnisation"></canvas>
+        </div>
+        <div class="db-bar-labels">
+          <div class="db-bar-col">
+            <span class="db-bar-icon">💰</span>
+            <span class="db-bar-lbl">Indemn.</span>
+          </div>
+          <div class="db-bar-col">
+            <span class="db-bar-icon">✅</span>
+            <span class="db-bar-lbl">Acceptés</span>
+          </div>
+          <div class="db-bar-col">
+            <span class="db-bar-icon">⏳</span>
+            <span class="db-bar-lbl">En cours</span>
+          </div>
+        </div>
+        <div class="db-bar-total">
+          Taux d'acceptation : <strong>{{ getTauxAcceptation() }}%</strong>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-</div>
+  <!-- BOTTOM EXPERT -->
+  <div class="db-bottom">
 
+    <!-- PERFORMANCE -->
+    <div class="db-widget">
+      <div class="db-widget-title">📈 Ma performance</div>
+      <div class="db-prog-wrap">
+        <div class="db-prog-label">
+          <span>✅ Taux d'acceptation</span>
+          <span>{{ getTauxAcceptation() }}%</span>
+        </div>
+        <div class="db-prog-bg">
+          <div class="db-prog-fill" [style.width]="getTauxAcceptation() + '%'"></div>
+        </div>
+      </div>
+      <div class="db-prog-wrap">
+        <div class="db-prog-label">
+          <span>⚡ Délai moyen</span>
+          <span style="color:#d4af37;">2.3 jours</span>
+        </div>
+        <div class="db-prog-bg">
+          <div class="db-prog-fill" style="width:75%;"></div>
+        </div>
+      </div>
+      <div class="db-prog-wrap">
+        <div class="db-prog-label">
+          <span>🛡️ Détection fraudes</span>
+          <span>100%</span>
+        </div>
+        <div class="db-prog-bg">
+          <div class="db-prog-fill" style="width:100%;"></div>
+        </div>
+      </div>
+      <div class="db-prog-wrap">
+        <div class="db-prog-label">
+          <span>📋 Dossiers traités</span>
+          <span>{{ stats.sinistresAcceptes || 0 }} / {{ getTotalSinistres() }}</span>
+        </div>
+        <div class="db-prog-bg">
+          <div class="db-prog-fill" [style.width]="getTauxAcceptation() + '%'"></div>
+        </div>
+      </div>
+    </div>
 
+    <!-- ANALYSE FRAUDES IA -->
+    <div class="db-widget">
+      <div class="db-widget-title">🤖 Analyse fraudes IA</div>
 
+      <div *ngIf="!stats.sinistresSupects || stats.sinistresSupects.length === 0"
+           class="db-tc-empty">
+        Aucun sinistre suspect détecté.
+      </div>
 
+      <div *ngFor="let s of stats.sinistresSupects" class="db-fraud-item">
+        <div class="db-fraud-dot"
+             [style.background]="getFraudColor(s.scoreFraude)"></div>
+        <div class="db-fraud-info">
+          <div class="db-fraud-num">{{ s.numeroSinistre }}</div>
+          <div class="db-fraud-score">Score : {{ (s.scoreFraude * 100) | number:'1.0-0' }}%</div>
+        </div>
+        <span class="db-fraud-badge" [ngClass]="getFraudBadgeClass(s.scoreFraude)">
+          {{ getFraudLabel(s.scoreFraude) }}
+        </span>
+      </div>
+    </div>
 
+    <!-- ACTIONS RAPIDES EXPERT -->
+    <div class="db-widget">
+      <div class="db-widget-title">⚡ Actions rapides</div>
+      <a routerLink="/admin/sinistres/expert" class="db-qa">
+        <div class="db-qa-icon si-or">🔬</div>
+        <span class="db-qa-text">Mes expertises en cours</span>
+        <span class="db-qa-arrow">›</span>
+      </a>
+      <a routerLink="/admin/sinistres/expert" class="db-qa">
+        <div class="db-qa-icon si-re">⚠️</div>
+        <span class="db-qa-text">Sinistres suspects (IA)</span>
+        <span class="db-qa-arrow">›</span>
+      </a>
+      <a routerLink="/admin/reclamations/expert" class="db-qa">
+        <div class="db-qa-icon si-re">💬</div>
+        <span class="db-qa-text">Réclamations à traiter</span>
+        <span class="db-qa-arrow">›</span>
+      </a>
+      <a routerLink="/admin/carte-sinistres" class="db-qa">
+        <div class="db-qa-icon si-bl">🗺️</div>
+        <span class="db-qa-text">Carte des sinistres</span>
+        <span class="db-qa-arrow">›</span>
+      </a>
+    </div>
 
-
-
-
-
-
-
-
-
-
+  </div>
 </div>

@@ -1,8 +1,11 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Déclarer un sinistre</h1>
-  <a routerLink="/admin/sinistres" class="btn btn-secondary">
-    <i class="fas fa-arrow-left me-2"></i>Retour
-  </a>
+  <!-- Bouton Retour en haut -->
+<a [routerLink]="isClient ? '/client/sinistres' : '/admin/sinistres'"
+   class="btn btn-secondary">
+  <i class="fas fa-arrow-left me-2"></i>Retour
+</a>
+
 </div>
 
 <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
@@ -40,33 +43,33 @@
           </select>
         </div>
 
-<div class="col-md-6 mb-3">
-  <label class="form-label">Date du sinistre *</label>
-  <input type="date" class="form-control" name="dateSinistre"
-         [class.is-invalid]="dto.dateSinistre && !isDateSinistreValide()"
-         [(ngModel)]="dto.dateSinistre"
-         [min]="dateMinSinistre"
-         [max]="dateMaxSinistre"
-         [disabled]="!contratSelectionne"
-         required>
-  
-  <!-- 🆕 Info période du contrat -->
-  <small *ngIf="contratSelectionne" class="text-muted">
-    <i class="fas fa-info-circle me-1"></i>
-    Période du contrat : du {{ contratSelectionne.dateDebut }} au {{ contratSelectionne.dateFin }}
-  </small>
-  
-  <small *ngIf="!contratSelectionne" class="text-warning">
-    <i class="fas fa-exclamation-circle me-1"></i>
-    Sélectionnez d'abord un contrat
-  </small>
-  
-  <!-- 🆕 Message d'erreur -->
-  <div *ngIf="dto.dateSinistre && !isDateSinistreValide()" class="invalid-feedback d-block">
-    <i class="fas fa-exclamation-circle me-1"></i>
-    La date doit être <strong>dans la période du contrat</strong>
-  </div>
-</div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Date du sinistre *</label>
+          <input type="date" class="form-control" name="dateSinistre"
+                 [class.is-invalid]="dto.dateSinistre && !isDateSinistreValide()"
+                 [(ngModel)]="dto.dateSinistre"
+                 [min]="dateMinSinistre"
+                 [max]="dateMaxSinistre"
+                 [disabled]="!contratSelectionne"
+                 required>
+
+          <!-- Info période du contrat -->
+          <small *ngIf="contratSelectionne" class="text-muted">
+            <i class="fas fa-info-circle me-1"></i>
+            Période du contrat : du {{ contratSelectionne.dateDebut }} au {{ contratSelectionne.dateFin }}
+          </small>
+
+          <small *ngIf="!contratSelectionne" class="text-warning">
+            <i class="fas fa-exclamation-circle me-1"></i>
+            Sélectionnez d'abord un contrat
+          </small>
+
+          <!-- Message d'erreur -->
+          <div *ngIf="dto.dateSinistre && !isDateSinistreValide()" class="invalid-feedback d-block">
+            <i class="fas fa-exclamation-circle me-1"></i>
+            La date doit être <strong>dans la période du contrat</strong>
+          </div>
+        </div>
 
         <div class="col-md-6 mb-3">
           <label class="form-label">Montant estimé (DT) *</label>
@@ -81,7 +84,7 @@
                     placeholder="Décrivez les circonstances..."></textarea>
         </div>
 
-        <!-- 📍 LIEU DU SINISTRE (NOUVEAU) -->
+        <!-- 📍 LIEU DU SINISTRE -->
         <div class="col-12 mb-4">
           <div class="card border-primary">
             <div class="card-header bg-primary text-white py-2">
@@ -174,22 +177,47 @@
           </div>
         </div>
 
-        <div class="col-12 mb-3">
-          <label class="form-label">
-            <i class="fas fa-paperclip me-2"></i>Documents / Photos (optionnel)
-          </label>
-          <input type="file" class="form-control" multiple
-                 (change)="onFichiersChange($event)"
-                 accept="image/*,.pdf">
-          <small class="text-muted">
-            {{ fichiers.length }} fichier(s) sélectionné(s)
-          </small>
+        <!-- 🆕 📷 UPLOAD DE FICHIERS - UNIQUEMENT POUR AUTO -->
+        <div class="col-12 mb-3" *ngIf="isContratAuto">
+          <div class="card border-primary">
+            <div class="card-header bg-primary text-white py-2">
+              <h6 class="m-0">
+                <i class="fas fa-camera me-2"></i>📸 Photos du véhicule / Documents
+              </h6>
+            </div>
+            <div class="card-body">
+              <label class="form-label">
+                <i class="fas fa-paperclip me-2"></i>Joindre des photos ou documents (optionnel)
+              </label>
+              <input type="file" class="form-control" multiple
+                     (change)="onFichiersChange($event)"
+                     accept="image/*,.pdf">
+              <small class="text-muted">
+                <i class="fas fa-info-circle me-1"></i>
+                {{ fichiers.length }} fichier(s) sélectionné(s) — 
+                <strong>Conseil :</strong> ajoutez des photos des dégâts pour bénéficier de l'analyse IA 🤖
+              </small>
+            </div>
+          </div>
         </div>
+
+        <!-- 🆕 💡 Message pour les sinistres NON-AUTO -->
+        <div class="col-12 mb-3" *ngIf="contratSelectionne && !isContratAuto">
+          <div class="alert alert-info mb-0">
+            <i class="fas fa-info-circle me-2"></i>
+            Pour ce type de sinistre 
+            <strong>{{ contratSelectionne.typeContrat }}</strong>,
+            les justificatifs (factures, certificats médicaux, etc.) seront demandés par l'expert lors du traitement de votre dossier.
+          </div>
+        </div>
+
       </div>
 
       <div class="text-end">
-        <a routerLink="/admin/sinistres" class="btn btn-secondary me-2">Annuler</a>
-        <button type="submit" class="btn btn-primary" [disabled]="loading || !f.valid">
+<!-- Bouton Annuler en bas -->
+<a [routerLink]="isClient ? '/client/sinistres' : '/admin/sinistres'"
+   class="btn btn-secondary me-2">Annuler</a>
+           <button type="submit" class="btn btn-primary" [disabled]="loading || !f.valid">
           <span *ngIf="!loading"><i class="fas fa-save me-2"></i>Déclarer</span>
           <span *ngIf="loading"><i class="fas fa-spinner fa-spin me-2"></i>Envoi...</span>
         </button>

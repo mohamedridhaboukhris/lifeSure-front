@@ -177,4 +177,63 @@ export class ReclamationsExpertComponent implements OnInit {
       default:         return 'badge-light';
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+getStatutIcon(s?: string): string {
+  switch (s) {
+    case 'SOUMISE':  return '📋';
+    case 'EN_COURS': return '⏳';
+    case 'ACCEPTEE': return '✅';
+    case 'REFUSEE':  return '❌';
+    default: return '';
+  }
+}
+
+getStatutBadgeClass(s?: string): string {
+  switch (s) {
+    case 'SOUMISE':  return 'badge-warning';
+    case 'EN_COURS': return 'badge-info';
+    case 'ACCEPTEE': return 'badge-success';
+    case 'REFUSEE':  return 'badge-danger';
+    default: return 'badge-light';
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -1,251 +1,427 @@
-/*.chart-area {
-  position: relative;
-  height: 20rem;
-  width: 100%;
+/* ══════════════════════════════════════════════
+   DASHBOARD — Agent & Expert — LifeSure
+   ══════════════════════════════════════════════ */
+
+/* HEADER */
+.db-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
 }
-
-.chart-pie {
-  position: relative;
-  height: 15rem;
-  width: 100%;
+.db-header-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+  flex-shrink: 0;
 }
-
-
-.border-left-primary  { border-left: 4px solid #4e73df !important; }
-.border-left-success  { border-left: 4px solid #1cc88a !important; }
-.border-left-warning  { border-left: 4px solid #f6c23e !important; }
-.border-left-info     { border-left: 4px solid #36b9cc !important; }
-.border-left-danger   { border-left: 4px solid #e74a3b !important; }
-
-.chart-area {
-  position: relative;
-  height: 300px;
-  width: 100%;
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ═══════════════════════════════════════════════════════════ */
-/* 🎨 DASHBOARD - NOIR + OR PREMIUM LUXE                      */
-/* ═══════════════════════════════════════════════════════════ */
-
-/* ============= TITRE DE LA PAGE ============= */
-h1.h3.text-gray-800 {
-  color: #1a1a1a !important;
-  font-weight: 600 !important;
-  font-size: 1.75rem !important;
+.db-title { font-size: 1.3rem; font-weight: 700; color: #1a1a1a; }
+.db-title span { color: #d4af37; }
+.db-subtitle { font-size: 0.75rem; color: #aaa; margin-top: 2px; }
+
+/* ══ STATS ══ */
+.db-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
 }
-
-h1.h3.text-gray-800 i {
-  color: #d4af37 !important;
-  margin-right: 12px;
+.db-stat {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: all 0.15s;
 }
-
-/* ============= LOADING SPINNER ============= */
-.fa-spinner.text-primary {
-  color: #d4af37 !important;
+.db-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(212,175,55,0.12);
 }
-
-/* ═══════════════════════════════════════════════════════════ */
-/* 🎨 CARDS STATS (4 cartes du haut)                           */
-/* ═══════════════════════════════════════════════════════════ */
-
-.card.shadow.h-100 {
-  border: 1px solid #f0f0eb !important;
-  border-radius: 14px !important;
-  background: #ffffff !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
-  transition: all 0.2s;
-  overflow: hidden;
-}
-
-.card.shadow.h-100:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* ============= BORDURES GAUCHES COLORÉES ============= */
-
-/* Primary = OR */
-.border-left-primary {
-  border-left: 4px solid #d4af37 !important;
-}
-
-.border-left-primary .text-primary {
-  color: #b8860b !important;
-}
-
-/* Success = OR foncé */
-.border-left-success {
-  border-left: 4px solid #b8860b !important;
-}
-
-.border-left-success .text-success {
-  color: #b8860b !important;
-}
-
-/* Warning = OR clair */
-.border-left-warning {
-  border-left: 4px solid #f4d03f !important;
-}
-
-.border-left-warning .text-warning {
-  color: #b8860b !important;
-}
-
-/* Info = Beige doré */
-.border-left-info {
-  border-left: 4px solid #c4a26a !important;
-}
-
-.border-left-info .text-info {
-  color: #8b7355 !important;
-}
-
-/* Danger = Noir (au lieu de rouge) */
-.border-left-danger {
-  border-left: 4px solid #1a1a1a !important;
-}
-
-.border-left-danger .text-danger {
-  color: #1a1a1a !important;
-}
-
-/* ============= LABELS DES STATS ============= */
-.text-xs.font-weight-bold.text-uppercase {
-  font-size: 0.7rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 1.2px !important;
-}
-
-/* ============= CHIFFRES GRANDS ============= */
-.h5.font-weight-bold.text-gray-800 {
-  color: #1a1a1a !important;
-  font-weight: 700 !important;
-  font-size: 1.5rem !important;
-}
-
-/* ============= ICÔNES DÉCORATIVES ============= */
-.text-gray-300 {
-  color: rgba(212, 175, 55, 0.25) !important;
-}
-
-/* ═══════════════════════════════════════════════════════════ */
-/* 🎨 CARTES GRAPHIQUES                                        */
-/* ═══════════════════════════════════════════════════════════ */
-
-.card.shadow.mb-4 {
-  border: 1px solid #f0f0eb !important;
-  border-radius: 14px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
-  background: #ffffff !important;
-  overflow: hidden;
-}
-
-.card-header {
-  background: #fafaf7 !important;
-  border-bottom: 1px solid #f0f0eb !important;
-  padding: 1.2rem 1.5rem !important;
-}
-
-.card-header h6 {
-  color: #b8860b !important;
+.db-stat-left { flex: 1; }
+.db-stat-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #aaa;
   text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.db-stat-val {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+}
+.db-stat-sub { font-size: 0.65rem; color: #aaa; margin-top: 4px; }
+.db-stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.si-or { background: rgba(212,175,55,0.1); }
+.si-gr { background: rgba(16,185,129,0.1); }
+.si-re { background: rgba(239,68,68,0.1);  }
+.si-bl { background: rgba(59,130,246,0.1); }
+
+/* ══ CHARTS ══ */
+.db-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.db-widget {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.db-widget-title {
+  font-size: 0.65rem;
+  font-weight: 700;
   letter-spacing: 1.5px;
-  font-size: 0.85rem !important;
-  font-weight: 600 !important;
+  color: #d4af37;
+  text-transform: uppercase;
+  margin-bottom: 16px;
 }
 
-.text-primary {
-  color: #b8860b !important;
+/* DONUT + LÉGENDE CÔTE À CÔTE */
+/*.db-chart-donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
-
-/* ============= ZONE DES GRAPHIQUES ============= */
-.chart-area {
+.db-chart-donut-canvas {
+  width: 130px;
+  height: 130px;
+  flex-shrink: 0;
   position: relative;
-  height: 300px;
-  width: 100%;
 }
+.db-chart-donut-canvas canvas {
+  width: 130px !important;
+  height: 130px !important;
+}
+.db-chart-donut-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.db-donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+}
+.db-donut-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.db-donut-icon { font-size: 0.85rem; }
+.db-donut-type { flex: 1; color: #555; font-weight: 500; }
+.db-donut-count { font-weight: 700; color: #1a1a1a; font-size: 0.9rem; }*/
 
-.chart-pie {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* DONUT + LÉGENDE CÔTE À CÔTE */
+.db-chart-donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 160px;
+}
+.db-chart-donut-canvas {
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
   position: relative;
-  height: 15rem;
-  width: 100%;
 }
 
-/* ============= CANVAS ============= */
-canvas {
-  max-width: 100%;
+/* IMPORTANT — forcer la taille du canvas */
+:host ::ng-deep #chartContratsType {
+  width: 150px !important;
+  height: 150px !important;
 }
+
+.db-chart-donut-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.db-donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+}
+.db-donut-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.db-donut-icon { font-size: 0.9rem; }
+.db-donut-type { flex: 1; color: #555; font-weight: 500; }
+.db-donut-count { font-weight: 700; color: #1a1a1a; font-size: 0.95rem; }
+
+
+
+
+
+
+
+
+
+
+
+/* BAR CHART CUSTOM */
+.db-chart-bar-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.db-bar-values {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.db-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.db-bar-val-top {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #d4af37;
+}
+.db-bar-labels {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+.db-bar-icon { font-size: 0.8rem; }
+.db-bar-lbl  { font-size: 0.6rem; color: #aaa; }
+.db-bar-total {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #f5f2e8;
+}
+.db-bar-total strong { color: #d4af37; }
+
+/* ══ BOTTOM ROW ══ */
+.db-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+/* ACTIVITÉ RÉCENTE */
+.db-act-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #f5f2e8;
+}
+.db-act-item:last-child { border-bottom: none; }
+.db-act-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.db-act-info { flex: 1; }
+.db-act-title { font-size: 0.78rem; font-weight: 600; color: #1a1a1a; }
+.db-act-sub   { font-size: 0.65rem; color: #aaa; margin-top: 1px; }
+
+/* ACTIONS RAPIDES */
+.db-qa {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 9px;
+  border-radius: 9px;
+  cursor: pointer;
+  margin-bottom: 3px;
+  transition: all 0.12s;
+  text-decoration: none;
+}
+.db-qa:hover { background: rgba(212,175,55,0.07); }
+.db-qa-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.db-qa-text  { font-size: 0.76rem; font-weight: 500; color: #555; flex: 1; }
+.db-qa-arrow { color: #d4af37; font-size: 0.8rem; }
+
+/* TOP CLIENTS + RÉSUMÉ */
+.db-tc {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #f5f2e8;
+}
+.db-tc:last-child { border-bottom: none; }
+.db-tc-av {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(212,175,55,0.25);
+}
+.db-tc-info { flex: 1; min-width: 0; }
+.db-tc-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.db-tc-nb  { font-size: 0.65rem; color: #aaa; margin-top: 1px; }
+.db-tc-amt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #d4af37;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.db-tc-empty {
+  text-align: center;
+  color: #aaa;
+  font-size: 0.78rem;
+  padding: 20px 0;
+}
+
+/* PROGRESSION EXPERT */
+.db-prog-wrap { margin-bottom: 12px; }
+.db-prog-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+.db-prog-label span:last-child { color: #d4af37; font-weight: 600; }
+.db-prog-bg {
+  height: 7px;
+  background: rgba(212,175,55,0.12);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.db-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #f4d03f);
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 1200px) {
+  .db-stats  { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .db-charts { grid-template-columns: 1fr; }
+  .db-bottom { grid-template-columns: 1fr; }
+  .db-stats  { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .db-stats { grid-template-columns: 1fr 1fr; }
+  .db-chart-donut-wrap { flex-direction: column; align-items: flex-start; }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* FRAUDES IA */
+.db-fraud-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #f5f2e8;
+}
+.db-fraud-item:last-child { border-bottom: none; }
+.db-fraud-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.db-fraud-info { flex: 1; }
+.db-fraud-num  { font-size: 0.75rem; font-weight: 600; color: #1a1a1a; }
+.db-fraud-score{ font-size: 0.65rem; color: #aaa; margin-top: 1px; }
+.db-fraud-badge {
+  font-size: 0.65rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.db-fraud-badge-haut   { background: rgba(239,68,68,0.1);   color: #991b1b; }
+.db-fraud-badge-moyen  { background: rgba(245,158,11,0.1);  color: #92400e; }
+.db-fraud-badge-faible { background: rgba(16,185,129,0.1);  color: #065f46; }

@@ -1,247 +1,259 @@
-<!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Détails du sinistre</h1>
-  <a routerLink="/admin/sinistres" class="btn btn-secondary shadow-sm">
-    <i class="fas fa-arrow-left fa-sm me-2"></i> Retour
+<!-- ══════════════════════════════════════════════
+     SINISTRE DETAIL — Interface Client LifeSure
+     ══════════════════════════════════════════════ -->
 
-
-
-
-    <button class="btn btn-info me-2"
-        *ngIf="sinistre"
-        (click)="telechargerRapport(sinistre.id!)">
-  <i class="fas fa-file-pdf me-2"></i>Télécharger PDF
-</button>
-  </a>
+<!-- HEADER -->
+<div class="sd-header">
+  <h1 class="sd-title">🔍 Détails du sinistre</h1>
+  <div class="sd-header-btns">
+    <button class="sd-btn-pdf"
+            *ngIf="sinistre"
+            (click)="telechargerRapport(sinistre.id!)">
+      📄 Télécharger PDF
+    </button>
+    <a [routerLink]="isClient ? '/client/sinistres' : '/admin/sinistres'"
+       class="sd-btn-retour">
+      ← Retour
+    </a>
+  </div>
 </div>
 
-<!-- Loading -->
+<!-- LOADING -->
 <div *ngIf="loading" class="text-center py-5">
-  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+  <i class="fas fa-spinner fa-spin fa-2x" style="color:#d4af37;"></i>
 </div>
 
-<!-- Error -->
+<!-- ERREUR -->
 <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
-<!-- Details -->
-<div *ngIf="!loading && sinistre" class="row">
+<!-- LAYOUT -->
+<div *ngIf="!loading && sinistre" class="sd-layout">
 
-  <!-- COLONNE PRINCIPALE -->
-  <div class="col-lg-8">
+  <!-- ══ COLONNE GAUCHE ══ -->
+  <div>
 
-    <!-- Infos générales -->
-    <div class="card shadow mb-4">
-      <div class="card-header py-3 d-flex justify-content-between align-items-center">
-        <h6 class="m-0 font-weight-bold text-primary">
-          <i class="fas fa-info-circle me-2"></i>
-          {{ sinistre.numeroSinistre }}
-        </h6>
-        <span class="badge" [ngClass]="getStatutBadge(sinistre.statut)">
-          {{ sinistre.statut }}
+    <!-- INFOS GÉNÉRALES -->
+    <div class="sd-card">
+      <div class="sd-card-header">
+        <div class="sd-numero">ℹ️ {{ sinistre.numeroSinistre }}</div>
+        <span class="sd-statut-badge" [ngClass]="getStatutBadge(sinistre.statut)">
+          {{ getStatutIcon(sinistre.statut) }} {{ sinistre.statut }}
         </span>
       </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="text-muted small">Type de sinistre</label>
-            <p class="mb-0">
-              <span class="badge badge-info">{{ sinistre.typeSinistre }}</span>
-            </p>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="text-muted small">Date du sinistre</label>
-            <p class="mb-0 font-weight-bold">{{ sinistre.dateSinistre }}</p>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="text-muted small">Date de déclaration</label>
-            <p class="mb-0">{{ sinistre.dateDeclaration | date:'short' }}</p>
-          </div>
-          <div class="col-md-6 mb-3" *ngIf="sinistre.dateCloture">
-            <label class="text-muted small">Date de clôture</label>
-            <p class="mb-0">{{ sinistre.dateCloture | date:'short' }}</p>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="text-muted small">Délai de déclaration</label>
-            <p class="mb-0">{{ sinistre.delaiDeclaration }} jour(s)</p>
-          </div>
-        </div>
 
-        <hr>
-
-        <label class="text-muted small">Description</label>
-        <p class="mb-0">{{ sinistre.description }}</p>
-      </div>
-    </div>
-
-    <!-- Contrat concerné -->
-    <div class="card shadow mb-4" *ngIf="sinistre.contrat">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">
-          <i class="fas fa-file-contract me-2"></i>Contrat concerné
-        </h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6 mb-2">
-            <label class="text-muted small">Numéro du contrat</label>
-            <p class="mb-0 font-weight-bold">{{ sinistre.contrat.numeroContrat }}</p>
-          </div>
-          <div class="col-md-6 mb-2">
-            <label class="text-muted small">Type</label>
-            <p class="mb-0">
-              <span class="badge badge-primary">{{ sinistre.contrat.typeContrat }}</span>
-            </p>
-          </div>
-          <div class="col-md-6 mb-2">
-            <label class="text-muted small">Statut</label>
-            <p class="mb-0">{{ sinistre.contrat.statut }}</p>
-          </div>
-          <div class="col-md-6 mb-2">
-            <label class="text-muted small">Prime mensuelle</label>
-            <p class="mb-0">{{ sinistre.contrat.primeMensuelle | number:'1.2-2' }} DT</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Documents joints -->
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">
-          <i class="fas fa-paperclip me-2"></i>
-          Documents joints ({{ documents.length }})
-        </h6>
-      </div>
-      <div class="card-body">
-        <div *ngIf="documents.length === 0" class="text-center text-muted py-3">
-          <i class="fas fa-folder-open fa-2x mb-2 d-block"></i>
-          Aucun document joint
-        </div>
-        <ul class="list-group" *ngIf="documents.length > 0">
-          <li *ngFor="let doc of documents"
-              class="list-group-item d-flex justify-content-between align-items-center">
-            <div>
-              <i class="fas me-2 text-primary" [ngClass]="getFileIcon(doc.fileType)"></i>
-              <strong>{{ doc.fileName }}</strong>
-              <small class="text-muted d-block ms-4">{{ doc.fileType }}</small>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- COLONNE LATÉRALE -->
-  <div class="col-lg-4">
-
-    <!-- Montants -->
-    <div class="card shadow mb-4 border-left-primary">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">
-          <i class="fas fa-money-bill-wave me-2"></i>Montants
-        </h6>
-      </div>
-      <div class="card-body">
-        <div class="mb-3">
-          <label class="text-muted small">Montant estimé</label>
-          <h4 class="mb-0 text-warning">
-            {{ sinistre.montantEstime | number:'1.2-2' }} DT
-          </h4>
-        </div>
-        <div *ngIf="sinistre.montantIndemnisation">
-          <label class="text-muted small">Indemnisation finale</label>
-          <h3 class="mb-0 text-success">
-            {{ sinistre.montantIndemnisation | number:'1.2-2' }} DT
-          </h3>
-        </div>
-        <div *ngIf="!sinistre.montantIndemnisation" class="text-muted">
-          <i>En attente d'expertise</i>
-        </div>
-      </div>
-    </div>
-
-    <!-- Analyse IA (visible pour AGENT et EXPERT) -->
-    <div class="card shadow mb-4"
-         *ngIf="(auth.isAgent() || auth.isExpert()) && sinistre.scoreFraude !== null && sinistre.scoreFraude !== undefined">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">
-          <i class="fas fa-robot me-2"></i>Analyse IA
-        </h6>
-      </div>
-      <div class="card-body">
-        <div class="mb-2">
-          <label class="text-muted small">Score de fraude</label>
-          <div class="progress" style="height: 25px;">
-            <div class="progress-bar"
-                 [class.bg-danger]="sinistre.fraude"
-                 [class.bg-success]="!sinistre.fraude"
-                 [style.width.%]="(sinistre.scoreFraude || 0) * 100">
-              {{ (sinistre.scoreFraude || 0) * 100 | number:'1.0-0' }}%
-            </div>
-          </div>
-        </div>
-        <div class="mt-2">
-          <span class="badge" [class.badge-danger]="sinistre.fraude" [class.badge-success]="!sinistre.fraude">
-            <i class="fas" [class.fa-exclamation-triangle]="sinistre.fraude" [class.fa-check]="!sinistre.fraude"></i>
-            {{ sinistre.fraude ? 'Suspicion de fraude' : 'Sinistre légitime' }}
+      <div class="sd-info-grid">
+        <div class="sd-info-item">
+          <div class="sd-info-label">Type de sinistre</div>
+          <span class="sd-type-badge" [ngClass]="getTypeBadgeClass(sinistre.typeSinistre)">
+            {{ getTypeIcon(sinistre.typeSinistre) }} {{ sinistre.typeSinistre }}
           </span>
         </div>
-        <hr>
-        <small class="text-muted d-block">
-          <strong>{{ sinistre.nbSinistresClient }}</strong> sinistre(s) antérieur(s) du client
-        </small>
+        <div class="sd-info-item">
+          <div class="sd-info-label">Date du sinistre</div>
+          <div class="sd-info-val">📅 {{ sinistre.dateSinistre }}</div>
+        </div>
+        <div class="sd-info-item">
+          <div class="sd-info-label">Date de déclaration</div>
+          <div class="sd-info-val">🕐 {{ sinistre.dateDeclaration | date:'short' }}</div>
+        </div>
+        <div class="sd-info-item">
+          <div class="sd-info-label">Délai de déclaration</div>
+          <div class="sd-info-val">⏱️ {{ sinistre.delaiDeclaration }} jour(s)</div>
+        </div>
+        <div class="sd-info-item" *ngIf="sinistre.dateCloture">
+          <div class="sd-info-label">Date de clôture</div>
+          <div class="sd-info-val">🔒 {{ sinistre.dateCloture | date:'short' }}</div>
+        </div>
+      </div>
+
+      <div class="sd-info-label" style="margin-bottom:8px;">Description</div>
+      <div class="sd-description-box">
+        📝 {{ sinistre.description }}
       </div>
     </div>
 
-    <!-- Personnes impliquées (visible pour AGENT et EXPERT uniquement) -->
-<div class="card shadow mb-4" *ngIf="auth.isAgent() || auth.isExpert()">
-  <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">
-      <i class="fas fa-users me-2"></i>Intervenants
-    </h6>
+    <!-- CONTRAT CONCERNÉ -->
+    <div class="sd-card" *ngIf="sinistre.contrat">
+      <div class="sd-section-label">📋 Contrat concerné</div>
+      <div class="sd-contrat-row">
+        <div class="sd-contrat-lbl">📄 Numéro</div>
+        <div class="sd-contrat-val">{{ sinistre.contrat.numeroContrat }}</div>
+      </div>
+      <div class="sd-contrat-row">
+        <div class="sd-contrat-lbl">🏷️ Type</div>
+        <span class="sd-contrat-badge">
+          {{ getContratIcon(sinistre.contrat.typeContrat) }} {{ sinistre.contrat.typeContrat }}
+        </span>
+      </div>
+      <div class="sd-contrat-row">
+        <div class="sd-contrat-lbl">📊 Statut contrat</div>
+        <div class="sd-contrat-val" style="color:#047857;">✅ {{ sinistre.contrat.statut }}</div>
+      </div>
+      <div class="sd-contrat-row">
+        <div class="sd-contrat-lbl">💰 Prime mensuelle</div>
+        <div class="sd-contrat-val" style="color:#d4af37;">
+          {{ sinistre.contrat.primeMensuelle | number:'1.2-2' }} DT
+        </div>
+      </div>
+    </div>
+
+    <!-- INTERVENANTS (Agent/Expert uniquement) -->
+    <div class="sd-card" *ngIf="auth.isAgent() || auth.isExpert()">
+      <div class="sd-section-label">👥 Intervenants</div>
+      <div class="sd-contrat-row" *ngIf="sinistre.client">
+        <div class="sd-contrat-lbl">👤 Client</div>
+        <div class="sd-contrat-val">
+          {{ sinistre.client.prenom }} {{ sinistre.client.nom }}
+          <small style="color:#aaa;display:block;">{{ sinistre.client.email }}</small>
+        </div>
+      </div>
+      <div class="sd-contrat-row" *ngIf="sinistre.agent">
+        <div class="sd-contrat-lbl">🕴️ Agent</div>
+        <div class="sd-contrat-val">
+          {{ sinistre.agent.prenom }} {{ sinistre.agent.nom }}
+          <small style="color:#aaa;display:block;">{{ sinistre.agent.email }}</small>
+        </div>
+      </div>
+      <div class="sd-contrat-row" *ngIf="!sinistre.agent">
+        <div class="sd-contrat-lbl">🕴️ Agent</div>
+        <div class="sd-contrat-val" style="color:#aaa;">Non affecté</div>
+      </div>
+      <div class="sd-contrat-row" *ngIf="sinistre.expert">
+        <div class="sd-contrat-lbl">🎓 Expert</div>
+        <div class="sd-contrat-val">
+          {{ sinistre.expert.prenom }} {{ sinistre.expert.nom }}
+          <small style="color:#aaa;display:block;">{{ sinistre.expert.email }}</small>
+        </div>
+      </div>
+      <div class="sd-contrat-row" *ngIf="!sinistre.expert">
+        <div class="sd-contrat-lbl">🎓 Expert</div>
+        <div class="sd-contrat-val" style="color:#aaa;">Non affecté</div>
+      </div>
+    </div>
+
+    <!-- ANALYSE IA (Agent/Expert uniquement) -->
+    <div class="sd-card"
+         *ngIf="(auth.isAgent() || auth.isExpert()) && sinistre.scoreFraude !== null && sinistre.scoreFraude !== undefined">
+      <div class="sd-section-label">🤖 Analyse IA</div>
+      <div class="sd-progress-wrap">
+        <div class="sd-progress-label">
+          <span>Score de fraude</span>
+          <span>{{ (sinistre.scoreFraude || 0) * 100 | number:'1.0-0' }}%</span>
+        </div>
+        <div class="sd-progress-bg">
+          <div class="sd-progress-fill"
+               [class.fill-red]="sinistre.fraude"
+               [class.fill-green]="!sinistre.fraude"
+               [style.width]="((sinistre.scoreFraude || 0) * 100) + '%'">
+          </div>
+        </div>
+      </div>
+      <div class="sd-fraud-badge" [class.fraud-danger]="sinistre.fraude" [class.fraud-safe]="!sinistre.fraude">
+        {{ sinistre.fraude ? '⚠️ Suspicion de fraude' : '✅ Sinistre légitime' }}
+      </div>
+      <div style="font-size:0.72rem;color:#aaa;margin-top:8px;">
+        📊 <strong>{{ sinistre.nbSinistresClient }}</strong> sinistre(s) antérieur(s) du client
+      </div>
+    </div>
+
+    <!-- DOCUMENTS -->
+    <div class="sd-card">
+      <div class="sd-section-label">📎 Documents joints ({{ documents.length }})</div>
+      <div *ngIf="documents.length === 0" class="sd-doc-empty">
+        📂 Aucun document joint
+      </div>
+      <div *ngFor="let doc of documents" class="sd-doc-item">
+        <div class="sd-doc-icon">
+          {{ getFileEmoji(doc.fileType) }}
+        </div>
+        <div>
+          <div class="sd-doc-name">{{ doc.fileName }}</div>
+          <div class="sd-doc-type">{{ doc.fileType }}</div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <div class="card-body">
 
-    <!-- Client -->
-    <div class="mb-3 pb-3 border-bottom" *ngIf="sinistre.client">
-      <label class="text-muted small">
-        <i class="fas fa-user me-1"></i> Client
-      </label>
-      <p class="mb-0 font-weight-bold">
-        {{ sinistre.client.prenom }} {{ sinistre.client.nom }}
-      </p>
-      <small class="text-muted">{{ sinistre.client.email }}</small>
+  <!-- ══ COLONNE DROITE ══ -->
+  <div class="sd-sidebar">
+
+    <!-- 1. MONTANTS -->
+    <div class="sd-widget">
+      <div class="sd-widget-title">💰 Montants</div>
+      <div class="sd-montant-row">
+        <div class="sd-montant-label">Montant estimé</div>
+        <div class="sd-montant-val">{{ sinistre.montantEstime | number:'1.2-2' }} DT</div>
+      </div>
+      <div class="sd-montant-row">
+        <div class="sd-montant-label">Indemnisation finale</div>
+        <div *ngIf="sinistre.montantIndemnisation" class="sd-montant-ind">
+          {{ sinistre.montantIndemnisation | number:'1.2-2' }} DT
+        </div>
+        <div *ngIf="!sinistre.montantIndemnisation" class="sd-montant-attente">
+          ⏳ En attente d'expertise
+        </div>
+      </div>
+      <div class="sd-progress-wrap" *ngIf="sinistre.montantIndemnisation" style="margin-top:12px;">
+        <div class="sd-progress-label">
+          <span>Taux d'indemnisation</span>
+          <span>{{ getTauxIndemnisation() }}%</span>
+        </div>
+        <div class="sd-progress-bg">
+          <div class="sd-progress-fill fill-green" [style.width]="getTauxIndemnisation() + '%'"></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Agent -->
-    <div class="mb-3 pb-3 border-bottom" *ngIf="sinistre.agent">
-      <label class="text-muted small">
-        <i class="fas fa-user-tie me-1"></i> Agent
-      </label>
-      <p class="mb-0 font-weight-bold">
-        {{ sinistre.agent.prenom }} {{ sinistre.agent.nom }}
-      </p>
-      <small class="text-muted">{{ sinistre.agent.email }}</small>
-    </div>
-    <div class="mb-3 pb-3 border-bottom text-muted" *ngIf="!sinistre.agent">
-      <i class="fas fa-user-tie me-1"></i> Aucun agent affecté
+    <!-- 2. PROGRESSION -->
+    <div class="sd-widget">
+      <div class="sd-widget-title">📍 Progression</div>
+      <div *ngFor="let step of getSteps(); let last = last" class="sd-tl-step">
+        <div class="sd-tl-dot-wrap">
+          <div class="sd-tl-dot" [ngClass]="step.dotClass"></div>
+          <div class="sd-tl-line" *ngIf="!last"></div>
+        </div>
+        <div class="sd-tl-info">
+          <div class="sd-tl-step-name" [ngClass]="step.textClass">
+            {{ step.icon }} {{ step.label }}
+          </div>
+          <div class="sd-tl-step-desc">{{ step.desc }}</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Expert -->
-    <div class="mb-0" *ngIf="sinistre.expert">
-      <label class="text-muted small">
-        <i class="fas fa-user-graduate me-1"></i> Expert
-      </label>
-      <p class="mb-0 font-weight-bold">
-        {{ sinistre.expert.prenom }} {{ sinistre.expert.nom }}
-      </p>
-      <small class="text-muted">{{ sinistre.expert.email }}</small>
+    <!-- 3. RÉCAPITULATIF -->
+    <div class="sd-widget">
+      <div class="sd-widget-title">📊 Récapitulatif</div>
+      <div class="sd-progress-wrap">
+        <div class="sd-progress-label">
+          <span>🔥 Gravité estimée</span>
+          <span>{{ getGravite() }}%</span>
+        </div>
+        <div class="sd-progress-bg">
+          <div class="sd-progress-fill fill-or" [style.width]="getGravite() + '%'"></div>
+        </div>
+      </div>
+      <div class="sd-progress-wrap">
+        <div class="sd-progress-label">
+          <span>📁 Documents fournis</span>
+          <span>{{ documents.length }}/3</span>
+        </div>
+        <div class="sd-progress-bg">
+          <div class="sd-progress-fill fill-green"
+               [style.width]="((documents.length / 3) * 100) + '%'"></div>
+        </div>
+      </div>
+      <div class="sd-progress-wrap">
+        <div class="sd-progress-label">
+          <span>⏱️ Délai traitement</span>
+          <span>{{ sinistre.delaiDeclaration || 0 }} j</span>
+        </div>
+        <div class="sd-progress-bg">
+          <div class="sd-progress-fill fill-or" style="width:70%;"></div>
+        </div>
+      </div>
     </div>
-    <div class="mb-0 text-muted" *ngIf="!sinistre.expert">
-      <i class="fas fa-user-graduate me-1"></i> Aucun expert affecté
-    </div>
-  </div>
-</div>
 
   </div>
 </div>

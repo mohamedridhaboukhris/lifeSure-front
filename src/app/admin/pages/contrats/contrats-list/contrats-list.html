@@ -1,687 +1,395 @@
+<!-- ══════════════════════════════════════════════
+     CONTRATS LIST — Interface Client LifeSure
+     ══════════════════════════════════════════════ -->
 
-<!-- ========================================== -->
-<!-- PAGE HEADING -->
-<!-- ========================================== -->
-
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-
-  <h1 class="h3 mb-0 text-gray-800">
-    {{ isAgent ? 'Tous les Contrats' : 'Mes Contrats' }}
-  </h1>
-
-  <a
-    *ngIf="!isAgent"
-    routerLink="/admin/contrats/nouveau"
-    class="btn btn-primary shadow-sm">
-
-    <i class="fas fa-plus fa-sm me-2"></i>
-    Nouveau Contrat
-
+<!-- HEADER -->
+<div class="cl-header">
+  <h1 class="cl-title">📋 Mes Contrats</h1>
+  <a *ngIf="!isAgent"
+     [routerLink]="isClient ? '/client/contrats/nouveau' : '/admin/contrats/nouveau'"
+     class="cl-btn-new">
+    <i class="fas fa-plus"></i> Nouveau Contrat
   </a>
-
 </div>
 
+<!-- MESSAGES -->
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
-<!-- ========================================== -->
-<!-- ERROR -->
-<!-- ========================================== -->
-
-<div *ngIf="errorMessage" class="alert alert-danger">
-  {{ errorMessage }}
-</div>
-
-
-<!-- ========================================== -->
 <!-- LOADING -->
-<!-- ========================================== -->
-
 <div *ngIf="loading" class="text-center py-5">
-
-  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
-
+  <i class="fas fa-spinner fa-spin fa-2x" style="color:#d4af37;"></i>
 </div>
 
+<!-- LAYOUT PRINCIPAL -->
+<div *ngIf="!loading" class="cl-layout">
 
-<!-- ========================================== -->
-<!-- FILTRES -->
-<!-- ========================================== -->
+  <!-- ══ COLONNE GAUCHE : LISTE CONTRATS ══ -->
+  <div class="cl-main">
 
-<div class="filtres-statut mb-4" *ngIf="isAgent">
+    <!-- FILTRES AGENT -->
+    <div class="filtres-statut mb-4" *ngIf="isAgent">
+      <button class="filtre-btn" [class.active]="filtreStatut === 'TOUS'" (click)="changerFiltre('TOUS')">
+        📋 Tous ({{ getCountByStatut('TOUS') }})
+      </button>
+      <button class="filtre-btn filtre-validation" [class.active]="filtreStatut === 'EN_ATTENTE_VALIDATION'" (click)="changerFiltre('EN_ATTENTE_VALIDATION')">
+        ⏳ À valider ({{ getCountByStatut('EN_ATTENTE_VALIDATION') }})
+      </button>
+      <button class="filtre-btn filtre-actif" [class.active]="filtreStatut === 'ACTIF'" (click)="changerFiltre('ACTIF')">
+        ✅ Actifs ({{ getCountByStatut('ACTIF') }})
+      </button>
+      <button class="filtre-btn filtre-refuse" [class.active]="filtreStatut === 'REFUSE'" (click)="changerFiltre('REFUSE')">
+        ❌ Refusés ({{ getCountByStatut('REFUSE') }})
+      </button>
+    </div>
 
-  <button
-    class="filtre-btn"
-    [class.active]="filtreStatut === 'TOUS'"
-    (click)="changerFiltre('TOUS')">
+    <div class="cl-section-label">📂 Liste de mes contrats ({{ contrats.length }})</div>
 
-    📋 Tous ({{ getCountByStatut('TOUS') }})
+    <!-- VIDE -->
+    <div *ngIf="contrats.length === 0" class="cl-empty">
+      <div class="cl-empty-icon">📄</div>
+      <p>Vous n'avez encore aucun contrat.</p>
+      <a [routerLink]="isClient ? '/client/contrats/nouveau' : '/admin/contrats/nouveau'"
+         class="cl-btn-new mt-3">
+        Souscrire maintenant
+      </a>
+    </div>
 
-  </button>
+    <!-- CARDS CONTRATS -->
+    <div *ngFor="let c of contrats" class="cl-card">
 
-  <button
-    class="filtre-btn filtre-validation"
-    [class.active]="filtreStatut === 'EN_ATTENTE_VALIDATION'"
-    (click)="changerFiltre('EN_ATTENTE_VALIDATION')">
+      <!-- ICÔNE TYPE -->
+      <div class="cl-card-icon" [ngClass]="getIconClass(c.typeContrat)">
+        {{ getTypeIcon(c.typeContrat) }}
+      </div>
 
-    ⏳ À valider ({{ getCountByStatut('EN_ATTENTE_VALIDATION') }})
+      <!-- INFOS PRINCIPALES -->
+      <div class="cl-card-main">
+        <div class="cl-card-numero">
+          {{ c.numeroContrat }}
+          <span class="cl-type-badge" [ngClass]="getTypeBadgeClass(c.typeContrat)">
+            {{ getTypeIcon(c.typeContrat) }} {{ c.typeContrat }}
+          </span>
+        </div>
+        <div class="cl-card-dates">
+          <span>📅 {{ c.dateDebut }}</span>
+          <span>🏁 {{ c.dateFin }}</span>
+        </div>
+        <!-- Client visible pour agent -->
+        <div *ngIf="isAgent" class="cl-card-client">
+          👤 {{ c.client?.prenom }} {{ c.client?.nom }}
+          <small>— {{ c.client?.email }}</small>
+        </div>
+      </div>
 
-  </button>
+      <!-- PRIME -->
+      <div class="cl-card-prime">
+        <div class="cl-prime-val">{{ c.primeMensuelle | number:'1.2-2' }} DT</div>
+        <div class="cl-prime-lbl">/ mois</div>
+      </div>
 
-  <button
-    class="filtre-btn filtre-actif"
-    [class.active]="filtreStatut === 'ACTIF'"
-    (click)="changerFiltre('ACTIF')">
+      <!-- STATUT -->
+      <div class="cl-card-statut">
+        <span class="cl-statut-badge" [ngClass]="getStatutBadge(c.statut)">
+          {{ getStatutIcon(c.statut) }} {{ c.statut }}
+        </span>
+      </div>
 
-    ✅ Actifs ({{ getCountByStatut('ACTIF') }})
+      <!-- ACTIONS CLIENT -->
+      <div class="cl-actions" *ngIf="!isAgent">
 
-  </button>
+        <!-- Signer -->
+        <button *ngIf="c.statut === 'ACTIF' && !c.signature"
+                class="cl-btn-signer"
+                (click)="ouvrirSignature(c)">
+          ✍️ Signer
+        </button>
 
-  <button
-    class="filtre-btn filtre-refuse"
-    [class.active]="filtreStatut === 'REFUSE'"
-    (click)="changerFiltre('REFUSE')">
+        <!-- Signé -->
+        <span *ngIf="c.signature" class="cl-signed">
+          ✔ Signé électroniquement
+        </span>
 
-    ❌ Refusés ({{ getCountByStatut('REFUSE') }})
+        <!-- Payer -->
+        <a *ngIf="c.statut === 'EN_ATTENTE'"
+           [routerLink]="[isClient ? '/client/paiements/payer' : '/admin/paiements/payer', c.id]"
+           class="cl-btn-payer">
+          💳 Payer
+        </a>
 
-  </button>
+        <!-- PDF -->
+        <button *ngIf="c.statut === 'ACTIF'"
+                class="cl-btn-pdf"
+                (click)="telechargerAttestation(c.id!)"
+                title="Télécharger attestation">
+          📄
+        </button>
 
-</div>
+        <!-- Carte santé -->
+        <div *ngIf="c.typeContrat === 'SANTE' && c.statut === 'ACTIF'" class="mt-1">
+          <button class="cl-btn-sante" [routerLink]="[isClient ? '/client/carte-sante' : '/admin/carte-sante', c.id]">
+            🏥 Ma carte santé
+          </button>
+        </div>
 
+      </div>
 
-<!-- ========================================== -->
-<!-- TABLEAU -->
-<!-- ========================================== -->
+      <!-- ACTIONS AGENT -->
+      <div class="cl-actions" *ngIf="isAgent">
+        <button *ngIf="c.statut === 'EN_ATTENTE_VALIDATION'"
+                class="cl-btn-examiner"
+                (click)="ouvrirValidation(c)">
+          👁 Examiner
+        </button>
+        <button class="cl-btn-icon btn-success-sm" (click)="activer(c.id)" *ngIf="c.statut !== 'ACTIF'">✔</button>
+        <button class="cl-btn-icon btn-warning-sm" (click)="suspendre(c.id)" *ngIf="c.statut === 'ACTIF'">⏸</button>
+        <button class="cl-btn-icon btn-danger-sm" (click)="resilier(c.id)" *ngIf="c.statut !== 'RESILIE'">🚫</button>
+        <button class="cl-btn-icon btn-dark-sm" (click)="supprimer(c.id)">🗑</button>
+      </div>
 
-<div *ngIf="!loading" class="card shadow mb-4">
-
-  <div class="card-header py-3">
-
-    <h6 class="m-0 font-weight-bold text-primary">
-
-      {{ isAgent ? 'Liste complète' : 'Liste de mes contrats' }}
-      ({{ contrats.length }})
-
-    </h6>
-
+    </div>
   </div>
 
-  <div class="card-body">
-
-    <div class="table-responsive">
-
-      <table
-        class="table table-bordered table-hover"
-        width="100%"
-        cellspacing="0">
-
-        <!-- ========================================== -->
-        <!-- HEAD -->
-        <!-- ========================================== -->
-
-        <thead>
-
-          <tr>
-
-            <th>N° Contrat</th>
-
-            <th>Type</th>
-
-            <th *ngIf="isAgent">Client</th>
-
-            <th>Date Début</th>
-
-            <th>Date Fin</th>
-
-            <th>Prime Mensuelle</th>
-
-            <th>Statut</th>
-
-            <th>Actions</th>
-
-          </tr>
-
-        </thead>
-
-
-        <!-- ========================================== -->
-        <!-- BODY -->
-        <!-- ========================================== -->
-
-        <tbody>
-
-          <!-- Aucun contrat -->
-
-          <tr *ngIf="contrats.length === 0">
-
-            <td
-              [attr.colspan]="isAgent ? 8 : 7"
-              class="text-center text-muted py-4">
-
-              <i class="fas fa-file-alt fa-2x mb-2 d-block"></i>
-
-              <ng-container *ngIf="isAgent">
-
-                Aucun contrat dans le système.
-
-              </ng-container>
-
-              <ng-container *ngIf="!isAgent">
-
-                Vous n'avez encore aucun contrat.
-
-                <br>
-
-                <a
-                  routerLink="/admin/contrats/nouveau"
-                  class="btn btn-primary mt-3">
-
-                  Souscrire maintenant
-
-                </a>
-
-              </ng-container>
-
-            </td>
-
-          </tr>
-
-
-          <!-- ========================================== -->
-          <!-- LIGNE CONTRAT -->
-          <!-- ========================================== -->
-
-          <tr *ngFor="let c of contrats">
-
-            <!-- Numéro -->
-
-            <td>
-              <strong>{{ c.numeroContrat }}</strong>
-            </td>
-
-
-            <!-- Type -->
-
-            <td>
-
-              <span class="badge badge-info">
-
-                 {{ getTypeIcon(c.typeContrat) }} {{ c.typeContrat }}
-
-              </span>
-
-            </td>
-
-
-            <!-- Client -->
-
-            <td *ngIf="isAgent">
-
-              <div>
-
-                <strong>
-                  {{ c.client?.prenom }}
-                  {{ c.client?.nom }}
-                </strong>
-
-              </div>
-
-              <small class="text-muted d-block">
-                {{ c.client?.email }}
-              </small>
-
-              <small class="text-muted">
-                ID: {{ c.client?.id }}
-              </small>
-
-            </td>
-
-
-            <!-- Dates -->
-
-            <td>{{ c.dateDebut }}</td>
-
-            <td>{{ c.dateFin }}</td>
-
-
-            <!-- Prime -->
-
-            <td>
-
-              {{ c.primeMensuelle | number:'1.2-2' }} DT
-
-            </td>
-
-
-            <!-- Statut -->
-
-            <td>
-
-              <span
-                class="badge"
-                [ngClass]="getStatutBadge(c.statut)">
-
-                {{ c.statut }}
-
-              </span>
-
-            </td>
-
-
-            <!-- ========================================== -->
-            <!-- ACTIONS -->
-            <!-- ========================================== -->
-
-            <td>
-
-              <!-- ========================================== -->
-              <!-- CLIENT -->
-              <!-- ========================================== -->
-
-              <!-- Signer -->
-
-              <button
-                *ngIf="!isAgent && c.statut === 'ACTIF' && !c.signature"
-                class="btn btn-sm btn-warning me-1"
-                (click)="ouvrirSignature(c)">
-
-                <i class="fas fa-signature"></i>
-                Signer
-
-              </button>
-
-
-              <!-- Déjà signé -->
-
-              <span
-                *ngIf="!isAgent && c.signature"
-                class="badge bg-success me-2">
-
-                <i class="fas fa-check me-1"></i>
-                Signé électroniquement
-
-              </span>
-
-
-              <!-- Payer -->
-
-              <a
-                *ngIf="!isAgent && c.statut === 'EN_ATTENTE'"
-                [routerLink]="['/admin/paiements/payer', c.id]"
-                class="btn btn-sm btn-success me-1">
-
-                <i class="fas fa-credit-card"></i>
-                Payer
-
-              </a>
-
-
-              <!-- PDF -->
-
-              <button
-                *ngIf="!isAgent && c.statut === 'ACTIF'"
-                class="btn btn-sm btn-info me-1"
-                (click)="telechargerAttestation(c.id!)">
-
-                <i class="fas fa-file-pdf"></i>
-
-              </button>
-
-
-              <!-- Santé -->
-
-              <div
-                *ngIf="!isAgent && c.typeContrat === 'SANTE' && c.statut === 'ACTIF'"
-                class="mt-2">
-
-                <button
-                  class="btn btn-sm btn-info me-2"
-                  [routerLink]="['/admin/carte-sante', c.id]">
-
-                  <i class="fas fa-id-card me-1"></i>
-                  Ma carte santé
-
-                </button>
-
-                <button
-                  class="btn btn-sm btn-medecin"
-                  routerLink="/admin/medecins">
-
-                  <i class="fas fa-user-md me-1"></i>
-                  Médecins partenaires
-
-                </button>
-
-              </div>
-
-
-              <!-- ========================================== -->
-              <!-- AGENT -->
-              <!-- ========================================== -->
-
-              <ng-container *ngIf="isAgent">
-
-                <!-- Examiner -->
-
-                <button
-                  *ngIf="c.statut === 'EN_ATTENTE_VALIDATION'"
-                  class="btn btn-sm btn-primary me-1"
-                  (click)="ouvrirValidation(c)">
-
-                  <i class="fas fa-eye"></i>
-                  Examiner
-
-                </button>
-
-
-                <!-- Activer -->
-
-                <button
-                  class="btn btn-sm btn-success me-1"
-                  (click)="activer(c.id)"
-                  *ngIf="c.statut !== 'ACTIF'">
-
-                  <i class="fas fa-check"></i>
-
-                </button>
-
-
-                <!-- Suspendre -->
-
-                <button
-                  class="btn btn-sm btn-warning me-1"
-                  (click)="suspendre(c.id)"
-                  *ngIf="c.statut === 'ACTIF'">
-
-                  <i class="fas fa-pause"></i>
-
-                </button>
-
-
-                <!-- Résilier -->
-
-                <button
-                  class="btn btn-sm btn-danger me-1"
-                  (click)="resilier(c.id)"
-                  *ngIf="c.statut !== 'RESILIE'">
-
-                  <i class="fas fa-ban"></i>
-
-                </button>
-
-
-                <!-- Supprimer -->
-
-                <button
-                  class="btn btn-sm btn-dark"
-                  (click)="supprimer(c.id)">
-
-                  <i class="fas fa-trash"></i>
-
-                </button>
-
-              </ng-container>
-
-            </td>
-
-          </tr>
-
-        </tbody>
-
-      </table>
-
+  <!-- ══ COLONNE DROITE : WIDGETS (CLIENT UNIQUEMENT) ══ -->
+  <div class="cl-sidebar" *ngIf="!isAgent">
+
+    <!-- 1. RÉSUMÉ STATS -->
+    <div class="cl-widget">
+      <div class="cl-widget-title">📊 Résumé</div>
+      <div class="cl-stats-grid">
+        <div class="cl-stat">
+          <div class="cl-stat-val">{{ contrats.length }}</div>
+          <div class="cl-stat-lbl">📋 Contrats actifs</div>
+        </div>
+        <div class="cl-stat">
+          <div class="cl-stat-val">{{ getTotalPrimes() | number:'1.0-0' }}</div>
+          <div class="cl-stat-lbl">💰 Total DT/mois</div>
+        </div>
+        <div class="cl-stat">
+          <div class="cl-stat-val" style="color:#1a1a1a;">0</div>
+          <div class="cl-stat-lbl">⚠️ Sinistres ouverts</div>
+        </div>
+        <div class="cl-stat">
+          <div class="cl-stat-val">{{ getNbSignes() }}</div>
+          <div class="cl-stat-lbl">✅ Signés</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. ÉCHÉANCES -->
+    <div class="cl-widget">
+      <div class="cl-widget-title">📅 Échéances à venir</div>
+      <div *ngFor="let c of getProchesEcheances()" class="cl-echeance">
+        <div class="cl-ech-date">
+          <div class="cl-ech-day">{{ getDay(c.dateFin) }}</div>
+          <div class="cl-ech-mon">{{ getMonth(c.dateFin) }}</div>
+        </div>
+        <div class="cl-ech-info">
+          <div class="cl-ech-num">{{ c.numeroContrat }}</div>
+          <div class="cl-ech-desc">{{ getTypeIcon(c.typeContrat) }} {{ c.typeContrat }} — Expire</div>
+        </div>
+        <span class="cl-ech-badge" [ngClass]="getEcheanceBadge(c.dateFin)">
+          {{ getEcheanceLabel(c.dateFin) }}
+        </span>
+      </div>
+      <div *ngIf="getProchesEcheances().length === 0" class="cl-empty-small">
+        ✅ Aucune échéance proche
+      </div>
+    </div>
+
+    <!-- 3. GRAPHIQUE PAIEMENTS -->
+    <div class="cl-widget">
+      <div class="cl-widget-title">💳 Paiements (6 mois)</div>
+      <div class="cl-chart-bars">
+        <div *ngFor="let m of moisPaiements" class="cl-bar-wrap">
+          <div class="cl-bar-val">{{ m.val }}k</div>
+          <div class="cl-bar" [class.active]="m.actif" [style.height]="m.hauteur + '%'"></div>
+          <div class="cl-bar-lbl">{{ m.lbl }}</div>
+        </div>
+      </div>
+      <div class="cl-chart-total">
+        Total 6 mois : <strong>{{ getTotalPaiements() }} DT</strong>
+      </div>
+    </div>
+
+    <!-- 4. SCORE CLIENT -->
+    <div class="cl-widget">
+      <div class="cl-widget-title">🏆 Score Client</div>
+
+      <div class="cl-score-top">
+        <div>
+          <div class="cl-score-circle">
+            <div class="cl-score-num">{{ scoreClient }}</div>
+            <div class="cl-score-max">/ 1000</div>
+          </div>
+          <div class="cl-score-label">Votre score</div>
+        </div>
+        <div>
+          <div class="cl-niveau-badge">{{ getNiveauIcon() }} {{ getNiveau() }}</div>
+          <div class="cl-membre-depuis">Membre depuis {{ anneeInscription }}</div>
+        </div>
+      </div>
+
+      <div class="cl-score-bar-wrap">
+        <div class="cl-score-bar-label">
+          <span>🤝 Fidélité</span><span>{{ fidelite }}%</span>
+        </div>
+        <div class="cl-score-bar-bg">
+          <div class="cl-score-bar-fill" [style.width]="fidelite + '%'"></div>
+        </div>
+      </div>
+      <div class="cl-score-bar-wrap">
+        <div class="cl-score-bar-label">
+          <span>💳 Paiements</span><span>{{ scorePaiements }}%</span>
+        </div>
+        <div class="cl-score-bar-bg">
+          <div class="cl-score-bar-fill" [style.width]="scorePaiements + '%'"></div>
+        </div>
+      </div>
+      <div class="cl-score-bar-wrap">
+        <div class="cl-score-bar-label">
+          <span>📋 Contrats</span><span>{{ scoreContrats }}%</span>
+        </div>
+        <div class="cl-score-bar-bg">
+          <div class="cl-score-bar-fill" [style.width]="scoreContrats + '%'"></div>
+        </div>
+      </div>
+
+      <div class="cl-avantages">
+        <div class="cl-av-title">Vos avantages</div>
+        <div class="cl-av-item"><span class="av-check">✔</span> Réduction 5% sur les primes</div>
+        <div class="cl-av-item"><span class="av-check">✔</span> Support prioritaire 24h</div>
+        <div class="cl-av-item"><span class="av-check">✔</span> Traitement sinistres express</div>
+        <div class="cl-av-item"><span class="av-lock">🔒</span>
+          <span class="av-locked">Réduction 10% — Platine</span>
+        </div>
+      </div>
+
+      <div class="cl-next-level">
+        🎯 Plus que <strong>{{ 1000 - scoreClient }} pts</strong> pour atteindre
+        <strong>💎 Platine</strong> !
+      </div>
     </div>
 
   </div>
-
 </div>
 
-
-<!-- ========================================== -->
-<!-- SIGNATURE MODAL -->
-<!-- ========================================== -->
-
+<!-- MODALS (signature, validation, refus, toast) -->
 <app-signature-modal
   *ngIf="showSignatureModal && selectedContratForSignature"
   [contratId]="selectedContratForSignature.id"
   [contratNumero]="selectedContratForSignature.numeroContrat"
   (signed)="signatureReussie()"
   (closed)="fermerSignature()">
-
 </app-signature-modal>
 
-
-<!-- ========================================== -->
-<!-- MODAL VALIDATION -->
-<!-- ========================================== -->
-
-<div
-  *ngIf="showValidationModal && contratSelectionne"
-  class="modal-overlay-v"
-  (click)="fermerValidation()">
-
+<div *ngIf="showValidationModal && contratSelectionne" class="modal-overlay-v" (click)="fermerValidation()">
   <div class="modal-large-v" (click)="$event.stopPropagation()">
-
-    <div
-      class="modal-header-v"
-      [style.background]="getTypeColor(contratSelectionne.typeContrat)">
-
+    <div class="modal-header-v" [style.background]="getTypeColor(contratSelectionne.typeContrat)">
       <div>
-
-        <h2>
-          {{ getTypeIcon(contratSelectionne.typeContrat) }}
-          Examen du contrat
-        </h2>
-
+        <h2>{{ getTypeIcon(contratSelectionne.typeContrat) }} Examen du contrat</h2>
         <p>{{ contratSelectionne.numeroContrat }}</p>
-
       </div>
-
-      <button
-        class="btn-close-v"
-        (click)="fermerValidation()">
-
-        ✕
-
-      </button>
-
+      <button class="btn-close-v" (click)="fermerValidation()">✕</button>
     </div>
-
-
-    <!-- BODY -->
-
     <div class="modal-body-v">
-
       <section class="detail-section-v">
-
         <h3>👤 Informations Client</h3>
-
         <div class="detail-grid-v">
-
-          <div>
-            <strong>Nom :</strong>
-            {{ contratSelectionne.client?.prenom }}
-            {{ contratSelectionne.client?.nom }}
-          </div>
-
-          <div>
-            <strong>Email :</strong>
-            {{ contratSelectionne.client?.email }}
-          </div>
-
-          <div>
-            <strong>Téléphone :</strong>
-            {{ contratSelectionne.client?.telephone || '-' }}
-          </div>
-
+          <div><strong>Nom :</strong> {{ contratSelectionne.client?.prenom }} {{ contratSelectionne.client?.nom }}</div>
+          <div><strong>Email :</strong> {{ contratSelectionne.client?.email }}</div>
         </div>
-
       </section>
-
-
-      <!-- CONTRAT -->
-
       <section class="detail-section-v">
-
         <h3>📋 Détails du contrat</h3>
-
         <div class="detail-grid-v">
-
-          <div>
-            <strong>Type :</strong>
-            {{ contratSelectionne.typeContrat }}
-          </div>
-
-          <div>
-            <strong>Date début :</strong>
-            {{ formatDate(contratSelectionne.dateDebut) }}
-          </div>
-
-          <div>
-            <strong>Date fin :</strong>
-            {{ formatDate(contratSelectionne.dateFin) }}
-          </div>
-
-          <div>
-            <strong>Prime :</strong>
-
-            <span class="highlight-v">
-              {{ contratSelectionne.primeMensuelle }} DT
-            </span>
-
-          </div>
-
+          <div><strong>Type :</strong> {{ contratSelectionne.typeContrat }}</div>
+          <div><strong>Date début :</strong> {{ contratSelectionne.dateDebut }}</div>
+          <div><strong>Date fin :</strong> {{ contratSelectionne.dateFin }}</div>
+          <div><strong>Prime :</strong> <span class="highlight-v">{{ contratSelectionne.primeMensuelle }} DT</span></div>
         </div>
-
       </section>
-
     </div>
-
-
-    <!-- FOOTER -->
-
     <div class="modal-footer-v">
-
-      <button
-        class="btn-refuser-v"
-        (click)="ouvrirRefus()">
-
-        ❌ Refuser
-
-      </button>
-
-      <button
-        class="btn-accepter-v"
-        (click)="accepterContrat()">
-
-        ✅ Accepter le contrat
-
-      </button>
-
+      <button class="btn-refuser-v" (click)="ouvrirRefus()">❌ Refuser</button>
+      <button class="btn-accepter-v" (click)="accepterContrat()">✅ Accepter le contrat</button>
     </div>
-
   </div>
-
 </div>
 
-
-<!-- ========================================== -->
-<!-- MODAL REFUS -->
-<!-- ========================================== -->
-
-<div
-  *ngIf="showRefusModal"
-  class="modal-overlay-v"
-  (click)="fermerRefus()">
-
+<div *ngIf="showRefusModal" class="modal-overlay-v" (click)="fermerRefus()">
   <div class="modal-small-v" (click)="$event.stopPropagation()">
-
     <div class="modal-header-v refus-header-v">
-
       <h2>❌ Motif du refus</h2>
-
-      <button
-        class="btn-close-v"
-        (click)="fermerRefus()">
-
-        ✕
-
-      </button>
-
+      <button class="btn-close-v" (click)="fermerRefus()">✕</button>
     </div>
-
-
-    <!-- BODY -->
-
     <div class="modal-body-v">
-
-      <p class="info-text-v">
-
-        Veuillez préciser les raisons du refus.
-
-      </p>
-
-      <label class="form-label-v">
-
-        📝 Motif détaillé
-        <span class="required-v">*</span>
-
-      </label>
-
-      <textarea
-        [(ngModel)]="motifRefus"
-        class="textarea-motif-v"
-        rows="6">
-
-      </textarea>
-
-      <div
-        class="char-counter-v"
-        [class.valid]="motifRefus.length >= 20">
-
+      <textarea [(ngModel)]="motifRefus" class="textarea-motif-v" rows="6" placeholder="Motif du refus (min. 20 caractères)..."></textarea>
+      <div class="char-counter-v" [class.valid]="motifRefus.length >= 20">
         {{ motifRefus.length }} / 20 caractères minimum
-
       </div>
-
     </div>
-
-
-    <!-- FOOTER -->
-
     <div class="modal-footer-v">
-
-      <button
-        class="btn-cancel-v"
-        (click)="fermerRefus()">
-
-        Annuler
-
-      </button>
-
-      <button
-        class="btn-confirm-refus-v"
-        (click)="confirmerRefus()"
-        [disabled]="motifRefus.length < 20">
-
+      <button class="btn-cancel-v" (click)="fermerRefus()">Annuler</button>
+      <button class="btn-confirm-refus-v" (click)="confirmerRefus()" [disabled]="motifRefus.length < 20">
         ❌ Confirmer le refus
-
       </button>
-
     </div>
-
   </div>
-
 </div>
 
-
-<!-- ========================================== -->
-<!-- TOAST -->
-<!-- ========================================== -->
-
-<div
-  *ngIf="toast.show"
-  class="toast-v"
-  [class.toast-success-v]="toast.type === 'success'"
-  [class.toast-error-v]="toast.type === 'error'">
-
+<div *ngIf="toast.show" class="toast-v"
+     [class.toast-success-v]="toast.type === 'success'"
+     [class.toast-error-v]="toast.type === 'error'">
   {{ toast.message }}
-
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

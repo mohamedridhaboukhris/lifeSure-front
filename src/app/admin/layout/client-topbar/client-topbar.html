@@ -1,0 +1,157 @@
+<nav class="client-topnav">
+
+  <!-- ① LOGO -->
+  <a class="client-brand" routerLink="/client/contrats">
+    <div class="client-brand-icon">
+      <i class="fas fa-shield-alt"></i>
+    </div>
+    <span class="client-brand-text">LifeSure</span>
+  </a>
+
+  <!-- ② ONGLETS DE NAVIGATION -->
+  <div class="client-nav-tabs">
+    <a class="client-tab" routerLink="/client/contrats" routerLinkActive="active">
+      <i class="fas fa-file-contract"></i>
+      <span>Contrats</span>
+    </a>
+    <a class="client-tab" routerLink="/client/sinistres" routerLinkActive="active">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>Sinistres</span>
+    </a>
+    <a class="client-tab" routerLink="/client/paiements" routerLinkActive="active">
+      <i class="fas fa-receipt"></i>
+      <span>Paiements</span>
+    </a>
+    <a class="client-tab" routerLink="/client/reclamations" routerLinkActive="active">
+      <i class="fas fa-comment-dots"></i>
+      <span>Réclamations</span>
+    </a>
+
+
+
+
+    <a class="client-tab" routerLink="/client/medecins" routerLinkActive="active">
+       <i class="fas fa-user-md"></i>
+       <span>Médecins</span>
+    </a>
+  </div>
+
+  <!-- ③ ACTIONS DROITES -->
+  <div class="client-topnav-actions">
+
+    <!-- Mode sombre -->
+    <button class="topnav-icon-btn"
+            (click)="toggleTheme()"
+            [title]="themeService.isDark() ? 'Mode clair' : 'Mode sombre'">
+      <i class="fas" [class.fa-moon]="!themeService.isDark()" [class.fa-sun]="themeService.isDark()"></i>
+    </button>
+
+    <!-- Langue -->
+    <div class="lang-dropdown-wrap" (click)="toggleLangMenu($event)">
+      <button class="topnav-lang-btn">
+        <span>{{ languageService.getCurrentLanguage().flag }}</span>
+        <span class="lang-code">{{ languageService.getCurrentLanguage().code | uppercase }}</span>
+        <i class="fas fa-chevron-down lang-arrow"></i>
+      </button>
+      <div class="topnav-dropdown" [class.open]="showLangMenu" (click)="$event.stopPropagation()">
+        <div class="topnav-dropdown-header">Langue</div>
+        <a *ngFor="let lang of languageService.languages"
+           class="topnav-dropdown-item"
+           (click)="changeLanguage(lang.code); $event.preventDefault()">
+          <span>{{ lang.flag }}</span>
+          <span>{{ lang.name }}</span>
+          <i *ngIf="languageService.getCurrentLanguage().code === lang.code"
+             class="fas fa-check ms-auto" style="color:#d4af37;font-size:0.7rem;"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="notif-wrap" (click)="toggleAlerts($event)">
+      <button class="topnav-icon-btn">
+        <i class="fas fa-bell"></i>
+        <span *ngIf="notifCount > 0" class="notif-badge">
+          {{ notifCount > 9 ? '9+' : notifCount }}
+        </span>
+      </button>
+      <div class="topnav-dropdown notif-dropdown" [class.open]="showAlerts" (click)="$event.stopPropagation()">
+        <div class="topnav-dropdown-header" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>Notifications</span>
+          <a *ngIf="notifCount > 0" href="#" (click)="marquerToutesCommeLues($event)"
+             style="font-size:0.7rem;color:#fff;text-decoration:underline;">Tout lire</a>
+        </div>
+        <div *ngIf="loadingNotifs" class="notif-empty">
+          <i class="fas fa-spinner fa-spin"></i> Chargement...
+        </div>
+        <div *ngIf="!loadingNotifs && notifications.length === 0" class="notif-empty">
+          <i class="fas fa-inbox" style="font-size:1.4rem;display:block;margin-bottom:6px;"></i>
+          Aucune notification
+        </div>
+        <a *ngFor="let notif of notifications"
+           class="topnav-dropdown-item notif-item"
+           [class.unread]="!notif.lue"
+           (click)="onNotifClick(notif, $event)">
+          <div class="notif-icon" [style.background]="notif.couleur">{{ notif.icone }}</div>
+          <div class="notif-body">
+            <span class="notif-title">{{ notif.titre }}</span>
+            <span class="notif-time">{{ getTimeAgo(notif.dateCreation) }}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Séparateur -->
+    <div class="topnav-divider"></div>
+
+    <!-- Profil utilisateur -->
+    <div class="profile-wrap" (click)="toggleUser($event)">
+      <span class="user-greeting">{{ userName }}</span>
+      <div class="client-avatar">{{ userInitials }}</div>
+      <div class="topnav-dropdown user-dropdown" [class.open]="showUser" (click)="$event.stopPropagation()">
+        <div class="user-dropdown-top">
+          <div class="client-avatar-lg">{{ userInitials }}</div>
+          <div>
+            <div style="font-weight:600;font-size:0.88rem;color:#1a1a1a;">{{ userName }}</div>
+            <div style="font-size:0.72rem;color:#aaa;">{{ userEmail }}</div>
+          </div>
+        </div>
+        <hr style="border-color:#f0ede0;margin:8px 0;">
+        <a class="topnav-dropdown-item" (click)="openProfile($event)">
+          <i class="fas fa-user-circle" style="color:#d4af37;"></i> Mon profil
+        </a>
+        <a class="topnav-dropdown-item logout-item" (click)="logout($event)">
+          <i class="fas fa-sign-out-alt"></i> Déconnexion
+        </a>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ══ MODAL PROFIL ══ -->
+<div class="modal-backdrop fade show" *ngIf="showProfileModal" (click)="closeProfile()"></div>
+<div class="modal fade show d-block" *ngIf="showProfileModal" tabindex="-1" style="z-index:1060;">
+  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+    <div class="modal-content" style="border-radius:16px;border:none;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,#d4af37,#f4d03f);padding:1.4rem 1.5rem;display:flex;align-items:center;justify-content:space-between;">
+        <h5 style="color:#fff;font-weight:700;margin:0;font-size:1rem;">
+          <i class="fas fa-id-card me-2"></i> Mon Profil
+        </h5>
+        <button (click)="closeProfile()" style="background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer;">&times;</button>
+      </div>
+      <div class="modal-body pb-3">
+        <div style="text-align:center;margin-bottom:16px;">
+          <div class="client-avatar-xl mx-auto">{{ userInitials }}</div>
+          <h5 style="font-weight:700;margin:10px 0 4px;">{{ userName }}</h5>
+          <span style="background:rgba(212,175,55,0.15);color:#b8860b;padding:3px 14px;border-radius:20px;font-size:0.7rem;font-weight:600;">{{ userRole }}</span>
+        </div>
+        <div class="profile-info-row"><i class="fas fa-envelope profile-info-icon"></i><div><small>Email</small><div style="font-weight:600;font-size:0.85rem;">{{ userEmail }}</div></div></div>
+        <div class="profile-info-row"><i class="fas fa-shield-alt profile-info-icon"></i><div><small>Rôle</small><div style="font-weight:600;font-size:0.85rem;">{{ userRole }}</div></div></div>
+        <div class="profile-info-row"><span style="width:36px;height:36px;background:rgba(16,185,129,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-right:12px;"><i class="fas fa-circle" style="color:#10b981;font-size:0.5rem;"></i></span><div><small>Statut</small><div style="font-weight:600;font-size:0.85rem;color:#10b981;">Connecté</div></div></div>
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button class="btn btn-outline-secondary btn-sm px-4" (click)="closeProfile()">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,314 +1,402 @@
-<!-- Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">
-    {{ isEdit ? 'Modifier Contrat' : 'Nouveau Contrat' }}
+
+
+<!-- ══════════════════════════════════════════════
+     CONTRAT FORM — Interface Client LifeSure
+     ══════════════════════════════════════════════ -->
+
+<!-- HEADER -->
+<div class="cf-header">
+  <h1 class="cf-title">
+    {{ isEdit ? '✏️ Modifier Contrat' : '📝 Nouveau Contrat' }}
   </h1>
-  <a routerLink="/admin/contrats" class="btn btn-secondary shadow-sm">
-    <i class="fas fa-arrow-left fa-sm me-2"></i> Retour
+  <a [routerLink]="isClient ? '/client/contrats' : '/admin/contrats'"
+     class="cf-btn-retour">
+    ← Retour
   </a>
 </div>
 
-<!-- Messages -->
-<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+<!-- MESSAGES -->
+<div *ngIf="errorMessage" class="cf-alert-danger">⚠️ {{ errorMessage }}</div>
+<div *ngIf="successMessage" class="cf-alert-success">✅ {{ successMessage }}</div>
 
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Informations du contrat</h6>
-  </div>
-  <div class="card-body">
-    <form (ngSubmit)="onSubmit()" #f="ngForm">
+<form (ngSubmit)="onSubmit()" #f="ngForm">
+<div class="cf-layout">
 
-      <!-- === CHAMPS COMMUNS === -->
-      <div class="row">
+  <!-- ══ COLONNE GAUCHE : FORMULAIRE ══ -->
+  <div>
 
-        <div class="col-md-12 mb-3">
-  <label class="form-label">Type de contrat *</label>
-  <select class="form-control" name="type"
-          [(ngModel)]="contrat.typeContrat"
-          (change)="onTypeChange()"
-          required>
-    <option *ngFor="let t of typesContrat" [value]="t">{{ t }}</option>
-  </select>
-</div>
+    <!-- TYPE DE CONTRAT -->
+    <div class="cf-card">
+      <div class="cf-section-label">🏷️ Type de contrat</div>
 
-<!-- Info client connecté -->
-<div class="col-12 mb-3">
-  <div class="alert alert-info mb-0">
-    <i class="fas fa-user me-2"></i>
-    Ce contrat sera créé pour <strong>le client actuellement connecté</strong>.
-  </div>
-</div>
-
-        
-<div class="col-md-6 mb-3">
-  <label class="form-label">Date début *</label>
-  <input type="date" class="form-control" name="dateDebut"
-         [(ngModel)]="contrat.dateDebut"
-         [min]="isEdit ? null : today"
-         required>
-</div>
-
-<div class="col-md-6 mb-3">
-  <label class="form-label">Date fin *</label>
-  <input type="date" class="form-control" name="dateFin"
-         [class.is-invalid]="contrat.dateDebut && contrat.dateFin && !isDateValid()"
-         [(ngModel)]="contrat.dateFin"
-         [min]="contrat.dateDebut || today"
-         required>
-  
-  <!-- 🆕 Message d'erreur en temps réel -->
-  <div *ngIf="contrat.dateDebut && contrat.dateFin && !isDateValid()" 
-       class="invalid-feedback d-block">
-    <i class="fas fa-exclamation-circle me-1"></i>
-    La date de fin doit être <strong>après</strong> la date de début
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          <div class="col-12 mb-3">
-             <label class="form-label">Description*</label>
-             <input type="text" class="form-control" name="description"
-               [(ngModel)]="contrat.description" required>
-          </div>
-
+      <div class="cf-type-grid">
+        <div *ngFor="let t of typesContrat"
+             class="cf-type-option"
+             [class.selected]="contrat.typeContrat === t"
+             (click)="contrat.typeContrat = t; onTypeChange()">
+          <div class="cf-type-emoji">{{ getTypeIcon(t) }}</div>
+          <div class="cf-type-name">{{ t }}</div>
+        </div>
       </div>
 
-      <hr>
+      <!-- Info client -->
+      <div class="cf-alert-info">
+        👤 Ce contrat sera créé pour <strong>le client actuellement connecté</strong>.
+      </div>
 
-      <!-- === AUTO === -->
-<div *ngIf="contrat.typeContrat === 'AUTO'">
-  <h5 class="text-primary mb-3">
-    <i class="fas fa-car me-2"></i>Informations véhicule
-  </h5>
-  <div class="row">
-    
-    <!-- 🆕 MARQUE en liste déroulante -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Marque *</label>
-      <select class="form-control" name="marque"
-              [(ngModel)]="contrat.vehiculeMarque"
-              (change)="onMarqueChange()"
-              required>
-        <option value="">-- Sélectionner une marque --</option>
-        <option *ngFor="let m of listeMarques" [value]="m">{{ m }}</option>
-      </select>
-    </div>
-    
-    <!-- 🆕 MODÈLE en liste déroulante (cascade) -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Modèle *</label>
-      <select class="form-control" name="modele"
-              [(ngModel)]="contrat.vehiculeModele"
-              [disabled]="!contrat.vehiculeMarque"
-              required>
-        <option value="">
-          {{ contrat.vehiculeMarque ? '-- Sélectionner un modèle --' : '⚠️ Choisissez d\'abord une marque' }}
-        </option>
-        <option *ngFor="let mod of modelesDisponibles" [value]="mod">{{ mod }}</option>
-      </select>
-      <small *ngIf="!contrat.vehiculeMarque" class="text-muted">
-        <i class="fas fa-info-circle me-1"></i>
-        Choisissez d'abord la marque pour voir les modèles
-      </small>
-    </div>
-    
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Immatriculation *</label>
-      <input type="text" class="form-control" name="immat"
-             [(ngModel)]="contrat.vehiculeImmatriculation"
-             placeholder="Ex: 1234 TUN 5678"
-             required>
-    </div>
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Montant garantie (DT) *</label>
-      <input type="number" class="form-control" name="garantieAuto"
-             [(ngModel)]="contrat.montantGarantie" required min="0">
-    </div>
-  </div>
-</div>
-
-     <!-- === HABITATION === -->
-<div *ngIf="contrat.typeContrat === 'HABITATION'">
-  <h5 class="text-primary mb-3">
-    <i class="fas fa-home me-2"></i>Informations habitation
-  </h5>
-  <div class="row">
-
-    <!-- 🆕 GOUVERNORAT -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Gouvernorat *</label>
-      <select class="form-control" name="gouvernorat"
-              [(ngModel)]="gouvernoratSelectionne"
-              (change)="onGouvernoratChange()"
-              required>
-        <option value="">🇹🇳 -- Sélectionner un gouvernorat --</option>
-        <option *ngFor="let g of listeGouvernorats" [value]="g">{{ g }}</option>
-      </select>
-    </div>
-
-    <!-- 🆕 DÉLÉGATION (cascade) -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Délégation / Ville *</label>
-      <select class="form-control" name="delegation"
-              [(ngModel)]="delegationSelectionnee"
-              (change)="updateAdresseBien()"
-              [disabled]="!gouvernoratSelectionne"
-              required>
-        <option value="">
-          {{ gouvernoratSelectionne ? '-- Sélectionner une délégation --' : '⚠️ Choisissez d\'abord un gouvernorat' }}
-        </option>
-        <option *ngFor="let d of delegationsDisponibles" [value]="d">{{ d }}</option>
-      </select>
-      <small *ngIf="!gouvernoratSelectionne" class="text-muted">
-        <i class="fas fa-info-circle me-1"></i>
-        Choisissez d'abord le gouvernorat
-      </small>
-    </div>
-
-    <!-- 🆕 RUE / DÉTAIL ADRESSE -->
-    <div class="col-md-12 mb-3">
-      <label class="form-label">Adresse précise (rue, numéro, étage...) *</label>
-      <input type="text" class="form-control" name="rueDetail"
-             [(ngModel)]="rueDetail"
-             (input)="updateAdresseBien()"
-             placeholder="Ex: 12, Rue des Roses, Apt 4B"
-             required>
-      <small class="text-muted" *ngIf="contrat.adresseBien">
-        <i class="fas fa-check-circle me-1 text-success"></i>
-        Adresse complète : <strong>{{ contrat.adresseBien }}</strong>
-      </small>
-    </div>
-
-    <div class="col-md-4 mb-3">
-      <label class="form-label">Type de bien *</label>
-      <select class="form-control" name="typeBien"
-              [(ngModel)]="contrat.typeBien" required>
-        <option value="">-- Choisir --</option>
-        <option value="APPARTEMENT">🏢 Appartement</option>
-        <option value="MAISON">🏠 Maison</option>
-        <option value="VILLA">🏡 Villa</option>
-        <option value="STUDIO">🛋️ Studio</option>
-      </select>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label class="form-label">Superficie (m²) *</label>
-      <input type="number" class="form-control" name="superficie"
-             [(ngModel)]="contrat.superficieBien" required min="1"
-             placeholder="Ex: 120">
-    </div>
-    <div class="col-md-4 mb-3">
-      <label class="form-label">Montant garantie (DT) *</label>
-      <input type="number" class="form-control" name="garantieHab"
-             [(ngModel)]="contrat.montantGarantie" required min="0"
-             placeholder="Ex: 100000">
-    </div>
-  </div>
-</div>
-
-      <!-- === SANTE === -->
-      <div *ngIf="contrat.typeContrat === 'SANTE'">
-        <h5 class="text-primary mb-3">
-          <i class="fas fa-heartbeat me-2"></i>Informations santé
-        </h5>
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Âge de l'assuré *</label>
-            <input type="number" class="form-control" name="age"
-                   [(ngModel)]="contrat.ageAssure" required min="0" max="120">
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Plafond annuel (DT) *</label>
-            <input type="number" class="form-control" name="plafondAn"
-                   [(ngModel)]="contrat.plafondAnnuel" required min="0">
+      <!-- Dates -->
+      <div class="cf-form-row">
+        <div class="cf-form-group">
+          <label class="cf-label">📅 Date début <span class="cf-required">*</span></label>
+          <input type="date" class="cf-input" name="dateDebut"
+                 [(ngModel)]="contrat.dateDebut"
+                 [min]="isEdit ? null : today"
+                 required>
+        </div>
+        <div class="cf-form-group">
+          <label class="cf-label">🏁 Date fin <span class="cf-required">*</span></label>
+          <input type="date" class="cf-input" name="dateFin"
+                 [class.cf-input-error]="contrat.dateDebut && contrat.dateFin && !isDateValid()"
+                 [(ngModel)]="contrat.dateFin"
+                 [min]="contrat.dateDebut || today"
+                 required>
+          <div *ngIf="contrat.dateDebut && contrat.dateFin && !isDateValid()"
+               class="cf-field-error">
+            ⚠️ La date de fin doit être <strong>après</strong> la date de début
           </div>
         </div>
       </div>
-<!-- === VOYAGE === -->
-<div *ngIf="contrat.typeContrat === 'VOYAGE'">
-  <h5 class="text-primary mb-3">
-    <i class="fas fa-plane me-2"></i>Informations voyage
-  </h5>
-  <div class="row">
-    
-    <!-- 🆕 DESTINATION en liste déroulante avec drapeaux -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Destination *</label>
-      <select class="form-control" name="destination"
-              [(ngModel)]="contrat.destination" required>
-        <option value="">🌍 -- Sélectionner une destination --</option>
-        <option *ngFor="let pays of destinations" [value]="pays">{{ pays }}</option>
-      </select>
-      <small class="text-muted">
-        <i class="fas fa-info-circle me-1"></i>
-        {{ destinations.length }} destinations disponibles
-      </small>
-    </div>
-    
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Durée (jours) *</label>
-      <input type="number" class="form-control" name="duree"
-             [(ngModel)]="contrat.dureeVoyage" required min="1" max="365"
-             placeholder="Ex: 7">
-      <small class="text-muted">
-        <i class="fas fa-info-circle me-1"></i>
-        Maximum 365 jours
-      </small>
-    </div>
-    
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Plafond assurance (DT) *</label>
-      <input type="number" class="form-control" name="plafondAss"
-             [(ngModel)]="contrat.plafondAssurance" required min="0"
-             placeholder="Ex: 10000">
-    </div>
-  </div>
-</div>
 
-      <!-- === INFO === -->
-      <div class="alert alert-info">
-        <i class="fas fa-info-circle me-2"></i>
-        La <strong>prime mensuelle</strong> sera calculée automatiquement par le système
-        selon le type de contrat et le taux en vigueur.
+      <!-- Description -->
+      <div class="cf-form-full">
+        <label class="cf-label">📝 Description <span class="cf-required">*</span></label>
+        <input type="text" class="cf-input" name="description"
+               [(ngModel)]="contrat.description"
+               placeholder="Description du contrat..."
+               required>
+      </div>
+    </div>
+
+    <!-- ══ AUTO ══ -->
+    <div class="cf-card" *ngIf="contrat.typeContrat === 'AUTO'">
+      <div class="cf-section-label">🚗 Informations véhicule</div>
+      <div class="cf-form-row">
+        <div class="cf-form-group">
+          <label class="cf-label">Marque <span class="cf-required">*</span></label>
+          <select class="cf-select" name="marque"
+                  [(ngModel)]="contrat.vehiculeMarque"
+                  (change)="onMarqueChange()" required>
+            <option value="">-- Sélectionner une marque --</option>
+            <option *ngFor="let m of listeMarques" [value]="m">{{ m }}</option>
+          </select>
+        </div>
+        <div class="cf-form-group">
+          <label class="cf-label">Modèle <span class="cf-required">*</span></label>
+          <select class="cf-select" name="modele"
+                  [(ngModel)]="contrat.vehiculeModele"
+                  [disabled]="!contrat.vehiculeMarque" required>
+            <option value="">
+              {{ contrat.vehiculeMarque ? '-- Sélectionner un modèle --' : "⚠️ Choisissez d'abord une marque" }}
+            </option>
+            <option *ngFor="let mod of modelesDisponibles" [value]="mod">{{ mod }}</option>
+          </select>
+          <div *ngIf="!contrat.vehiculeMarque" class="cf-hint">
+            ℹ️ Choisissez d'abord la marque pour voir les modèles
+          </div>
+        </div>
+      </div>
+      <div class="cf-form-row">
+        <div class="cf-form-group">
+          <label class="cf-label">Immatriculation <span class="cf-required">*</span></label>
+          <input type="text" class="cf-input" name="immat"
+                 [(ngModel)]="contrat.vehiculeImmatriculation"
+                 placeholder="Ex: 1234 TUN 5678" required>
+        </div>
+        <div class="cf-form-group">
+          <label class="cf-label">Montant garantie (DT) <span class="cf-required">*</span></label>
+          <input type="number" class="cf-input" name="garantieAuto"
+                 [(ngModel)]="contrat.montantGarantie" required min="0"
+                 placeholder="Ex: 50 000">
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ HABITATION ══ -->
+    <div class="cf-card" *ngIf="contrat.typeContrat === 'HABITATION'">
+      <div class="cf-section-label">🏠 Informations habitation</div>
+      <div class="cf-form-row">
+        <div class="cf-form-group">
+          <label class="cf-label">Gouvernorat <span class="cf-required">*</span></label>
+          <select class="cf-select" name="gouvernorat"
+                  [(ngModel)]="gouvernoratSelectionne"
+                  (change)="onGouvernoratChange()" required>
+            <option value="">🇹🇳 -- Sélectionner un gouvernorat --</option>
+            <option *ngFor="let g of listeGouvernorats" [value]="g">{{ g }}</option>
+          </select>
+        </div>
+        <div class="cf-form-group">
+          <label class="cf-label">Délégation / Ville <span class="cf-required">*</span></label>
+          <select class="cf-select" name="delegation"
+                  [(ngModel)]="delegationSelectionnee"
+                  (change)="updateAdresseBien()"
+                  [disabled]="!gouvernoratSelectionne" required>
+            <option value="">
+              {{ gouvernoratSelectionne ? '-- Sélectionner une délégation --' : "⚠️ Choisissez d'abord un gouvernorat" }}
+            </option>
+            <option *ngFor="let d of delegationsDisponibles" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="cf-form-full">
+        <label class="cf-label">Adresse précise <span class="cf-required">*</span></label>
+        <input type="text" class="cf-input" name="rueDetail"
+               [(ngModel)]="rueDetail"
+               (input)="updateAdresseBien()"
+               placeholder="Ex: 12, Rue des Roses, Apt 4B" required>
+        <div *ngIf="contrat.adresseBien" class="cf-hint" style="color:#047857;">
+          ✅ Adresse complète : <strong>{{ contrat.adresseBien }}</strong>
+        </div>
+      </div>
+      <div class="cf-form-row cf-form-row-3">
+        <div class="cf-form-group">
+          <label class="cf-label">Type de bien <span class="cf-required">*</span></label>
+          <select class="cf-select" name="typeBien"
+                  [(ngModel)]="contrat.typeBien" required>
+            <option value="">-- Choisir --</option>
+            <option value="APPARTEMENT">🏢 Appartement</option>
+            <option value="MAISON">🏠 Maison</option>
+            <option value="VILLA">🏡 Villa</option>
+            <option value="STUDIO">🛋️ Studio</option>
+          </select>
+        </div>
+        <div class="cf-form-group">
+          <label class="cf-label">Superficie (m²) <span class="cf-required">*</span></label>
+          <input type="number" class="cf-input" name="superficie"
+                 [(ngModel)]="contrat.superficieBien" required min="1"
+                 placeholder="Ex: 120">
+        </div>
+        <div class="cf-form-group">
+          <label class="cf-label">Montant garantie (DT) <span class="cf-required">*</span></label>
+          <input type="number" class="cf-input" name="garantieHab"
+                 [(ngModel)]="contrat.montantGarantie" required min="0"
+                 placeholder="Ex: 100 000">
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SANTÉ ══ -->
+    <div class="cf-card" *ngIf="contrat.typeContrat === 'SANTE'">
+      <div class="cf-section-label">🏥 Informations santé</div>
+      <div class="cf-form-row">
+        <div class="cf-form-group">
+          <label class="cf-label">Âge de l'assuré <span class="cf-required">*</span></label>
+          <input type="number" class="cf-input" name="age"
+                 [(ngModel)]="contrat.ageAssure" required min="0" max="120"
+                 placeholder="Ex: 35">
+        </div>
+        <div class="cf-form-group">
+          <label class="cf-label">Plafond annuel (DT) <span class="cf-required">*</span></label>
+          <input type="number" class="cf-input" name="plafondAn"
+                 [(ngModel)]="contrat.plafondAnnuel" required min="0"
+                 placeholder="Ex: 10 000">
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ VOYAGE ══ -->
+    <div class="cf-card" *ngIf="contrat.typeContrat === 'VOYAGE'">
+      <div class="cf-section-label">✈️ Informations voyage</div>
+      <div class="cf-form-row">
+        <div class="cf-form-group">
+          <label class="cf-label">Destination <span class="cf-required">*</span></label>
+          <select class="cf-select" name="destination"
+                  [(ngModel)]="contrat.destination" required>
+            <option value="">🌍 -- Sélectionner une destination --</option>
+            <option *ngFor="let pays of destinations" [value]="pays">{{ pays }}</option>
+          </select>
+          <div class="cf-hint">ℹ️ {{ destinations.length }} destinations disponibles</div>
+        </div>
+        <div class="cf-form-group">
+          <label class="cf-label">Durée (jours) <span class="cf-required">*</span></label>
+          <input type="number" class="cf-input" name="duree"
+                 [(ngModel)]="contrat.dureeVoyage" required min="1" max="365"
+                 placeholder="Ex: 7">
+          <div class="cf-hint">ℹ️ Maximum 365 jours</div>
+        </div>
+      </div>
+      <div class="cf-form-row">
+        <div class="cf-form-group">
+          <label class="cf-label">Plafond assurance (DT) <span class="cf-required">*</span></label>
+          <input type="number" class="cf-input" name="plafondAss"
+                 [(ngModel)]="contrat.plafondAssurance" required min="0"
+                 placeholder="Ex: 10 000">
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO PRIME -->
+    <div class="cf-alert-info" style="margin-bottom:16px;">
+      ℹ️ La <strong>prime mensuelle</strong> sera calculée automatiquement
+      selon le type de contrat et le taux en vigueur.
+    </div>
+
+    <!-- BOUTONS -->
+    <div class="cf-actions">
+      <a [routerLink]="isClient ? '/client/contrats' : '/admin/contrats'"
+         class="cf-btn-annuler">Annuler</a>
+      <button type="submit" class="cf-btn-creer"
+              [disabled]="loading || !f.valid">
+        <span *ngIf="!loading">
+          💾 {{ isEdit ? 'Modifier' : 'Créer le contrat' }}
+        </span>
+        <span *ngIf="loading">
+          ⏳ Enregistrement...
+        </span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ══ COLONNE DROITE : SIDEBAR ══ -->
+  <div class="cf-sidebar">
+
+    <!-- CHECKLIST -->
+    <div class="cf-widget">
+      <div class="cf-widget-title">✅ Progression</div>
+      <div class="cf-check-item">
+        <div class="cf-check-dot" [class.dot-done]="contrat.typeContrat"></div>
+        <span>Type de contrat</span>
+      </div>
+      <div class="cf-check-item">
+        <div class="cf-check-dot" [class.dot-done]="contrat.dateDebut"></div>
+        <span>Date de début</span>
+      </div>
+      <div class="cf-check-item">
+        <div class="cf-check-dot" [class.dot-done]="contrat.dateFin && isDateValid()"></div>
+        <span>Date de fin</span>
+      </div>
+      <div class="cf-check-item">
+        <div class="cf-check-dot" [class.dot-done]="contrat.description"></div>
+        <span>Description</span>
       </div>
 
-      <!-- === BOUTONS === -->
-      <div class="text-end">
-        <a routerLink="/admin/contrats" class="btn btn-secondary me-2">Annuler</a>
-        <button type="submit" class="btn btn-primary" [disabled]="loading || !f.valid">
-          <span *ngIf="!loading">
-            <i class="fas fa-save me-2"></i>
-            {{ isEdit ? 'Modifier' : 'Créer le contrat' }}
-          </span>
-          <span *ngIf="loading">
-            <i class="fas fa-spinner fa-spin me-2"></i>Enregistrement...
-          </span>
-        </button>
-      </div>
+      <!-- AUTO -->
+      <ng-container *ngIf="contrat.typeContrat === 'AUTO'">
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.vehiculeMarque"></div>
+          <span>Marque</span>
+        </div>
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.vehiculeModele"></div>
+          <span>Modèle</span>
+        </div>
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.vehiculeImmatriculation"></div>
+          <span>Immatriculation</span>
+        </div>
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.montantGarantie"></div>
+          <span>Montant garantie</span>
+        </div>
+      </ng-container>
 
-    </form>
+      <!-- HABITATION -->
+      <ng-container *ngIf="contrat.typeContrat === 'HABITATION'">
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="gouvernoratSelectionne"></div>
+          <span>Gouvernorat</span>
+        </div>
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="delegationSelectionnee"></div>
+          <span>Délégation</span>
+        </div>
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.typeBien"></div>
+          <span>Type de bien</span>
+        </div>
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.superficieBien"></div>
+          <span>Superficie</span>
+        </div>
+      </ng-container>
+
+      <!-- SANTÉ -->
+      <ng-container *ngIf="contrat.typeContrat === 'SANTE'">
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.ageAssure"></div>
+          <span>Âge assuré</span>
+        </div>
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.plafondAnnuel"></div>
+          <span>Plafond annuel</span>
+        </div>
+      </ng-container>
+
+      <!-- VOYAGE -->
+      <ng-container *ngIf="contrat.typeContrat === 'VOYAGE'">
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.destination"></div>
+          <span>Destination</span>
+        </div>
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.dureeVoyage"></div>
+          <span>Durée</span>
+        </div>
+        <div class="cf-check-item">
+          <div class="cf-check-dot" [class.dot-done]="contrat.plafondAssurance"></div>
+          <span>Plafond assurance</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- PRIME ESTIMÉE -->
+    <div class="cf-widget">
+      <div class="cf-widget-title">💰 Prime estimée</div>
+      <div class="cf-prime-box">
+        <div class="cf-prime-label">Prime mensuelle estimée</div>
+        <div class="cf-prime-val">— DT</div>
+        <div class="cf-prime-note">Calculée après soumission</div>
+      </div>
+      <div class="cf-prime-info">
+        La prime dépend du type de contrat, de la durée et du taux en vigueur.
+      </div>
+    </div>
+
+    <!-- CONSEILS -->
+    <div class="cf-widget">
+      <div class="cf-widget-title">💡 Conseils</div>
+      <div class="cf-conseil-item">
+        <div class="cf-conseil-icon ci-or">📅</div>
+        <div class="cf-conseil-text">
+          <strong>Dates valides</strong> — la date de fin doit être après la date de début
+        </div>
+      </div>
+      <div class="cf-conseil-item" *ngIf="contrat.typeContrat === 'AUTO'">
+        <div class="cf-conseil-icon ci-green">🚗</div>
+        <div class="cf-conseil-text">
+          <strong>Immatriculation</strong> — format tunisien : 1234 TUN 5678
+        </div>
+      </div>
+      <div class="cf-conseil-item" *ngIf="contrat.typeContrat === 'HABITATION'">
+        <div class="cf-conseil-icon ci-blue">🏠</div>
+        <div class="cf-conseil-text">
+          <strong>Adresse complète</strong> — sélectionnez gouvernorat, délégation puis la rue
+        </div>
+      </div>
+      <div class="cf-conseil-item" *ngIf="contrat.typeContrat === 'VOYAGE'">
+        <div class="cf-conseil-icon ci-blue">✈️</div>
+        <div class="cf-conseil-text">
+          <strong>Durée max</strong> — 365 jours par voyage assuré
+        </div>
+      </div>
+      <div class="cf-conseil-item" *ngIf="contrat.typeContrat === 'SANTE'">
+        <div class="cf-conseil-icon" style="background:rgba(239,68,68,0.1);">🏥</div>
+        <div class="cf-conseil-text">
+          <strong>Plafond annuel</strong> — montant maximum remboursé par an
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+</form>

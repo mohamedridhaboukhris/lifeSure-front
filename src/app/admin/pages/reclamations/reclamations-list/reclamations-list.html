@@ -1,59 +1,58 @@
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Mes Réclamations</h1>
-  <a routerLink="/admin/reclamations/nouvelle" class="btn btn-primary shadow-sm">
-    <i class="fas fa-plus fa-sm me-2"></i> Nouvelle réclamation
+<!-- HEADER -->
+<div class="rl-header">
+  <h1 class="rl-title">💬 Mes Réclamations</h1>
+  <a [routerLink]="isClient ? '/client/reclamations/nouvelle' : '/admin/reclamations/nouvelle'"
+     class="rl-btn-new">
+    <i class="fas fa-plus"></i> Nouvelle réclamation
   </a>
 </div>
 
 <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
 <div *ngIf="loading" class="text-center py-5">
-  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+  <i class="fas fa-spinner fa-spin fa-2x" style="color:#d4af37;"></i>
 </div>
 
-<div *ngIf="!loading" class="card shadow mb-4">
-  <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">
-      Mes réclamations ({{ reclamations.length }})
-    </h6>
+<div *ngIf="!loading">
+
+  <div class="rl-section-label">📂 Mes réclamations ({{ reclamations.length }})</div>
+
+  <!-- VIDE -->
+  <div *ngIf="reclamations.length === 0" class="rl-empty">
+    <div class="rl-empty-icon">💬</div>
+    <p>Aucune réclamation soumise.</p>
+    <a [routerLink]="isClient ? '/client/reclamations/nouvelle' : '/admin/reclamations/nouvelle'"
+       class="rl-btn-new mt-3">
+      Soumettre une réclamation
+    </a>
   </div>
-  <div class="card-body">
-    <div *ngIf="reclamations.length === 0" class="text-center text-muted py-4">
-      <i class="fas fa-comment-dots fa-2x mb-2 d-block"></i>
-      Aucune réclamation.
-      <br>
-      <a routerLink="/admin/reclamations/nouvelle" class="btn btn-primary mt-3">
-        Soumettre une réclamation
-      </a>
-    </div>
 
-    <div *ngFor="let r of reclamations" class="card mb-3 border-left-primary">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start">
-          <div>
-            <h5 class="mb-1">{{ r.sujet }}</h5>
-            <small class="text-muted">
-              Soumise le {{ r.dateDepot | date:'short' }}
-            </small>
-          </div>
-          <span class="badge" [ngClass]="getStatutBadge(r.statut)">
-            {{ r.statut }}
-          </span>
-        </div>
+  <!-- CARDS -->
+  <div *ngFor="let r of reclamations" class="rl-card">
 
-        <p class="mt-3 mb-2">{{ r.description }}</p>
-
-        <!-- Réponse de l'expert -->
-        <div *ngIf="r.justification" class="alert mt-3"
-             [class.alert-success]="r.statut === 'ACCEPTEE'"
-             [class.alert-danger]="r.statut === 'REFUSEE'">
-          <strong>
-            <i class="fas fa-reply me-2"></i>Réponse de l'expert :
-          </strong>
-          <br>
-          {{ r.justification }}
-        </div>
+    <!-- HEADER CARD -->
+    <div class="rl-card-header">
+      <div>
+        <div class="rl-card-sujet">{{ r.sujet }}</div>
+        <div class="rl-card-date">📅 Soumise le {{ r.dateDepot | date:'short' }}</div>
       </div>
+      <span class="rl-statut" [ngClass]="getStatutBadge(r.statut)">
+        {{ getStatutIcon(r.statut) }} {{ r.statut }}
+      </span>
     </div>
+
+    <!-- DESCRIPTION -->
+    <div class="rl-desc">{{ r.description }}</div>
+
+    <!-- RÉPONSE EXPERT -->
+    <div *ngIf="r.justification" class="rl-reponse"
+         [class.rl-reponse-acceptee]="r.statut === 'ACCEPTEE'"
+         [class.rl-reponse-refusee]="r.statut === 'REFUSEE'">
+      <div class="rl-reponse-title">
+        ↩ Réponse de l'expert
+      </div>
+      <div class="rl-reponse-text">{{ r.justification }}</div>
+    </div>
+
   </div>
 </div>

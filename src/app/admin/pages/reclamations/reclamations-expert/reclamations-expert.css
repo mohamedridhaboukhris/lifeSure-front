@@ -1,0 +1,184 @@
+/* ══════════════════════════════════════════════
+   RÉCLAMATIONS EXPERT — LifeSure
+   ══════════════════════════════════════════════ */
+
+.re-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.re-title { font-size: 1.3rem; font-weight: 700; color: #1a1a1a; }
+.re-count {
+  background: rgba(212,175,55,0.12);
+  color: #b8860b;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.re-section-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #d4af37;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.re-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(212,175,55,0.2);
+}
+
+.re-empty {
+  text-align: center;
+  padding: 50px;
+  color: #aaa;
+}
+.re-empty-icon { font-size: 3rem; margin-bottom: 12px; }
+
+/* CARD */
+.re-card {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-left: 4px solid #d4af37;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: all 0.15s ease;
+}
+.re-card:hover {
+  border-color: rgba(212,175,55,0.35);
+  box-shadow: 0 4px 18px rgba(212,175,55,0.1);
+  transform: translateX(3px);
+}
+
+.re-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f5f2e8;
+}
+.re-rec-num {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #d4af37;
+}
+
+/* STATUT */
+.re-statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+.badge-warning { background: rgba(245,158,11,0.12); color: #92400e; }
+.badge-info    { background: rgba(59,130,246,0.1);  color: #1d4ed8; }
+.badge-success { background: rgba(16,185,129,0.1);  color: #065f46; }
+.badge-danger  { background: rgba(239,68,68,0.1);   color: #991b1b; }
+
+/* INFO GRID */
+.re-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.re-info-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #bbb;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.re-info-val { font-size: 0.85rem; font-weight: 600; color: #1a1a1a; }
+.re-info-sub { font-size: 0.7rem; color: #aaa; }
+
+/* SUJET */
+.re-sujet-wrap { margin-bottom: 14px; }
+.re-sujet { font-size: 0.95rem; font-weight: 700; color: #1a1a1a; }
+
+/* DESCRIPTION */
+.re-desc-box {
+  background: #faf9f5;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+/* DÉCISION */
+.re-decision {
+  background: rgba(212,175,55,0.04);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.re-decision-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #d4af37;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.re-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #f0ede0;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  background: #fff;
+  resize: vertical;
+  min-height: 90px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.re-textarea:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+  outline: none;
+}
+.re-textarea-hint { font-size: 0.65rem; color: #aaa; margin-top: 5px; }
+
+.re-decision-btns { display: flex; gap: 10px; margin-top: 14px; }
+.re-btn-accept {
+  background: rgba(16,185,129,0.1);
+  border: 1.5px solid rgba(16,185,129,0.3);
+  border-radius: 10px;
+  padding: 9px 22px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #065f46;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.re-btn-accept:hover { background: rgba(16,185,129,0.2); }
+.re-btn-refus {
+  background: rgba(239,68,68,0.08);
+  border: 1.5px solid rgba(239,68,68,0.25);
+  border-radius: 10px;
+  padding: 9px 22px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #991b1b;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.re-btn-refus:hover { background: rgba(239,68,68,0.15); }

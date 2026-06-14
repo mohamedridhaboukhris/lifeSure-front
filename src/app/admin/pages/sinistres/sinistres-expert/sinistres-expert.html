@@ -1,340 +1,346 @@
-<h1 class="h3 mb-4 text-gray-800">Mes Sinistres à expertiser</h1>
+<!-- ══════════════════════════════════════════════
+     SINISTRES EXPERT — Nouveau Design LifeSure
+     ══════════════════════════════════════════════ -->
 
-<!-- ============================== -->
-<!-- 🔍 BARRE DE RECHERCHE + FILTRES -->
-<!-- ============================== -->
-<div class="card shadow mb-4">
-  <div class="card-header py-3 d-flex justify-content-between align-items-center">
-    <h6 class="m-0 font-weight-bold text-primary">
-      <i class="fas fa-search me-2"></i>
-    </h6>
-    <button *ngIf="hasActiveFilters()"
-            class="btn btn-sm btn-outline-secondary"
-            (click)="resetFilters()">
-      <i class="fas fa-times me-1"></i>Réinitialiser
-    </button>
+<!-- HEADER PAGE -->
+<div class="se-header">
+  <div class="se-title">🔬 Mes Sinistres à <span class="se-title-accent">expertiser</span></div>
+  <span class="se-count-badge">📋 {{ filteredSinistres.length }} sinistre(s)</span>
+</div>
+
+<!-- STATS RAPIDES -->
+<div class="se-stats">
+  <div class="se-stat">
+    <div class="se-stat-val se-or">{{ sinistres.length }}</div>
+    <div class="se-stat-lbl">📋 Total assignés</div>
   </div>
-  <div class="card-body">
-    <div class="row g-3">
-
-      <div class="col-md-12 mb-2">
-        <div class="input-group">
-          <span class="input-group-text bg-primary text-white">
-            <i class="fas fa-search"></i>
-          </span>
-          <input type="text" class="form-control"
-                 placeholder="Rechercher par n° sinistre, client, contrat..."
-                 [(ngModel)]="searchTerm"
-                 (input)="applyFilters()">
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <label class="form-label small text-muted">Type de sinistre</label>
-        <select class="form-select" [(ngModel)]="filterType" (change)="applyFilters()">
-          <option value="">-- Tous --</option>
-          <option *ngFor="let t of types" [value]="t">{{ t }}</option>
-        </select>
-      </div>
-
-      <div class="col-md-3">
-        <label class="form-label small text-muted">Statut</label>
-        <select class="form-select" [(ngModel)]="filterStatut" (change)="applyFilters()">
-          <option value="">-- Tous --</option>
-          <option *ngFor="let s of statuts" [value]="s">{{ s }}</option>
-        </select>
-      </div>
-
-      <div class="col-md-2">
-        <label class="form-label small text-muted">🤖 Fraude IA</label>
-        <select class="form-select" [(ngModel)]="filterFraude" (change)="applyFilters()">
-          <option value="">-- Tous --</option>
-          <option value="oui">⚠️ Suspicion</option>
-          <option value="non">✅ Légitime</option>
-        </select>
-      </div>
-
-      <div class="col-md-2">
-        <label class="form-label small text-muted">Date de début</label>
-        <input type="date" class="form-control" [(ngModel)]="filterDateDebut"
-               (change)="applyFilters()">
-      </div>
-
-      <div class="col-md-2">
-        <label class="form-label small text-muted">Date de fin</label>
-        <input type="date" class="form-control" [(ngModel)]="filterDateFin"
-               (change)="applyFilters()">
-      </div>
-
-    </div>
-
-    <div class="mt-3" *ngIf="hasActiveFilters()">
-      <small class="text-muted">
-        <i class="fas fa-filter me-1 text-primary"></i>
-        <strong>{{ filteredSinistres.length }}</strong> résultat(s) sur
-        <strong>{{ sinistres.length }}</strong> sinistre(s)
-      </small>
-    </div>
+  <div class="se-stat">
+    <div class="se-stat-val se-blue">{{ getCountByStatut('EN_COURS') }}</div>
+    <div class="se-stat-lbl">⏳ En cours</div>
+  </div>
+  <div class="se-stat">
+    <div class="se-stat-val se-green">{{ getCountByStatut('ACCEPTE') }}</div>
+    <div class="se-stat-lbl">✅ Acceptés</div>
+  </div>
+  <div class="se-stat">
+    <div class="se-stat-val se-red">{{ getCountByStatut('REFUSE') }}</div>
+    <div class="se-stat-lbl">❌ Refusés</div>
   </div>
 </div>
 
-<!-- Errors -->
+<!-- FILTRES -->
+<div class="se-filter-panel">
+  <div class="se-filter-grid">
+
+    <div class="se-search">
+      <span class="se-search-ico">🔍</span>
+      <input class="se-search-input"
+             placeholder="Rechercher par n° sinistre, client, contrat..."
+             [(ngModel)]="searchTerm"
+             (input)="applyFilters()">
+    </div>
+
+    <div class="se-filter-group">
+      <div class="se-filter-label">Type sinistre</div>
+      <select class="se-filter-select" [(ngModel)]="filterType" (change)="applyFilters()">
+        <option value="">-- Tous --</option>
+        <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+
+    <div class="se-filter-group">
+      <div class="se-filter-label">Statut</div>
+      <select class="se-filter-select" [(ngModel)]="filterStatut" (change)="applyFilters()">
+        <option value="">-- Tous --</option>
+        <option *ngFor="let s of statuts" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <div class="se-filter-group">
+      <div class="se-filter-label">🤖 Fraude IA</div>
+      <select class="se-filter-select" [(ngModel)]="filterFraude" (change)="applyFilters()">
+        <option value="">-- Tous --</option>
+        <option value="oui">⚠️ Suspicion</option>
+        <option value="non">✅ Légitime</option>
+      </select>
+    </div>
+
+    <div class="se-filter-group">
+      <div class="se-filter-label">Date début</div>
+      <input type="date" class="se-filter-input" [(ngModel)]="filterDateDebut" (change)="applyFilters()">
+    </div>
+
+    <div class="se-filter-group">
+      <div class="se-filter-label">Date fin</div>
+      <input type="date" class="se-filter-input" [(ngModel)]="filterDateFin" (change)="applyFilters()">
+    </div>
+
+  </div>
+
+  <div class="se-filter-footer" *ngIf="hasActiveFilters()">
+    <small>🔎 <strong>{{ filteredSinistres.length }}</strong> résultat(s) sur <strong>{{ sinistres.length }}</strong></small>
+    <button class="se-btn-reset" (click)="resetFilters()">✕ Réinitialiser</button>
+  </div>
+</div>
+
+<!-- ERREUR -->
 <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
-<!-- Loading -->
+<!-- LOADING -->
 <div *ngIf="loading" class="text-center py-5">
-  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+  <i class="fas fa-spinner fa-spin fa-2x" style="color:#d4af37;"></i>
 </div>
 
-<!-- Aucun résultat -->
-<div *ngIf="!loading && filteredSinistres.length === 0" class="text-center py-5 text-muted">
-  <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
-  <ng-container *ngIf="hasActiveFilters()">
-    Aucun sinistre ne correspond à vos critères.
-    <br>
-    <button class="btn btn-link" (click)="resetFilters()">
-      Réinitialiser les filtres
-    </button>
-  </ng-container>
-  <ng-container *ngIf="!hasActiveFilters()">
-    Aucun sinistre à expertiser pour le moment.
-  </ng-container>
+<!-- VIDE -->
+<div *ngIf="!loading && filteredSinistres.length === 0" class="se-empty">
+  <div class="se-empty-icon">🔬</div>
+  <p *ngIf="hasActiveFilters()">Aucun sinistre ne correspond à vos critères.</p>
+  <p *ngIf="!hasActiveFilters()">Aucun sinistre à expertiser pour le moment.</p>
+  <button *ngIf="hasActiveFilters()" class="se-btn-reset" (click)="resetFilters()">
+    Réinitialiser les filtres
+  </button>
 </div>
 
-<!-- ============================== -->
-<!-- 📋 LISTE DES SINISTRES -->
-<!-- ============================== -->
-<div *ngFor="let s of paginatedSinistres" class="card shadow mb-4">
-  <div class="card-header py-3">
-    <div class="d-flex justify-content-between align-items-center">
-      <h6 class="m-0 font-weight-bold text-primary">
-        {{ s.numeroSinistre }}
-        <span class="badge ms-2" [ngClass]="getStatutBadge(s.statut)">{{ s.statut }}</span>
-      </h6>
-      <span class="badge badge-info">{{ s.typeSinistre }}</span>
+<!-- CARDS SINISTRES -->
+<div *ngFor="let s of paginatedSinistres" class="se-card">
+
+  <!-- TOP : icône + numéro + badges + montant -->
+  <div class="se-card-top">
+    <div class="se-sin-icon" [ngClass]="getSinIconClass(s.typeSinistre)">
+      {{ getTypeIcon(s.typeSinistre) }}
+    </div>
+    <div class="se-sin-info">
+      <div class="se-sin-numero">{{ s.numeroSinistre }}</div>
+      <div class="se-badges">
+        <span class="se-badge se-badge-type">
+          {{ getTypeIcon(s.typeSinistre) }} {{ s.typeSinistre }}
+        </span>
+        <span class="se-badge" [ngClass]="getStatutBadgeClass(s.statut)">
+          {{ getStatutIcon(s.statut) }} {{ s.statut }}
+        </span>
+        <span *ngIf="s.fraude" class="se-badge se-badge-fraude">
+          ⚠️ Fraude : {{ (s.scoreFraude || 0) * 100 | number:'1.0-0' }}%
+        </span>
+        <span *ngIf="s.fraude === false" class="se-badge se-badge-legitime">
+          ✅ Légitime : {{ (s.scoreFraude || 0) * 100 | number:'1.0-0' }}%
+        </span>
+      </div>
+    </div>
+    <div class="se-montant">
+      <div class="se-montant-val">{{ s.montantEstime | number:'1.2-2' }} DT</div>
+      <div class="se-montant-lbl">Montant estimé</div>
     </div>
   </div>
-  <div class="card-body">
 
-    <div class="row">
-      <div class="col-md-6">
-        <p><strong>Client :</strong> {{ s.client?.prenom }} {{ s.client?.nom }}</p>
-        <p><strong>Contrat :</strong> {{ s.contrat?.numeroContrat }} ({{ s.contrat?.typeContrat }})</p>
-        <p><strong>Date du sinistre :</strong> {{ s.dateSinistre }}</p>
+  <!-- GRILLE INFOS -->
+  <div class="se-info-grid">
+    <div class="se-info-block">
+      <div class="se-info-label">👤 Client</div>
+      <div class="se-info-val">{{ s.client?.prenom }} {{ s.client?.nom }}</div>
+      <div class="se-info-sub">{{ s.client?.email }}</div>
+    </div>
+    <div class="se-info-block">
+      <div class="se-info-label">📋 Contrat</div>
+      <div class="se-info-val">{{ s.contrat?.numeroContrat }}</div>
+      <div class="se-info-sub">📅 Sinistre : {{ s.dateSinistre }}</div>
+    </div>
+    <div class="se-info-block">
+      <div class="se-info-label">⏱️ Délai déclaration</div>
+      <div class="se-info-val">{{ s.delaiDeclaration }} jour(s)</div>
+    </div>
+    <div class="se-info-block">
+      <div class="se-info-label">📊 Sinistres antérieurs</div>
+      <div class="se-info-val">{{ s.nbSinistresClient }} sinistre(s)</div>
+    </div>
+  </div>
 
-
-
-
-
-        <p><strong>Montant estimé :</strong> {{ s.montantEstime | number:'1.2-2' }} DT
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <button class="btn btn-sm btn-outline-primary ms-3"
-            (click)="voirLieuSurCarte(s)"
-            [disabled]="!s.latitude || !s.longitude"
-            [title]="s.lieuSinistre || 'Voir sur la carte'">
-      <i class="fas fa-map-marker-alt"></i> 📍 Voir lieu
-    </button>
-        
-        
-        
-        
-        
-        </p>
-      
-      
-      </div>
-      <div class="col-md-6">
-        <p><strong>Délai de déclaration :</strong> {{ s.delaiDeclaration }} jour(s)</p>
-        <p><strong>Sinistres antérieurs du client :</strong> {{ s.nbSinistresClient }}</p>
-        <p *ngIf="s.scoreFraude !== null && s.scoreFraude !== undefined">
-          <strong>Score de fraude IA :</strong>
-          <span [class.text-danger]="s.fraude" [class.text-success]="!s.fraude">
-            {{ (s.scoreFraude || 0) * 100 | number:'1.0-0' }}%
-            <i *ngIf="s.fraude" class="fas fa-exclamation-triangle"></i>
-          </span>
-        </p>
+  <!-- SCORE FRAUDE IA -->
+  <div *ngIf="s.scoreFraude !== null && s.scoreFraude !== undefined" class="se-fraude-block"
+       [class.se-fraude-danger]="s.fraude" [class.se-fraude-safe]="!s.fraude">
+    <div class="se-fraude-row">
+      <span class="se-fraude-title">🤖 Score de fraude IA</span>
+      <span class="se-fraude-score" [class.se-score-red]="s.fraude" [class.se-score-green]="!s.fraude">
+        {{ (s.scoreFraude || 0) * 100 | number:'1.0-0' }}%
+      </span>
+    </div>
+    <div class="se-fraude-bar-bg">
+      <div class="se-fraude-bar-fill"
+           [class.se-bar-red]="s.fraude" [class.se-bar-green]="!s.fraude"
+           [style.width]="((s.scoreFraude || 0) * 100) + '%'">
       </div>
     </div>
+    <div class="se-fraude-details">
+      <span>📋 {{ s.nbSinistresClient }} sinistres antérieurs</span>
+      <span>⏱️ Délai : {{ s.delaiDeclaration }} jours</span>
+    </div>
+  </div>
 
-    <hr>
+  <!-- DESCRIPTION -->
+  <div class="se-info-label" style="margin-bottom:6px;">📝 Description</div>
+  <div class="se-desc-box">{{ s.description }}</div>
 
-    <p><strong>Description :</strong><br>{{ s.description }}</p>
+  <!-- LIEU -->
+  <div class="se-lieu-row">
+    <span class="se-info-label">📍 Lieu du sinistre</span>
+    <button class="se-lieu-badge"
+            (click)="voirLieuSurCarte(s)"
+            [disabled]="!s.latitude || !s.longitude">
+      📍 🔴 Voir lieu sur la carte
+    </button>
+  </div>
 
-    <hr>
+  <hr class="se-divider">
 
-    <!-- ============================== -->
-    <!-- 🤖 ZONE D'ANALYSE IA - UNIQUEMENT POUR AUTO -->
-    <!-- ============================== -->
-<div *ngIf="s.statut === 'EN_COURS' && (s.typeSinistre === 'ACCIDENT' || s.typeSinistre === 'VOL' || s.typeSinistre === 'INCENDIE_AUTO' || s.typeSinistre === 'BRIS_DE_GLACE' || s.typeSinistre === 'DOMMAGES_TOUS_ACCIDENTS')" class="mb-3">
-      <button class="btn ia-button"
-              (click)="analyserAvecIa(s.id!)"
-              [disabled]="loadingIa[s.id!]">
-        <span *ngIf="!loadingIa[s.id!]">
-          <i class="fas fa-robot me-2"></i>🤖 Analyser les images avec l'IA
+  <!-- ══ ANALYSE IA (AUTO uniquement) ══ -->
+  <div *ngIf="s.statut === 'EN_COURS' && (
+    s.typeSinistre === 'ACCIDENT' ||
+    s.typeSinistre === 'VOL' ||
+    s.typeSinistre === 'INCENDIE_AUTO' ||
+    s.typeSinistre === 'BRIS_DE_GLACE' ||
+    s.typeSinistre === 'DOMMAGES_TOUS_ACCIDENTS')" class="se-ia-section">
+
+    <div class="se-ia-title">🤖 Analyse IA des images</div>
+
+    <button class="se-btn-ia" (click)="analyserAvecIa(s.id!)" [disabled]="loadingIa[s.id!]">
+      <span *ngIf="!loadingIa[s.id!]">
+        <i class="fas fa-robot me-2"></i>🤖 Analyser les images avec l'IA
+      </span>
+      <span *ngIf="loadingIa[s.id!]">
+        <i class="fas fa-spinner fa-spin me-2"></i>Analyse en cours...
+      </span>
+    </button>
+
+    <!-- Résultats IA -->
+    <div *ngIf="iaResults[s.id!]" class="se-ia-results">
+      <div class="se-ia-results-header">
+        <span>🤖 Analyse IA terminée</span>
+        <button class="se-btn-close-ia" (click)="closeIaResult(s.id!)">×</button>
+      </div>
+      <div class="se-ia-results-body">
+        <div class="se-ia-grid">
+          <div class="se-ia-stat">
+            <div class="se-ia-stat-label">📊 Type de dégât</div>
+            <div class="se-ia-stat-val">{{ iaResults[s.id!].typeDegat }}</div>
+          </div>
+          <div class="se-ia-stat">
+            <div class="se-ia-stat-label">⚠️ Gravité</div>
+            <div class="se-ia-stat-val" [ngClass]="'gravite-' + iaResults[s.id!].gravite.toLowerCase()">
+              {{ iaResults[s.id!].gravite }}
+            </div>
+          </div>
+          <div class="se-ia-stat">
+            <div class="se-ia-stat-label">💰 Estimation IA</div>
+            <div class="se-ia-stat-val se-green">
+              {{ iaResults[s.id!].montantMin | number:'1.0-0' }} – {{ iaResults[s.id!].montantMax | number:'1.0-0' }} DT
+            </div>
+          </div>
+          <div class="se-ia-stat">
+            <div class="se-ia-stat-label">🎯 Confiance IA</div>
+            <div class="se-ia-progress-bg">
+              <div class="se-ia-progress-fill"
+                   [style.width]="(iaResults[s.id!].scoreConfiance * 100) + '%'">
+                {{ (iaResults[s.id!].scoreConfiance * 100) | number:'1.0-0' }}%
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="iaResults[s.id!].detailsTechniques?.length" class="se-ia-details">
+          <div class="se-ia-stat-label">📝 Détails techniques</div>
+          <ul>
+            <li *ngFor="let d of iaResults[s.id!].detailsTechniques">{{ d }}</li>
+          </ul>
+        </div>
+
+        <div class="se-ia-footer">
+          <small>📷 {{ iaResults[s.id!].nbImagesAnalysees }} image(s) analysée(s)</small>
+          <button class="se-btn-utiliser-ia"
+                  (click)="utiliserMontantIa(s.id!, iaResults[s.id!].montantSuggere)">
+            ✅ Utiliser cette estimation ({{ iaResults[s.id!].montantSuggere | number:'1.0-0' }} DT)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MESSAGE NON-AUTO ══ -->
+  <div *ngIf="s.statut === 'EN_COURS' && s.contrat?.typeContrat !== 'AUTO'" class="se-ia-alert">
+    ℹ️ L'analyse IA d'images est disponible uniquement pour les sinistres
+    <strong>AUTO</strong>. Veuillez procéder à l'estimation manuelle.
+  </div>
+
+  <!-- ══ ESTIMATION & DÉCISION ══ -->
+  <div *ngIf="s.statut === 'EN_COURS'" class="se-estimation">
+    <div class="se-estimation-title">🧮 Estimation & Décision</div>
+
+    <div class="se-estimation-body">
+      <button class="se-btn-calcul"
+              (click)="estimerIA(s.id!)"
+              [disabled]="loadingEstimation[s.id!]">
+        <span *ngIf="!loadingEstimation[s.id!]">
+          🧮 Calculer estimation (algorithme)
         </span>
-        <span *ngIf="loadingIa[s.id!]">
-          <i class="fas fa-spinner fa-spin me-2"></i>Analyse en cours...
+        <span *ngIf="loadingEstimation[s.id!]">
+          <i class="fas fa-spinner fa-spin me-2"></i>Calcul en cours...
         </span>
       </button>
 
-      <!-- Résultats IA -->
-      <div *ngIf="iaResults[s.id!]" class="ia-results-card mt-3">
-        <div class="ia-header">
-          <h5><i class="fas fa-robot"></i> Analyse IA terminée</h5>
-          <button class="btn-close-ia" (click)="closeIaResult(s.id!)">×</button>
-        </div>
-
-        <div class="ia-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="ia-stat">
-                <small>📊 Type de dégât</small>
-                <strong>{{ iaResults[s.id!].typeDegat }}</strong>
-              </div>
-              <div class="ia-stat">
-                <small>⚠️ Gravité</small>
-                <strong [class]="'gravite-' + iaResults[s.id!].gravite.toLowerCase()">
-                  {{ iaResults[s.id!].gravite }}
-                </strong>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="ia-stat">
-                <small>💰 Estimation IA</small>
-                <strong class="text-success">
-                  {{ iaResults[s.id!].montantMin | number:'1.0-0' }} - {{ iaResults[s.id!].montantMax | number:'1.0-0' }} DT
-                </strong>
-              </div>
-              <div class="ia-stat">
-                <small>🎯 Confiance IA</small>
-                <div class="progress">
-                  <div class="progress-bar bg-info"
-                       [style.width.%]="iaResults[s.id!].scoreConfiance * 100">
-                    {{ (iaResults[s.id!].scoreConfiance * 100) | number:'1.0-0' }}%
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="ia-details mt-3" *ngIf="iaResults[s.id!].detailsTechniques?.length">
-            <small><strong>📝 Détails techniques :</strong></small>
-            <ul>
-              <li *ngFor="let d of iaResults[s.id!].detailsTechniques">{{ d }}</li>
-            </ul>
-          </div>
-
-          <div class="ia-info mt-2">
-            <small class="text-muted">
-              <i class="fas fa-image me-1"></i>
-              {{ iaResults[s.id!].nbImagesAnalysees }} image(s) analysée(s)
-            </small>
-          </div>
-
-          <div class="text-end mt-3">
-            <button class="btn btn-success"
-                    (click)="utiliserMontantIa(s.id!, iaResults[s.id!].montantSuggere)">
-              <i class="fas fa-check me-2"></i>
-              Utiliser cette estimation ({{ iaResults[s.id!].montantSuggere | number:'1.0-0' }} DT)
-            </button>
-          </div>
-        </div>
-      </div>
+      <span *ngIf="s.montantIndemnisation" class="se-estimation-algo">
+        📊 Estimation algo : <strong>{{ s.montantIndemnisation | number:'1.2-2' }} DT</strong>
+      </span>
     </div>
 
-    <!-- 💡 Message pour les sinistres NON-AUTO -->
-    <div *ngIf="s.statut === 'EN_COURS' && s.contrat?.typeContrat !== 'AUTO'"
-         class="alert alert-info mb-3">
-      <i class="fas fa-info-circle me-2"></i>
-      L'analyse IA d'images est disponible uniquement pour les sinistres
-      <strong>AUTO</strong>. Veuillez procéder à l'estimation manuelle.
+    <div class="se-montant-input-wrap">
+      <div class="se-montant-label">Montant final proposé (DT) *</div>
+      <input class="se-montant-input"
+             type="number"
+             [(ngModel)]="montantFinal[s.id!]"
+             [name]="'montant-' + s.id"
+             placeholder="Ex: 1500">
+      <div class="se-montant-hint">Vous pouvez modifier le montant proposé par l'IA ou l'algorithme</div>
     </div>
 
-    <!-- ============================== -->
-    <!-- ⚙️ ACTIONS EXPERT (existantes) -->
-    <!-- ============================== -->
-    <div *ngIf="s.statut === 'EN_COURS'" class="bg-light p-3 rounded">
-      <h6 class="text-primary mb-3">
-        <i class="fas fa-calculator me-2"></i>Estimation & Décision
-      </h6>
-
-      <div class="mb-3">
-        <button class="btn btn-info" (click)="estimerIA(s.id!)">
-          <i class="fas fa-calculator me-2"></i>Calculer estimation (algorithme)
-        </button>
-        <span *ngIf="s.montantIndemnisation" class="ms-3">
-          <strong>Estimation algo :</strong>
-          {{ s.montantIndemnisation | number:'1.2-2' }} DT
-        </span>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label"><strong>Montant final proposé (DT) *</strong></label>
-        <input type="number" class="form-control"
-               [(ngModel)]="montantFinal[s.id!]"
-               name="montant-{{s.id}}"
-               placeholder="Ex: 1500">
-        <small class="text-muted">Vous pouvez modifier le montant proposé par l'IA ou l'algorithme</small>
-      </div>
-
-      <div>
-        <button class="btn btn-success me-2" (click)="accepter(s.id!)">
-          <i class="fas fa-check me-2"></i>Accepter
-        </button>
-        <button class="btn btn-danger" (click)="refuser(s.id!)">
-          <i class="fas fa-times me-2"></i>Refuser
-        </button>
-      </div>
-    </div>
-
-    <!-- Déjà traité -->
-    <div *ngIf="s.statut === 'ACCEPTE'" class="alert alert-success">
-      ✅ Accepté — Montant : {{ s.montantIndemnisation | number:'1.2-2' }} DT
-    </div>
-    <div *ngIf="s.statut === 'REFUSE'" class="alert alert-danger">
-      ❌ Refusé
+    <div class="se-decision-btns">
+      <button class="se-btn-accept"
+              (click)="accepter(s.id!)"
+              [disabled]="loadingAction[s.id!]">
+        <span *ngIf="!loadingAction[s.id!]">✅ Accepter</span>
+        <span *ngIf="loadingAction[s.id!]"><i class="fas fa-spinner fa-spin me-1"></i>...</span>
+      </button>
+      <button class="se-btn-refus"
+              (click)="refuser(s.id!)"
+              [disabled]="loadingAction[s.id!]">
+        <span *ngIf="!loadingAction[s.id!]">❌ Refuser</span>
+        <span *ngIf="loadingAction[s.id!]"><i class="fas fa-spinner fa-spin me-1"></i>...</span>
+      </button>
     </div>
   </div>
+
+  <!-- DÉJÀ TRAITÉ -->
+  <div *ngIf="s.statut === 'ACCEPTE'" class="se-traite-ok">
+    ✅ Accepté — Montant indemnisé : <strong>{{ s.montantIndemnisation | number:'1.2-2' }} DT</strong>
+  </div>
+  <div *ngIf="s.statut === 'REFUSE'" class="se-traite-refuse">
+    ❌ Ce sinistre a été refusé.
+  </div>
+
 </div>
 
-<!-- ============================== -->
-<!-- 📃 PAGINATION -->
-<!-- ============================== -->
-<div *ngIf="!loading && totalPages > 1"
-     class="d-flex justify-content-between align-items-center mb-4">
-  <small class="text-muted">
-    Page {{ currentPage }} / {{ totalPages }}
-    ({{ filteredSinistres.length }} résultat(s))
+<!-- PAGINATION -->
+<div *ngIf="!loading && totalPages > 1" class="se-pagination">
+  <small class="se-pagination-info">
+    Page {{ currentPage }} / {{ totalPages }} ({{ filteredSinistres.length }} résultat(s))
   </small>
-
-  <nav>
-    <ul class="pagination pagination-sm mb-0">
-      <li class="page-item" [class.disabled]="currentPage === 1">
-        <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(currentPage - 1)">
-          <i class="fas fa-chevron-left"></i>
-        </a>
-      </li>
-
-      <li *ngFor="let p of [].constructor(totalPages); let i = index"
-          class="page-item" [class.active]="currentPage === i + 1">
-        <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(i + 1)">
-          {{ i + 1 }}
-        </a>
-      </li>
-
-      <li class="page-item" [class.disabled]="currentPage === totalPages">
-        <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(currentPage + 1)">
-          <i class="fas fa-chevron-right"></i>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <div class="se-pagination-btns">
+    <button class="se-page-btn" [disabled]="currentPage === 1"
+            (click)="changePage(currentPage - 1)">‹</button>
+    <button *ngFor="let p of [].constructor(totalPages); let i = index"
+            class="se-page-btn"
+            [class.se-page-active]="currentPage === i + 1"
+            (click)="changePage(i + 1)">
+      {{ i + 1 }}
+    </button>
+    <button class="se-page-btn" [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)">›</button>
+  </div>
 </div>

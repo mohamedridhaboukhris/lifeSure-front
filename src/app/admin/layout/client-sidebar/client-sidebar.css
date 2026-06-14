@@ -1,0 +1,104 @@
+/* ══════════════════════════════════════════════
+   CLIENT SIDEBAR — LifeSure
+   Sidebar légère, sans header de logo (déjà dans topnav)
+   ══════════════════════════════════════════════ */
+
+/*.client-sidebar {
+  width: 215px;
+  min-width: 215px;
+  background: #ffffff;
+  border-right: 1px solid #f0ede0;
+  padding: 20px 12px 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 62px);
+  box-shadow: 2px 0 8px rgba(212,175,55,0.04);
+}
+
+/* Sections *
+.sidebar-section {
+  margin-bottom: 22px;
+}
+
+.sidebar-section-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ccc;
+  text-transform: uppercase;
+  padding: 0 10px;
+  margin-bottom: 6px;
+}
+
+/* Items /
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.83rem;
+  color: #555;
+  text-decoration: none;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: all 0.16s ease;
+}
+.sidebar-item i {
+  width: 16px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #ccc;
+  flex-shrink: 0;
+  transition: color 0.16s;
+}
+.sidebar-item:hover {
+  background: rgba(212,175,55,0.08);
+  color: #b8860b;
+}
+.sidebar-item:hover i {
+  color: #d4af37;
+}
+.sidebar-item.active {
+  background: rgba(212,175,55,0.12);
+  color: #b8860b;
+  font-weight: 600;
+}
+.sidebar-item.active i {
+  color: #d4af37;
+}
+
+/* Boîte d'aide en bas /
+.sidebar-help-box {
+  margin-top: auto;
+  background: rgba(212,175,55,0.07);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.help-icon {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+.help-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #b8860b;
+  margin-bottom: 2px;
+}
+.help-text {
+  font-size: 0.7rem;
+  color: #999;
+  line-height: 1.4;
+}*/

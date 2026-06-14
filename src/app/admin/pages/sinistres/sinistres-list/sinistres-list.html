@@ -1,72 +1,219 @@
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Mes Sinistres</h1>
-  <a routerLink="/admin/sinistres/declarer" class="btn btn-primary shadow-sm">
-    <i class="fas fa-plus fa-sm me-2"></i> Déclarer un sinistre
+<!-- ══════════════════════════════════════════════
+     SINISTRES LIST — Interface Client LifeSure
+     ══════════════════════════════════════════════ -->
+
+<!-- HEADER -->
+<div class="sl-header">
+  <h1 class="sl-title">⚠️ Mes Sinistres</h1>
+  <a [routerLink]="isClient ? '/client/sinistres/declarer' : '/admin/sinistres/declarer'"
+     class="sl-btn-new">
+    <i class="fas fa-plus"></i> Déclarer un sinistre
   </a>
 </div>
 
 <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
 <div *ngIf="loading" class="text-center py-5">
-  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+  <i class="fas fa-spinner fa-spin fa-2x" style="color:#d4af37;"></i>
 </div>
 
-<div *ngIf="!loading" class="card shadow mb-4">
-  <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">
-      Mes sinistres ({{ sinistres.length }})
-    </h6>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>N° Sinistre</th>
-            <th>Type</th>
-            <th>Date Sinistre</th>
-            <th>Montant Estimé</th>
-            <th>Indemnisation</th>
-            <th>Statut</th>
-            <th>Détails</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngIf="sinistres.length === 0">
-            <td colspan="7" class="text-center text-muted py-4">
-              Aucun sinistre déclaré.
-              <br>
-              <a routerLink="/admin/sinistres/declarer" class="btn btn-primary mt-3">
-                Déclarer maintenant
-              </a>
-            </td>
-          </tr>
-          <tr *ngFor="let s of sinistres">
-            <td><strong>{{ s.numeroSinistre }}</strong></td>
-            <td><span class="badge badge-info">{{ s.typeSinistre }}</span></td>
-            <td>{{ s.dateSinistre }}</td>
-            <td>{{ s.montantEstime | number:'1.2-2' }} DT</td>
-            <td>
-              <span *ngIf="s.montantIndemnisation">
-                {{ s.montantIndemnisation | number:'1.2-2' }} DT
-              </span>
-              <span *ngIf="!s.montantIndemnisation" class="text-muted">—</span>
-            </td>
-            <td>
-              <span class="badge" [ngClass]="getStatutBadge(s.statut)">{{ s.statut }}</span>
-            </td>
-            <td>
-              <a [routerLink]="['/admin/sinistres', s.id]" class="btn btn-sm btn-info">
-                <i class="fas fa-eye"></i>
-              </a>
+<div *ngIf="!loading" class="sl-layout">
 
+  <!-- ══ COLONNE GAUCHE : LISTE ══ -->
+  <div class="sl-main">
 
+    <div class="sl-section-label">🗂️ Mes sinistres ({{ sinistres.length }})</div>
 
-
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- VIDE -->
+    <div *ngIf="sinistres.length === 0" class="sl-empty">
+      <div class="sl-empty-icon">⚠️</div>
+      <p>Aucun sinistre déclaré.</p>
+      <a [routerLink]="isClient ? '/client/sinistres/declarer' : '/admin/sinistres/declarer'"
+         class="sl-btn-new mt-3">
+        Déclarer maintenant
+      </a>
     </div>
+
+    <!-- CARDS SINISTRES -->
+    <div *ngFor="let s of sinistres" class="sl-card">
+
+      <!-- ICÔNE -->
+      <div class="sl-icon" [ngClass]="getIconClass(s.typeSinistre)">
+        {{ getTypeIcon(s.typeSinistre) }}
+      </div>
+
+      <!-- INFOS -->
+      <div class="sl-card-main">
+        <div class="sl-numero">
+          {{ s.numeroSinistre }}
+          <span class="sl-type-badge" [ngClass]="getTypeBadgeClass(s.typeSinistre)">
+            {{ getTypeIcon(s.typeSinistre) }} {{ s.typeSinistre }}
+          </span>
+        </div>
+        <div class="sl-date">📅 Date sinistre : {{ s.dateSinistre }}</div>
+      </div>
+
+      <!-- MONTANT ESTIMÉ -->
+      <div class="sl-montant">
+        <div class="sl-montant-val">{{ s.montantEstime | number:'1.2-2' }} DT</div>
+        <div class="sl-montant-lbl">Estimé</div>
+      </div>
+
+      <!-- INDEMNISATION -->
+      <div class="sl-indemnisation">
+        <div *ngIf="s.montantIndemnisation" class="sl-ind-val">
+          {{ s.montantIndemnisation | number:'1.2-2' }} DT
+        </div>
+        <div *ngIf="!s.montantIndemnisation" class="sl-ind-none">—</div>
+        <div class="sl-ind-lbl">
+          {{ s.montantIndemnisation ? 'Indemnisé' : 'En attente' }}
+        </div>
+      </div>
+
+      <!-- STATUT -->
+      <div class="sl-statut">
+        <span class="sl-statut-badge" [ngClass]="getStatutBadge(s.statut)">
+          {{ getStatutIcon(s.statut) }} {{ s.statut }}
+        </span>
+      </div>
+
+      <!-- DÉTAILS -->
+      <a [routerLink]="[isClient ? '/client/sinistres' : '/admin/sinistres', s.id]"
+         class="sl-btn-detail">
+        👁 Détails
+      </a>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+
+  <!-- ══ COLONNE DROITE : WIDGETS ══ -->
+  <div class="sl-sidebar">
+
+    <!-- 1. STATS -->
+    <div class="sl-widget">
+      <div class="sl-widget-title">📊 Résumé sinistres</div>
+      <div class="sl-stats-grid">
+        <div class="sl-stat">
+          <div class="sl-stat-val sl-or">{{ sinistres.length }}</div>
+          <div class="sl-stat-lbl">📋 Total</div>
+        </div>
+        <div class="sl-stat">
+          <div class="sl-stat-val sl-green">{{ getCount('ACCEPTE') }}</div>
+          <div class="sl-stat-lbl">✅ Acceptés</div>
+        </div>
+        <div class="sl-stat">
+          <div class="sl-stat-val sl-red">{{ getCount('REFUSE') }}</div>
+          <div class="sl-stat-lbl">❌ Refusés</div>
+        </div>
+        <div class="sl-stat">
+          <div class="sl-stat-val sl-blue">{{ getCount('EN_COURS') }}</div>
+          <div class="sl-stat-lbl">⏳ En cours</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. RÉPARTITION DONUT -->
+    <div class="sl-widget">
+      <div class="sl-widget-title">🥧 Répartition par type</div>
+      <div class="sl-donut-wrap">
+        <div class="sl-donut">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="30" fill="none"
+                    stroke="rgba(212,175,55,0.15)" stroke-width="12"/>
+            <circle cx="40" cy="40" r="30" fill="none"
+                    stroke="#d4af37" stroke-width="12"
+                    [attr.stroke-dasharray]="getDonutAuto() + ' 188'"
+                    stroke-dashoffset="0"
+                    style="transform:rotate(-90deg);transform-origin:center;"/>
+            <circle cx="40" cy="40" r="30" fill="none"
+                    stroke="#3b82f6" stroke-width="12"
+                    [attr.stroke-dasharray]="getDonutVoyage() + ' 188'"
+                    [attr.stroke-dashoffset]="'-' + getDonutAuto()"
+                    style="transform:rotate(-90deg);transform-origin:center;"/>
+            <circle cx="40" cy="40" r="30" fill="none"
+                    stroke="#10b981" stroke-width="12"
+                    [attr.stroke-dasharray]="getDonutHab() + ' 188'"
+                    [attr.stroke-dashoffset]="'-' + (getDonutAuto() + getDonutVoyage())"
+                    style="transform:rotate(-90deg);transform-origin:center;"/>
+          </svg>
+          <div class="sl-donut-center">
+            <div class="sl-donut-num">{{ sinistres.length }}</div>
+            <div class="sl-donut-sub">total</div>
+          </div>
+        </div>
+        <div class="sl-donut-legend">
+          <div class="sl-legend-item">
+            <span class="sl-leg-dot" style="background:#d4af37;"></span>
+            🚗 Auto ({{ getNbAuto() }})
+          </div>
+          <div class="sl-legend-item">
+            <span class="sl-leg-dot" style="background:#3b82f6;"></span>
+            ✈️ Voyage ({{ getNbVoyage() }})
+          </div>
+          <div class="sl-legend-item">
+            <span class="sl-leg-dot" style="background:#10b981;"></span>
+            🏠 Habitation ({{ getNbHab() }})
+          </div>
+          <div class="sl-legend-item">
+            <span class="sl-leg-dot" style="background:#ef4444;"></span>
+            🏥 Santé ({{ getNbSante() }})
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. TIMELINE -->
+    <div class="sl-widget">
+      <div class="sl-widget-title">🕐 Historique récent</div>
+      <div *ngFor="let s of getRecents()" class="sl-tl-item">
+        <div class="sl-tl-dot" [ngClass]="getTlDotClass(s.statut)"></div>
+        <div class="sl-tl-info">
+          <div class="sl-tl-num">{{ s.numeroSinistre | slice:0:20 }}...</div>
+          <div class="sl-tl-desc">
+            {{ getTypeIcon(s.typeSinistre) }} {{ s.typeSinistre }}
+            — {{ getStatutLabel(s.statut) }}
+          </div>
+        </div>
+        <div class="sl-tl-date">{{ formatDateCourt(s.dateSinistre) }}</div>
+      </div>
+      <div *ngIf="sinistres.length === 0" class="sl-empty-small">
+        Aucun sinistre enregistré
+      </div>
+    </div>
+
+    <!-- 4. CONSEILS -->
+    <div class="sl-widget">
+      <div class="sl-widget-title">💡 Conseils LifeSure</div>
+      <div class="sl-conseil-item">
+        <div class="sl-conseil-icon ci-or">📸</div>
+        <div class="sl-conseil-text">
+          <strong>Prenez des photos</strong> immédiatement après un sinistre pour faciliter le traitement
+        </div>
+      </div>
+      <div class="sl-conseil-item">
+        <div class="sl-conseil-icon ci-green">⚡</div>
+        <div class="sl-conseil-text">
+          <strong>Déclarez rapidement</strong> — tout sinistre doit être déclaré dans les 5 jours
+        </div>
+      </div>
+      <div class="sl-conseil-item">
+        <div class="sl-conseil-icon ci-blue">📞</div>
+        <div class="sl-conseil-text">
+          <strong>Contactez votre agent</strong> en cas de sinistre grave pour un traitement express
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

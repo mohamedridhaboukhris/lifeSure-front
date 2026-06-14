@@ -599,7 +599,7 @@ private expertBarChart: any = null;
 
 import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../../services/auth';
 import { DashboardService } from '../../../services/dashboard';
 
@@ -608,9 +608,9 @@ declare var Chart: any;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard.html',
-  styleUrls: ['./dashboard.css']
+  styleUrls: ['./dashboard.css'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -664,6 +664,83 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     // Chart.js sera chargé dans ngOnInit
   }
+
+
+
+
+
+
+
+
+
+
+
+// Ajouter dans DashboardComponent :
+
+getContratsParType(): any[] {
+  if (!this.stats.contratsParType) return [];
+  return Object.keys(this.stats.contratsParType).map(type => ({
+    type,
+    icon: type === 'AUTO' ? '🚗' : type === 'HABITATION' ? '🏠' : type === 'VOYAGE' ? '✈️' : '🏥',
+    count: this.stats.contratsParType[type],
+    revenu: this.stats.revenusParType?.[type] || 0
+  }));
+}
+
+getTauxAcceptation(): number {
+  const total = (this.stats.sinistresAcceptes || 0) + (this.stats.sinistresEnAttente || 0);
+  if (total === 0) return 0;
+  return Math.round((this.stats.sinistresAcceptes / total) * 100);
+}
+
+getTotalSinistres(): number {
+  return (this.stats.sinistresAcceptes || 0) + (this.stats.sinistresEnAttente || 0) + (this.stats.fraudesDetectees || 0);
+}
+
+
+getLegendColor(type: string): string {
+  const colors: any = {
+    'AUTO':      '#b8860b',
+    'VOYAGE':    '#d4af37',
+    'HABITATION':'#c4a26a',
+    'SANTE':     '#1a1a1a'
+  };
+  return colors[type] || '#d4af37';
+}
+
+formatRevenu(val: number): string {
+  if (val >= 1000) return (val / 1000).toFixed(1).replace('.0','') + 'k';
+  return val.toString();
+}
+
+
+
+// ── Nouvelles méthodes fraude ──
+getFraudColor(score: number): string {
+  if (score >= 0.7) return '#ef4444';
+  if (score >= 0.4) return '#f59e0b';
+  return '#10b981';
+}
+
+getFraudBadgeClass(score: number): string {
+  if (score >= 0.7) return 'db-fraud-badge-haut';
+  if (score >= 0.4) return 'db-fraud-badge-moyen';
+  return 'db-fraud-badge-faible';
+}
+
+getFraudLabel(score: number): string {
+  if (score >= 0.7) return 'Haut';
+  if (score >= 0.4) return 'Moyen';
+  return 'Faible';
+}
+
+
+
+
+
+
+
+
 
   ngOnDestroy(): void {
     if (this.pieChart) this.pieChart.destroy();
@@ -772,7 +849,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.pieChart) this.pieChart.destroy();
 
-        this.pieChart = new Chart(ctx, {
+       /* this.pieChart = new Chart(ctx, {
           type: 'doughnut',
           data: {
             labels: Object.keys(this.stats.contratsParType),
@@ -795,7 +872,55 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
           }
-        });
+        });*/
+        this.pieChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: Object.keys(this.stats.contratsParType),
+    datasets: [{
+      data: Object.values(this.stats.contratsParType),
+      backgroundColor: PALETTE_OR,
+      borderColor: '#ffffff',
+      borderWidth: 3
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,  // ← important
+    responsive: true,
+    legend: {
+      display: false  // ← désactiver légende Chart.js
+    },
+    cutoutPercentage: 65,  // ← trou au centre
+    layout: {
+      padding: 0
+    }
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         console.log('✅ Pie chart agent créé');
       }
 
@@ -855,95 +980,80 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     // =========================
     if (this.isExpertRole) {
 
-      // 🥧 Sinistres (PIE)
-      const expertPie = document.getElementById('chartSinistres') as HTMLCanvasElement;
-
-      if (expertPie) {
-        const ctx = expertPie.getContext('2d');
-
-        if (this.expertPieChart) this.expertPieChart.destroy();
-
-        this.expertPieChart = new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: ['En attente', 'Acceptés', 'Fraudes'],
-            datasets: [{
-              data: [
-                this.stats.sinistresEnAttente || 0,
-                this.stats.sinistresAcceptes || 0,
-                this.stats.fraudesDetectees || 0
-              ],
-              backgroundColor: ['#d4af37', '#b8860b', '#1a1a1a'],
-              borderColor: '#ffffff',
-              borderWidth: 3
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-              position: 'bottom',
-              labels: {
-                fontColor: '#1a1a1a',
-                fontSize: 12,
-                padding: 15
-              }
-            }
-          }
-        });
-        console.log('✅ Pie chart expert créé');
+  // DONUT SINISTRES
+  const expertPie = document.getElementById('chartSinistres') as HTMLCanvasElement;
+  if (expertPie) {
+    const ctx = expertPie.getContext('2d');
+    if (this.expertPieChart) this.expertPieChart.destroy();
+    this.expertPieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Acceptés', 'En attente', 'Fraudes'],
+        datasets: [{
+          data: [
+            this.stats.sinistresAcceptes || 0,
+            this.stats.sinistresEnAttente || 0,
+            this.stats.fraudesDetectees || 0
+          ],
+          backgroundColor: ['#10b981', '#d4af37', '#1a1a1a'],
+          borderColor: '#ffffff',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        legend: { display: false },
+        cutoutPercentage: 65
       }
+    });
+  }
 
-      // 📊 Indemnisations (BAR)
-      const expertBar = document.getElementById('chartIndemnisation') as HTMLCanvasElement;
 
-      if (expertBar) {
-        const ctx = expertBar.getContext('2d');
 
-        if (this.expertBarChart) this.expertBarChart.destroy();
 
-        this.expertBarChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['Indemnisations'],
-            datasets: [{
-              label: 'Total DT',
-              data: [this.stats.totalIndemnisations || 0],
-              backgroundColor: '#d4af37',
-              borderColor: '#b8860b',
-              borderWidth: 1,
-              hoverBackgroundColor: '#f4d03f'
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: { display: false },
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true,
-                  fontColor: '#888'
-                },
-                gridLines: {
-                  color: '#f0f0eb'
-                }
-              }],
-              xAxes: [{
-                ticks: {
-                  fontColor: '#1a1a1a',
-                  fontStyle: 'bold'
-                },
-                gridLines: {
-                  display: false
-                }
-              }]
-            }
-          }
-        });
-        console.log('✅ Bar chart expert créé');
+
+
+
+
+
+
+
+
+
+  // BAR INDEMNISATIONS
+  const expertBar = document.getElementById('chartIndemnisation') as HTMLCanvasElement;
+  if (expertBar) {
+    const ctx = expertBar.getContext('2d');
+    if (this.expertBarChart) this.expertBarChart.destroy();
+    this.expertBarChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Indemnisations', 'Acceptés', 'En cours'],
+        datasets: [{
+          data: [
+            this.stats.totalIndemnisations || 0,
+            this.stats.sinistresAcceptes || 0,
+            this.stats.sinistresEnAttente || 0
+          ],
+          backgroundColor: ['#d4af37', '#f4d03f', '#b8860b'],
+          borderColor: '#b8860b',
+          borderWidth: 1,
+          hoverBackgroundColor: '#f4d03f'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: { display: false },
+        scales: {
+          yAxes: [{ ticks: { beginAtZero: true, fontColor: '#888' }, gridLines: { color: '#f0f0eb' } }],
+          xAxes: [{ ticks: { fontColor: '#1a1a1a', fontStyle: 'bold' }, gridLines: { display: false } }]
+        }
       }
-    }
+    });
+  }
+}
   }
 
 }

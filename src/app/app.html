@@ -1,11 +1,14 @@
-<app-navbar *ngIf="!isAdminRoute"></app-navbar>
+<app-navbar *ngIf="!isAdminRoute && !isClientRoute"></app-navbar>
 
 <router-outlet></router-outlet>
 
-<app-footer *ngIf="!isAdminRoute"></app-footer>
+<app-footer *ngIf="!isAdminRoute&& !isClientRoute "></app-footer>
 
 <!-- 🤖 Chatbot LifeBot - visible partout sauf login/register -->
 <app-chatbot *ngIf="!isAuthRoute"></app-chatbot>
+
+
+
 
 
 

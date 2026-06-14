@@ -497,7 +497,7 @@ export class SinistresAgentComponent implements OnInit {
 
 
 
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+/*import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SinistreService, Sinistre, PlafondCheckResponse } from '../../../../services/sinistre';
@@ -588,21 +588,7 @@ export class SinistresAgentComponent implements OnInit {
     if (this.filterFraude === 'oui') result = result.filter(s => s.fraude === true);
     if (this.filterFraude === 'non') result = result.filter(s => s.fraude === false);
 //hedi mta3 last update fel affichage
-    /*if (this.sortColumn) {
-      result.sort((a: any, b: any) => {
-        const valA = this.getValueByPath(a, this.sortColumn);
-        const valB = this.getValueByPath(b, this.sortColumn);
-        if (valA == null) return 1;
-        if (valB == null) return -1;
-        let cmp = 0;
-        if (typeof valA === 'number' && typeof valB === 'number') {
-          cmp = valA - valB;
-        } else {
-          cmp = String(valA).localeCompare(String(valB));
-        }
-        return this.sortDirection === 'asc' ? cmp : -cmp;
-      });
-    }*/
+    
    if (this.sortColumn) {
   result.sort((a: any, b: any) => {
     const valA = this.getValueByPath(a, this.sortColumn);
@@ -756,6 +742,293 @@ export class SinistresAgentComponent implements OnInit {
     }
   }
 
+  getStatutBadge(s?: string): string {
+    switch (s) {
+      case 'DECLARE':  return 'badge-warning';
+      case 'EN_COURS': return 'badge-info';
+      case 'ACCEPTE':  return 'badge-success';
+      case 'REFUSE':   return 'badge-danger';
+      case 'CLOTURE':  return 'badge-secondary';
+      default:         return 'badge-light';
+    }
+  }
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SinistreService, Sinistre, PlafondCheckResponse } from '../../../../services/sinistre';
+
+@Component({
+  selector: 'app-sinistres-agent',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './sinistres-agent.html',
+  styleUrls: ['./sinistres-agent.css']
+})
+export class SinistresAgentComponent implements OnInit {
+
+  sinistres: Sinistre[] = [];
+  filteredSinistres: Sinistre[] = [];
+  loading = false;
+  errorMessage = '';
+
+  plafondResult: { [id: number]: PlafondCheckResponse } = {};
+  expertIdToAffect: { [id: number]: number } = {};
+
+  searchTerm = '';
+  filterStatut = '';
+  filterType = '';
+  filterDateDebut = '';
+  filterDateFin = '';
+  filterFraude = '';
+
+  sortColumn = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
+  currentPage = 1;
+  itemsPerPage = 5;
+
+  statuts = ['DECLARE', 'EN_COURS', 'ACCEPTE', 'REFUSE', 'CLOTURE'];
+  types: string[] = [];
+
+  constructor(
+    private sinistreService: SinistreService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void { this.load(); }
+
+  load(): void {
+    this.loading = true;
+    this.cdr.detectChanges();
+    this.sinistreService.getAll().subscribe({
+      next: (data) => {
+        this.sinistres = data;
+        this.types = [...new Set(data.map(s => s.typeSinistre).filter(t => t))] as string[];
+        this.applyFilters();
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.errorMessage = 'Erreur chargement';
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  applyFilters(): void {
+    let result = [...this.sinistres];
+    if (this.searchTerm.trim()) {
+      const term = this.searchTerm.toLowerCase().trim();
+      result = result.filter(s =>
+        s.numeroSinistre?.toLowerCase().includes(term) ||
+        s.description?.toLowerCase().includes(term) ||
+        s.client?.nom?.toLowerCase().includes(term) ||
+        s.client?.prenom?.toLowerCase().includes(term) ||
+        s.client?.email?.toLowerCase().includes(term) ||
+        s.contrat?.numeroContrat?.toLowerCase().includes(term) ||
+        s.typeSinistre?.toLowerCase().includes(term)
+      );
+    }
+    if (this.filterStatut)    result = result.filter(s => s.statut === this.filterStatut);
+    if (this.filterType)      result = result.filter(s => s.typeSinistre === this.filterType);
+    if (this.filterDateDebut) result = result.filter(s => s.dateSinistre && s.dateSinistre >= this.filterDateDebut);
+    if (this.filterDateFin)   result = result.filter(s => s.dateSinistre && s.dateSinistre <= this.filterDateFin);
+    if (this.filterFraude === 'oui') result = result.filter(s => s.fraude === true);
+    if (this.filterFraude === 'non') result = result.filter(s => s.fraude === false);
+
+    if (this.sortColumn) {
+      result.sort((a: any, b: any) => {
+        const valA = this.getValueByPath(a, this.sortColumn);
+        const valB = this.getValueByPath(b, this.sortColumn);
+        if (valA == null) return 1;
+        if (valB == null) return -1;
+        let cmp = typeof valA === 'number' && typeof valB === 'number'
+          ? valA - valB
+          : String(valA).localeCompare(String(valB));
+        return this.sortDirection === 'asc' ? cmp : -cmp;
+      });
+    } else {
+      result.sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
+    }
+
+    this.filteredSinistres = result;
+    this.currentPage = 1;
+    this.cdr.detectChanges();
+  }
+
+  private getValueByPath(obj: any, path: string): any {
+    return path.split('.').reduce((o, p) => o?.[p], obj);
+  }
+
+  sort(column: string): void {
+    this.sortColumn = column;
+    this.sortDirection = this.sortColumn === column && this.sortDirection === 'asc' ? 'desc' : 'asc';
+    this.applyFilters();
+  }
+
+  resetFilters(): void {
+    this.searchTerm = ''; this.filterStatut = ''; this.filterType = '';
+    this.filterDateDebut = ''; this.filterDateFin = ''; this.filterFraude = '';
+    this.sortColumn = ''; this.sortDirection = 'asc';
+    this.applyFilters();
+  }
+
+  hasActiveFilters(): boolean {
+    return !!(this.searchTerm || this.filterStatut || this.filterType
+              || this.filterDateDebut || this.filterDateFin || this.filterFraude);
+  }
+
+  get paginatedSinistres(): Sinistre[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredSinistres.slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredSinistres.length / this.itemsPerPage);
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) { this.currentPage = page; this.cdr.detectChanges(); }
+  }
+
+  // ── STATS ──
+  getCountByStatut(statut: string): number {
+    return this.sinistres.filter(s => s.statut === statut).length;
+  }
+  getNbFraudes(): number {
+    return this.sinistres.filter(s => s.fraude === true).length;
+  }
+
+  // ── HELPERS TYPE ──
+  getTypeIcon(type?: string): string {
+    if (!type) return '⚠️';
+    if (type.includes('AUTO') || type === 'ACCIDENT' || type.includes('DOMMAGES') || type === 'BRIS_DE_GLACE') return '🚗';
+    if (type.includes('HABITATION') || type.includes('DEGAT') || type.includes('CATASTROPHE')) return '🏠';
+    if (type === 'ANNULATION' || type.includes('VOYAGE') || type === 'PERTE_BAGAGES') return '✈️';
+    if (type.includes('HOSPITALISATION') || type.includes('CONSULTATION') || type.includes('MALADIE')) return '🏥';
+    if (type.includes('INCENDIE')) return '🔥';
+    return '⚠️';
+  }
+
+  getSinIconClass(type?: string): string {
+    if (!type) return 'sa-icon-autre';
+    if (type.includes('AUTO') || type === 'ACCIDENT' || type.includes('DOMMAGES')) return 'sa-icon-auto';
+    if (type.includes('HABITATION') || type.includes('DEGAT')) return 'sa-icon-hab';
+    if (type === 'ANNULATION' || type.includes('VOYAGE')) return 'sa-icon-voyage';
+    if (type.includes('HOSPITALISATION') || type.includes('SANTE')) return 'sa-icon-sante';
+    return 'sa-icon-autre';
+  }
+
+  // ── STATUT ──
+  getStatutIcon(s?: string): string {
+    switch (s) {
+      case 'DECLARE':  return '📋';
+      case 'EN_COURS': return '⏳';
+      case 'ACCEPTE':  return '✅';
+      case 'REFUSE':   return '❌';
+      case 'CLOTURE':  return '🔒';
+      default: return '';
+    }
+  }
+
+  getStatutBadgeClass(s?: string): string {
+    switch (s) {
+      case 'DECLARE':  return 'sa-badge-declare';
+      case 'EN_COURS': return 'sa-badge-encours';
+      case 'ACCEPTE':  return 'sa-badge-accepte';
+      case 'REFUSE':   return 'sa-badge-refuse';
+      case 'CLOTURE':  return 'sa-badge-cloture';
+      default: return '';
+    }
+  }
+
+  // ── ACTIONS ──
+  prendre(id: number): void {
+    this.sinistreService.affecterAgent(id).subscribe({
+      next: () => { alert('✅ Sinistre pris en charge !'); this.load(); },
+      error: () => alert('❌ Erreur lors de la prise en charge')
+    });
+  }
+
+  checkPlafond(id: number): void {
+    this.sinistreService.checkPlafond(id).subscribe({
+      next: (res) => { this.plafondResult[id] = res; this.cdr.detectChanges(); },
+      error: () => alert('❌ Erreur vérification plafond')
+    });
+  }
+
+  affecterExpert(sinistreId: number): void {
+    const expertId = this.expertIdToAffect[sinistreId];
+    if (!expertId) { alert("⚠️ Entrez l'ID d'un expert"); return; }
+    this.sinistreService.affecterExpert(sinistreId, expertId).subscribe({
+      next: () => { alert('✅ Expert affecté !'); this.load(); },
+      error: () => alert('❌ Erreur affectation expert')
+    });
+  }
+
+  refuser(id: number): void {
+    if (!confirm('Confirmer le refus ?')) return;
+    this.sinistreService.refuser(id).subscribe({
+      next: () => { alert('✅ Sinistre refusé'); this.load(); },
+      error: () => alert('❌ Erreur lors du refus')
+    });
+  }
+
+  cloturer(id: number): void {
+    if (!confirm('Clôturer ce sinistre ?')) return;
+    this.sinistreService.cloturer(id).subscribe({
+      next: () => { alert('✅ Sinistre clôturé'); this.load(); },
+      error: () => alert('❌ Erreur clôture')
+    });
+  }
+
+  // ── ANCIEN getStatutBadge (conservé si utilisé ailleurs) ──
   getStatutBadge(s?: string): string {
     switch (s) {
       case 'DECLARE':  return 'badge-warning';

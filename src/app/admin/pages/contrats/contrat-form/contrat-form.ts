@@ -1002,6 +1002,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ContratService, TypeContrat } from '../../../../services/contrat';
+import { Auth } from '../../../../services/auth';
 
 @Component({
   selector: 'app-contrat-form',
@@ -1153,18 +1154,30 @@ export class ContratFormComponent implements OnInit {
     return this.gouvernorats[this.gouvernoratSelectionne] || [];
   }
 
+
+  getTypeIcon(type: string): string {
+  const icons: any = { AUTO: '🚗', HABITATION: '🏠', SANTE: '🏥', VOYAGE: '✈️' };
+  return icons[type] || '📋';
+}
+
   constructor(
     private contratService: ContratService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+      private auth: Auth 
   ) {}
 
+
+  isClient = false;
+
   ngOnInit(): void {
+    this.isClient = this.auth.isClient(); // ← ajouter
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEdit = true;
       this.editId = +id;
       this.loadContrat(+id);
+      
     }
   }
 
@@ -1196,6 +1209,10 @@ export class ContratFormComponent implements OnInit {
       this.gouvernoratSelectionne = parts[2];
     }
   }
+
+
+
+  
 
   onTypeChange(): void {
     this.contrat.vehiculeMarque = undefined;
@@ -1242,7 +1259,7 @@ export class ContratFormComponent implements OnInit {
     return new Date(this.contrat.dateDebut) < new Date(this.contrat.dateFin);
   }
 
-  onSubmit(): void {
+  /*onSubmit(): void {
     this.errorMessage = '';
     this.successMessage = '';
 
@@ -1305,5 +1322,150 @@ export class ContratFormComponent implements OnInit {
         }
       });
     }
+  }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+onSubmit(): void {
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    if (!this.contrat.dateDebut || !this.contrat.dateFin) {
+      this.errorMessage = "Les dates de début et de fin sont obligatoires";
+      return;
+    }
+
+    const debut = new Date(this.contrat.dateDebut);
+    const fin = new Date(this.contrat.dateFin);
+
+    if (debut >= fin) {
+      this.errorMessage = "⚠️ La date de début doit être ANTÉRIEURE à la date de fin";
+      return;
+    }
+
+    if (!this.isEdit) {
+      const aujourdhui = new Date();
+      aujourdhui.setHours(0, 0, 0, 0);
+      if (debut < aujourdhui) {
+        this.errorMessage = "⚠️ La date de début ne peut pas être dans le passé";
+        return;
+      }
+    }
+
+    if (this.contrat.typeContrat === 'HABITATION') {
+      if (!this.gouvernoratSelectionne || !this.delegationSelectionnee || !this.rueDetail) {
+        this.errorMessage = "⚠️ Veuillez remplir gouvernorat, délégation et rue pour l'habitation";
+        return;
+      }
+      this.updateAdresseBien();
+    }
+
+    this.loading = true;
+
+    // ← ajouter cette ligne une seule fois ici
+    const route = this.auth.isClient() ? '/client/contrats' : '/admin/contrats';
+
+    if (this.isEdit && this.editId) {
+      this.contratService.update(this.editId, this.contrat).subscribe({
+        next: () => {
+          this.successMessage = 'Contrat modifié avec succès !';
+          this.loading = false;
+          setTimeout(() => this.router.navigate([route]), 1200); // ← modifié
+        },
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'Erreur lors de la modification';
+          this.loading = false;
+        }
+      });
+    } else {
+      this.contratService.creer(this.contrat).subscribe({
+        next: () => {
+          this.successMessage = 'Contrat créé avec succès !';
+          this.loading = false;
+          setTimeout(() => this.router.navigate([route]), 1200); // ← modifié
+        },
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'Erreur lors de la création';
+          this.loading = false;
+        }
+      });
+    }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

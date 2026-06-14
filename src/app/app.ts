@@ -62,6 +62,7 @@ export class AppComponent implements OnInit {
   title = 'lifesure';
   isAdminRoute = false;
   isAuthRoute = false;
+   isClientRoute = false; 
 
   constructor(private router: Router) {}
 
@@ -82,5 +83,6 @@ export class AppComponent implements OnInit {
   private checkRoute(url: string): void {
     this.isAdminRoute = url.startsWith('/admin');
     this.isAuthRoute = url.startsWith('/login') || url.startsWith('/register');
+     this.isClientRoute = url.startsWith('/client'); 
   }
 }

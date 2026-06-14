@@ -1,239 +1,132 @@
-/* ═══════════════════════════════════════════════════════════ */
-/* 🎨 RÉCLAMATIONS LIST - NOIR + OR PREMIUM LUXE              */
-/* ═══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   RÉCLAMATIONS LIST CLIENT — LifeSure
+   ══════════════════════════════════════════════ */
 
-/* ============= TITRE DE LA PAGE ============= */
-h1.h3.text-gray-800 {
-  color: #1a1a1a !important;
-  font-weight: 600 !important;
-  font-size: 1.75rem !important;
+.rl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
 }
+.rl-title { font-size: 1.3rem; font-weight: 700; color: #1a1a1a; }
 
-/* ============= BOUTONS ============= */
-/* ============= BOUTON NOUVELLE RÉCLAMATION ============= */
-.btn-primary {
-  background: #d4af37 !important;
-  color: white !important;
-  border: 2px solid #d4af37 !important;
-
-  font-weight: 600 !important;
-  padding: 10px 22px !important;
-  border-radius: 8px !important;
-  letter-spacing: 0.3px;
-
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
-  transition: none !important;
-}
-
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
-  background: #d4af37 !important;
-  color: white !important;
-  border-color: #d4af37 !important;
-
-  transform: none !important;
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
-}
-/* ============= LOADING SPINNER ============= */
-.fa-spinner.text-primary {
-  color: #d4af37 !important;
-}
-
-/* ============= ALERTES ============= */
-.alert {
-  border: none !important;
-  border-radius: 10px !important;
-  padding: 14px 18px !important;
-  border-left: 4px solid !important;
-}
-
-.alert-danger {
-  background: rgba(239, 68, 68, 0.08) !important;
-  color: #991b1b !important;
-  border-left-color: #ef4444 !important;
-}
-
-.alert-success {
-  background: rgba(16, 185, 129, 0.08) !important;
-  color: #047857 !important;
-  border-left-color: #10b981 !important;
-}
-
-/* ============= CARTE PRINCIPALE ============= */
-.card.shadow {
-  border: 1px solid #f0f0eb !important;
-  border-radius: 14px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
-  background: #ffffff !important;
-}
-
-.card-header {
-  background: #fafaf7 !important;
-  border-bottom: 1px solid #f0f0eb !important;
-  padding: 1.2rem 1.5rem !important;
-}
-
-.card-header h6 {
-  color: #b8860b !important;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-size: 0.85rem !important;
-  font-weight: 600 !important;
-}
-
-.text-primary {
-  color: #b8860b !important;
-}
-
-/* ═══════════════════════════════════════════════════════════ */
-/* 🎨 CARTES RÉCLAMATIONS (chaque réclamation est une carte)  */
-/* ═══════════════════════════════════════════════════════════ */
-
-.card.mb-3.border-left-primary {
-  border: 1px solid #f0f0eb !important;
-  border-left: 4px solid #d4af37 !important;
-  border-radius: 12px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+.rl-btn-new {
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(212,175,55,0.3);
   transition: all 0.2s;
-  background: #ffffff !important;
 }
+.rl-btn-new:hover { transform: translateY(-1px); color: #fff; }
 
-.card.mb-3.border-left-primary:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15) !important;
-  border-left-color: #f4d03f !important;
-}
-
-/* Titre de la réclamation */
-.card.border-left-primary h5 {
-  color: #1a1a1a !important;
-  font-weight: 600 !important;
-  font-size: 1.1rem !important;
-  margin-bottom: 4px !important;
-}
-
-/* Date de soumission */
-.card.border-left-primary small.text-muted {
-  color: #888 !important;
-  font-size: 0.78rem !important;
-}
-
-/* Description */
-.card.border-left-primary p {
-  color: #444 !important;
-  line-height: 1.6;
-  font-size: 0.92rem;
-  background: #fafaf8;
-  padding: 12px 14px;
-  border-radius: 8px;
-  border-left: 2px solid #e5e5e0;
-  margin-top: 12px !important;
-}
-
-/* ============= BADGES STATUTS ============= */
-.badge {
-  padding: 5px 14px !important;
-  font-size: 0.7rem !important;
-  font-weight: 600 !important;
-  border-radius: 20px !important;
-  letter-spacing: 0.5px;
-}
-
-/* EN_ATTENTE = OR */
-.badge-warning {
-  background: rgba(212, 175, 55, 0.15) !important;
-  color: #b8860b !important;
-  border: 1px solid rgba(212, 175, 55, 0.3) !important;
-}
-
-/* EN_COURS = info */
-.badge-info {
-  background: rgba(180, 180, 180, 0.2) !important;
-  color: #555 !important;
-  border: 1px solid #d0d0d0 !important;
-}
-
-/* ACCEPTEE = vert */
-.badge-success {
-  background: rgba(16, 185, 129, 0.15) !important;
-  color: #047857 !important;
-  border: 1px solid rgba(16, 185, 129, 0.3) !important;
-}
-
-/* REFUSEE = rouge */
-.badge-danger {
-  background: rgba(239, 68, 68, 0.12) !important;
-  color: #b91c1c !important;
-  border: 1px solid rgba(239, 68, 68, 0.3) !important;
-}
-
-.badge-light {
-  background: transparent !important;
-  color: #888 !important;
-  border: 1px solid #e5e5e0 !important;
-}
-
-/* ============= RÉPONSE DE L'EXPERT (alert) ============= */
-.alert.mt-3 {
-  border-radius: 10px !important;
-  padding: 14px 18px !important;
-  border: none !important;
-  border-left: 4px solid !important;
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-.alert.mt-3 strong {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 0.85rem;
+.rl-section-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #d4af37;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rl-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(212,175,55,0.2);
 }
 
-.alert.mt-3 strong i {
-  margin-right: 6px;
+.rl-empty {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+}
+.rl-empty-icon { font-size: 3rem; margin-bottom: 12px; }
+
+/* CARD */
+.rl-card {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: all 0.15s ease;
+}
+.rl-card:hover {
+  border-color: rgba(212,175,55,0.3);
+  box-shadow: 0 4px 16px rgba(212,175,55,0.08);
 }
 
-/* Réponse ACCEPTEE = vert */
-.alert.mt-3.alert-success {
-  background: rgba(16, 185, 129, 0.08) !important;
-  color: #047857 !important;
-  border-left-color: #10b981 !important;
+.rl-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.rl-card-sujet { font-size: 0.95rem; font-weight: 700; color: #1a1a1a; }
+.rl-card-date  { font-size: 0.7rem; color: #aaa; margin-top: 3px; }
+
+/* STATUT BADGES */
+.rl-statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.badge-warning  { background: rgba(245,158,11,0.12);  color: #92400e; }
+.badge-info     { background: rgba(59,130,246,0.1);   color: #1d4ed8; }
+.badge-success  { background: rgba(16,185,129,0.1);   color: #065f46; }
+.badge-danger   { background: rgba(239,68,68,0.1);    color: #991b1b; }
+.badge-light    { background: #f5f5f0; color: #555; }
+
+/* DESCRIPTION */
+.rl-desc {
+  background: #faf9f5;
+  border-radius: 9px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 10px;
 }
 
-.alert.mt-3.alert-success strong i {
-  color: #10b981 !important;
+/* RÉPONSE EXPERT */
+.rl-reponse {
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 10px;
 }
-
-/* Réponse REFUSEE = rouge */
-.alert.mt-3.alert-danger {
-  background: rgba(239, 68, 68, 0.08) !important;
-  color: #991b1b !important;
-  border-left-color: #ef4444 !important;
+.rl-reponse-acceptee {
+  background: rgba(16,185,129,0.06);
+  border-left: 4px solid #10b981;
 }
-
-.alert.mt-3.alert-danger strong i {
-  color: #ef4444 !important;
+.rl-reponse-refusee {
+  background: rgba(239,68,68,0.06);
+  border-left: 4px solid #ef4444;
 }
-
-/* ============= EMPTY STATE (Aucune réclamation) ============= */
-.text-center.text-muted.py-4 {
-  color: #888 !important;
+.rl-reponse-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
 }
-
-.text-center.text-muted.py-4 i.fa-comment-dots {
-  color: #d4af37 !important;
-  opacity: 0.5;
-}
-
-.text-center.text-muted.py-4 a.btn-primary {
-  margin-top: 16px !important;
-}
-
-/* ============= LIENS ============= */
-a.btn-primary,
-a.btn-secondary {
-  text-decoration: none !important;
-}
+.rl-reponse-acceptee .rl-reponse-title { color: #047857; }
+.rl-reponse-refusee  .rl-reponse-title { color: #991b1b; }
+.rl-reponse-text { font-size: 0.82rem; color: #555; line-height: 1.5; }

@@ -1,77 +1,102 @@
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">
-    <i class="fas fa-credit-card me-2"></i>Paiement de votre prime
-  </h1>
-  <a routerLink="/admin/contrats" class="btn btn-secondary">
-    <i class="fas fa-arrow-left me-2"></i>Retour
+<!-- ══════════════════════════════════════════════
+     PAIEMENT STRIPE — Interface Client LifeSure
+     ══════════════════════════════════════════════ -->
+
+<!-- HEADER -->
+<div class="ps-header">
+  <h1 class="ps-title">💳 Paiement de votre prime</h1>
+  <a [routerLink]="isClient ? '/client/contrats' : '/admin/contrats'"
+     class="ps-btn-retour">
+    ← Retour
   </a>
 </div>
 
-<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+<!-- MESSAGES -->
+<div *ngIf="errorMessage" class="ps-alert-danger">⚠️ {{ errorMessage }}</div>
+<div *ngIf="successMessage" class="ps-alert-success">✅ {{ successMessage }}</div>
 
-<div class="row" *ngIf="contrat">
+<!-- LAYOUT -->
+<div class="ps-layout" *ngIf="contrat">
 
-  <!-- Récap du contrat -->
-  <div class="col-lg-4 mb-4">
-    <div class="card shadow border-left-primary">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Récapitulatif</h6>
+  <!-- ══ GAUCHE : RÉCAPITULATIF ══ -->
+  <div>
+    <div class="ps-recap-card">
+      <div class="ps-section-label">📋 Récapitulatif</div>
+
+      <div class="ps-recap-row">
+        <div class="ps-recap-lbl">📄 Contrat</div>
+        <div class="ps-recap-val">{{ contrat.numeroContrat }}</div>
       </div>
-      <div class="card-body">
-        <p><strong>Contrat :</strong> {{ contrat.numeroContrat }}</p>
-        <p><strong>Type :</strong>
-          <span class="badge badge-info">{{ contrat.typeContrat }}</span>
-        </p>
-        <p><strong>Statut :</strong> {{ contrat.statut }}</p>
-        <hr>
-        <h4 class="text-primary">
-          {{ contrat.primeMensuelle | number:'1.2-2' }} DT
-        </h4>
-        <small class="text-muted">Prime mensuelle</small>
+      <div class="ps-recap-row">
+        <div class="ps-recap-lbl">🏷️ Type</div>
+        <span class="ps-type-badge">
+          {{ getTypeIcon(contrat.typeContrat) }} {{ contrat.typeContrat }}
+        </span>
+      </div>
+      <div class="ps-recap-row">
+        <div class="ps-recap-lbl">📊 Statut</div>
+        <div class="ps-recap-val" style="color:#b45309;">⏳ {{ contrat.statut }}</div>
+      </div>
+
+      <!-- PRIME -->
+      <div class="ps-prime-box">
+        <div class="ps-prime-label">Prime mensuelle</div>
+        <div class="ps-prime-val">{{ contrat.primeMensuelle | number:'1.2-2' }} DT</div>
+        <div class="ps-prime-sub">à régler</div>
+      </div>
+
+      <!-- SÉCURITÉ -->
+      <div class="ps-security-row">
+        <span>🔒</span>
+        <div class="ps-security-text">
+          <strong>Paiement 100% sécurisé</strong><br>
+          Chiffré SSL — Aucune donnée bancaire stockée
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Formulaire Stripe -->
-  <div class="col-lg-8 mb-4">
-    <div class="card shadow">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">
-          <i class="fab fa-cc-stripe me-2"></i>Paiement sécurisé par Stripe
-        </h6>
+  <!-- ══ DROITE : STRIPE ══ -->
+  <div class="ps-stripe-card">
+
+    <!-- HEADER STRIPE -->
+    <div class="ps-stripe-header">
+      <div class="ps-stripe-title">💳 Paiement sécurisé par</div>
+      <div class="ps-stripe-logo">stripe</div>
+    </div>
+
+    <div class="ps-stripe-body">
+
+      <!-- LOADING -->
+      <div *ngIf="loading" class="ps-loading">
+        <div class="ps-spinner"></div>
+        <p>Initialisation du paiement...</p>
       </div>
-      <div class="card-body">
 
-        <div *ngIf="loading" class="text-center py-4">
-          <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
-          <p class="mt-2">Initialisation du paiement...</p>
+      <!-- FORMULAIRE -->
+      <div [hidden]="loading">
+
+        <div class="ps-alert-info">
+          ℹ️ Test : carte <strong>4242 4242 4242 4242</strong> — Date future — CVC: <strong>123</strong>
         </div>
 
-        <div [hidden]="loading">
-          <div class="alert alert-info">
-            <i class="fas fa-info-circle me-2"></i>
-            
-          </div>
+        <!-- Stripe injecte son formulaire ici -->
+        <div id="payment-element" class="ps-payment-element"></div>
 
-          <!-- Stripe va injecter son formulaire ici -->
-          <div id="payment-element" class="mb-4"></div>
-
-          <button class="btn btn-primary btn-lg w-100"
-                  (click)="payer()"
-                  [disabled]="processing">
-            <span *ngIf="!processing">
-              <i class="fas fa-lock me-2"></i>
-              Payer {{ contrat.primeMensuelle | number:'1.2-2' }} DT
-            </span>
-            <span *ngIf="processing">
-              <i class="fas fa-spinner fa-spin me-2"></i>
-              Traitement en cours...
-            </span>
-          </button>
-        </div>
+        <!-- BOUTON PAYER -->
+        <button class="ps-btn-payer"
+                (click)="payer()"
+                [disabled]="processing">
+          <span *ngIf="!processing">
+            🔒 Payer {{ contrat.primeMensuelle | number:'1.2-2' }} DT
+          </span>
+          <span *ngIf="processing">
+            ⏳ Traitement en cours...
+          </span>
+        </button>
 
       </div>
     </div>
   </div>
+
 </div>

@@ -1,83 +1,81 @@
-<h1 class="h3 mb-4 text-gray-800">
-  <i class="fas fa-inbox me-2"></i>Réclamations à traiter
-</h1>
+<!-- HEADER -->
+<div class="re-header">
+  <h1 class="re-title">🔬 Réclamations à traiter</h1>
+  <span class="re-count">{{ reclamations.length }} en attente</span>
+</div>
 
 <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
 <div *ngIf="loading" class="text-center py-5">
-  <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+  <i class="fas fa-spinner fa-spin fa-2x" style="color:#d4af37;"></i>
 </div>
 
-<div *ngIf="!loading && reclamations.length === 0" class="text-center py-5 text-muted">
-  <i class="fas fa-check-circle fa-3x mb-3 d-block text-success"></i>
-  Aucune réclamation en attente
+<!-- VIDE -->
+<div *ngIf="!loading && reclamations.length === 0" class="re-empty">
+  <div class="re-empty-icon">✅</div>
+  <p>Aucune réclamation en attente</p>
 </div>
 
-<div *ngFor="let r of reclamations" class="card shadow mb-4">
-  <div class="card-header py-3 d-flex justify-content-between align-items-center">
-    <h6 class="m-0 font-weight-bold text-primary">
-      <i class="fas fa-comment-dots me-2"></i>
-      Réclamation #{{ r.id }}
-    </h6>
-    <span class="badge" [ngClass]="getStatutBadge(r.statut)">
-      {{ r.statut }}
+<div class="re-section-label" *ngIf="!loading && reclamations.length > 0">
+  📂 Réclamations assignées
+</div>
+
+<!-- CARDS -->
+<div *ngFor="let r of reclamations" class="re-card">
+
+  <!-- TOP -->
+  <div class="re-card-top">
+    <div class="re-rec-num">💬 Réclamation #{{ r.id }}</div>
+    <span class="re-statut" [ngClass]="getStatutBadgeClass(r.statut)">
+      {{ getStatutIcon(r.statut) }} {{ r.statut }}
     </span>
   </div>
-  <div class="card-body">
 
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <label class="text-muted small">Client</label>
-        <p class="mb-0 font-weight-bold">
-          <i class="fas fa-user me-1"></i>
-          {{ r.client?.prenom }} {{ r.client?.nom }}
-        </p>
-        <small class="text-muted">{{ r.client?.email }}</small>
-      </div>
-      <div class="col-md-6">
-        <label class="text-muted small">Date de dépôt</label>
-        <p class="mb-0">{{ r.dateDepot | date:'short' }}</p>
-      </div>
+  <!-- INFO GRID -->
+  <div class="re-info-grid">
+    <div>
+      <div class="re-info-label">👤 Client</div>
+      <div class="re-info-val">{{ r.client?.prenom }} {{ r.client?.nom }}</div>
+      <div class="re-info-sub">{{ r.client?.email }}</div>
     </div>
-
-    <hr>
-
-    <div class="mb-3">
-      <label class="text-muted small">Sujet</label>
-      <h5>{{ r.sujet }}</h5>
+    <div>
+      <div class="re-info-label">📅 Date de dépôt</div>
+      <div class="re-info-val">{{ r.dateDepot | date:'dd/MM/yyyy' }}</div>
+      <div class="re-info-sub">{{ r.dateDepot | date:'HH:mm' }}</div>
     </div>
-
-    <div class="mb-4">
-      <label class="text-muted small">Description</label>
-      <div class="p-3 bg-light rounded">
-        {{ r.description }}
-      </div>
-    </div>
-
-    <!-- Zone de traitement -->
-    <div class="bg-light p-3 rounded">
-      <h6 class="text-primary mb-3">
-        <i class="fas fa-gavel me-2"></i>Votre décision
-      </h6>
-
-      <div class="mb-3">
-        <label class="form-label"><strong>Justification / Réponse *</strong></label>
-        <textarea class="form-control" rows="4"
-                  [(ngModel)]="justifications[r.id!]"
-                  name="just-{{r.id}}"
-                  placeholder="Expliquez votre décision au client..."></textarea>
-        <small class="text-muted">Minimum 10 caractères. Cette réponse sera envoyée par email au client.</small>
-      </div>
-
-      <div class="text-end">
-        <button class="btn btn-danger me-2" (click)="traiter(r.id!, 'REFUSEE')">
-          <i class="fas fa-times me-2"></i>Refuser
-        </button>
-        <button class="btn btn-success" (click)="traiter(r.id!, 'ACCEPTEE')">
-          <i class="fas fa-check me-2"></i>Accepter
-        </button>
-      </div>
-    </div>
-
   </div>
+
+  <!-- SUJET -->
+  <div class="re-sujet-wrap">
+    <div class="re-info-label">📋 Sujet</div>
+    <div class="re-sujet">{{ r.sujet }}</div>
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="re-info-label" style="margin-bottom:6px;">📝 Description</div>
+  <div class="re-desc-box">{{ r.description }}</div>
+
+  <!-- DÉCISION -->
+  <div class="re-decision">
+    <div class="re-decision-title">⚖️ Votre décision</div>
+    <div class="re-info-label" style="margin-bottom:6px;">Justification / Réponse *</div>
+    <textarea class="re-textarea"
+              rows="4"
+              [(ngModel)]="justifications[r.id!]"
+              [name]="'just-' + r.id"
+              placeholder="Expliquez votre décision au client...">
+    </textarea>
+    <div class="re-textarea-hint">
+      Minimum 10 caractères. Cette réponse sera envoyée par email au client.
+    </div>
+    <div class="re-decision-btns">
+      <button class="re-btn-accept" (click)="traiter(r.id!, 'ACCEPTEE')">
+        ✅ Accepter
+      </button>
+      <button class="re-btn-refus" (click)="traiter(r.id!, 'REFUSEE')">
+        ❌ Refuser
+      </button>
+    </div>
+  </div>
+
 </div>

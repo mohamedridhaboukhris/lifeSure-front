@@ -1,268 +1,256 @@
-/* ═══════════════════════════════════════════════════════════ */
-/* 🎨 PAIEMENT STRIPE - NOIR + OR PREMIUM LUXE                */
-/* ═══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   PAIEMENT STRIPE — Styles Client LifeSure
+   ══════════════════════════════════════════════ */
 
-/* ============= TITRE DE LA PAGE ============= */
-h1.h3.text-gray-800 {
-  color: #1a1a1a !important;
-  font-weight: 600 !important;
-  font-size: 1.75rem !important;
+.ps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+.ps-title { font-size: 1.4rem; font-weight: 700; color: #1a1a1a; }
+
+.ps-btn-retour {
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+  transition: all 0.2s;
+}
+.ps-btn-retour:hover { transform: translateY(-1px); color: #fff; }
+
+/* ALERTS */
+.ps-alert-danger {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-left: 3px solid #ef4444;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 0.82rem;
+  color: #991b1b;
+  margin-bottom: 14px;
+}
+.ps-alert-success {
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.25);
+  border-left: 3px solid #10b981;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 0.82rem;
+  color: #065f46;
+  margin-bottom: 14px;
+}
+.ps-alert-info {
+  background: rgba(212,175,55,0.07);
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 9px;
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  color: #92400e;
+  margin-bottom: 18px;
 }
 
-h1.h3.text-gray-800 i {
-  color: #d4af37 !important;
-  margin-right: 12px;
+/* LAYOUT */
+.ps-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  align-items: start;
 }
 
-/* ============= BOUTONS PRINCIPAUX ============= */
-/* Boutons Retour et Payer */
-.btn-primary {
-  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
-  color: #0a0a0a !important;
-  border: 2px solid #d4af37 !important;
-
-  font-weight: 600 !important;
-  padding: 12px 28px !important;
-  border-radius: 10px !important;
-
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25) !important;
+/* RÉCAP */
+.ps-recap-card {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
-.btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #b8860b, #d4af37) !important;
-  color: #ffffff !important;
-  border-color: #b8860b !important;
-
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45) !important;
-}
-
-.btn-primary i {
-  color: inherit !important;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
-  color: #0a0a0a !important;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45) !important;
-}
-
-.btn-primary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.btn-primary.btn-lg {
-  font-size: 1rem !important;
-  padding: 14px 28px !important;
-}
-
-.btn-primary i {
-  color: inherit !important;
-}
-
-.btn-secondary {
-  background: linear-gradient(135deg, #d4af37, #f4d03f) !important;
-  color: #0a0a0a !important;
-  border: 2px solid #d4af37 !important;
-}
-
-.btn-secondary:hover {
-  background: linear-gradient(135deg, #b8860b, #d4af37) !important;
-  color: #ffffff !important;
-  border-color: #b8860b !important;
-}
-
-
-
-/* ============= LOADING SPINNER ============= */
-.fa-spinner.text-primary {
-  color: #d4af37 !important;
-}
-
-/* ============= ALERTES ============= */
-.alert {
-  border: none !important;
-  border-radius: 10px !important;
-  padding: 14px 18px !important;
-  border-left: 4px solid !important;
-}
-
-.alert-danger {
-  background: rgba(239, 68, 68, 0.08) !important;
-  color: #991b1b !important;
-  border-left-color: #ef4444 !important;
-}
-
-.alert-success {
-  background: rgba(16, 185, 129, 0.08) !important;
-  color: #047857 !important;
-  border-left-color: #10b981 !important;
-}
-
-.alert-info {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 208, 63, 0.04)) !important;
-  color: #b8860b !important;
-  border-left-color: #d4af37 !important;
-}
-
-.alert-info i {
-  color: #d4af37 !important;
-}
-
-.alert-info code {
-  background: #1a1a1a !important;
-  color: #d4af37 !important;
-  padding: 3px 10px !important;
-  border-radius: 6px !important;
-  font-weight: 600 !important;
-  font-family: 'Courier New', monospace !important;
-  letter-spacing: 1px;
-  margin: 0 4px;
-}
-
-.alert-info strong {
-  color: #b8860b !important;
-}
-
-/* ═══════════════════════════════════════════════════════════ */
-/* 🎨 CARTE RÉCAPITULATIF (COLONNE GAUCHE)                     */
-/* ═══════════════════════════════════════════════════════════ */
-
-.card.shadow {
-  border: 1px solid #f0f0eb !important;
-  border-radius: 14px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
-  background: #ffffff !important;
-  overflow: hidden;
-}
-
-/* Carte récap avec bordure OR */
-.card.border-left-primary {
-  border-left: 4px solid #d4af37 !important;
-}
-
-.card-header {
-  background: #fafaf7 !important;
-  border-bottom: 1px solid #f0f0eb !important;
-  padding: 1.2rem 1.5rem !important;
-}
-
-.card-header h6 {
-  color: #b8860b !important;
+.ps-section-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #d4af37;
   text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ps-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(212,175,55,0.2);
+}
+
+.ps-recap-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid #f5f2e8;
+}
+.ps-recap-row:last-of-type { border-bottom: none; }
+.ps-recap-lbl { font-size: 0.72rem; color: #aaa; }
+.ps-recap-val { font-size: 0.82rem; font-weight: 600; color: #1a1a1a; }
+
+.ps-type-badge {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  background: rgba(239,68,68,0.1);
+  color: #991b1b;
+}
+
+/* PRIME */
+.ps-prime-box {
+  background: #faf9f5;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 14px;
+  text-align: center;
+}
+.ps-prime-label {
+  font-size: 0.6rem;
+  font-weight: 700;
   letter-spacing: 1.5px;
-  font-size: 0.85rem !important;
-  font-weight: 600 !important;
+  color: #aaa;
+  text-transform: uppercase;
+  margin-bottom: 6px;
 }
-
-.card-header h6 i {
-  color: #d4af37 !important;
+.ps-prime-val {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d4af37;
 }
-
-.text-primary {
-  color: #b8860b !important;
-}
-
-/* Contenu carte récap */
-.card-body p {
-  margin-bottom: 12px !important;
-  font-size: 0.9rem;
-  color: #1a1a1a;
-}
-
-.card-body p strong {
-  color: #555 !important;
-  font-weight: 500;
-}
-
-/* Séparateur */
-hr {
-  border-color: rgba(212, 175, 55, 0.2) !important;
-  margin: 1rem 0 !important;
-}
-
-/* Prime mensuelle XL */
-h4.text-primary {
-  color: #b8860b !important;
-  font-weight: 700 !important;
-  font-size: 2rem !important;
-  margin: 8px 0 4px !important;
-  background: linear-gradient(135deg, #d4af37, #b8860b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-muted {
-  color: #888 !important;
-}
-
-small.text-muted {
-  font-size: 0.78rem !important;
+.ps-prime-sub {
+  font-size: 0.65rem;
+  color: #aaa;
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin-top: 2px;
 }
 
-/* ============= BADGES ============= */
-.badge {
-  padding: 5px 14px !important;
-  font-size: 0.7rem !important;
-  font-weight: 600 !important;
-  border-radius: 20px !important;
+/* SÉCURITÉ */
+.ps-security-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: rgba(16,185,129,0.06);
+  border-radius: 9px;
+  border: 1px solid rgba(16,185,129,0.15);
+  font-size: 1rem;
+}
+.ps-security-text {
+  font-size: 0.68rem;
+  color: #065f46;
+  line-height: 1.5;
+}
+.ps-security-text strong { color: #047857; }
+
+/* STRIPE CARD */
+.ps-stripe-card {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.ps-stripe-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f5f2e8;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ps-stripe-title {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #d4af37;
+  text-transform: uppercase;
+}
+.ps-stripe-logo {
+  background: #635bff;
+  color: #fff;
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 0.72rem;
+  font-weight: 700;
   letter-spacing: 0.5px;
 }
 
-.badge-info {
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
-  color: #d4af37 !important;
-  font-weight: 600 !important;
+.ps-stripe-body { padding: 22px; }
+
+/* LOADING */
+.ps-loading {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+}
+.ps-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(212,175,55,0.2);
+  border-top-color: #d4af37;
+  border-radius: 50%;
+  animation: ps-spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+@keyframes ps-spin { to { transform: rotate(360deg); } }
+
+/* PAYMENT ELEMENT (Stripe injecte ici) */
+.ps-payment-element {
+  margin-bottom: 20px;
+  min-height: 100px;
 }
 
-/* ═══════════════════════════════════════════════════════════ */
-/* 🎨 STRIPE PAYMENT ELEMENT                                   */
-/* ═══════════════════════════════════════════════════════════ */
-
-#payment-element {
-  background: #fafaf8;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1.5px solid #f0f0eb;
+/* BOUTON PAYER */
+.ps-btn-payer {
+  width: 100%;
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #fff;
+  border: none;
+  border-radius: 11px;
+  padding: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 6px 16px rgba(212,175,55,0.35);
   transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.ps-btn-payer:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(212,175,55,0.45);
+}
+.ps-btn-payer:disabled {
+  background: #e5e5e0;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
-#payment-element:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-  background: #ffffff;
-}
-
-/* Texte chargement */
-.text-center.py-4 p {
-  color: #888 !important;
-  margin-top: 12px;
-}
-
-/* ============= LIENS ============= */
-a.btn-secondary {
-  text-decoration: none !important;
-}
-
-/* ============= EFFETS ============= */
-.card.shadow {
-  transition: all 0.2s;
-}
-
-.card.shadow:hover {
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Animation paiement */
-@keyframes pulseGold {
-  0%, 100% { box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25); }
-  50% { box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5); }
-}
-
-.btn-primary.btn-lg:not(:disabled):hover {
-  animation: pulseGold 1.5s infinite;
+/* Responsive */
+@media (max-width: 768px) {
+  .ps-layout { grid-template-columns: 1fr; }
 }

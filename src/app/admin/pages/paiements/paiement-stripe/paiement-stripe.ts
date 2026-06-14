@@ -134,6 +134,7 @@ import { loadStripe, Stripe, StripeElements, StripePaymentElement } from '@strip
 import { PaiementService } from '../../../../services/paiement';
 import { ContratService, Contrat } from '../../../../services/contrat';
 import { environment } from '../../../../../environments/environment';
+import { Auth } from '../../../../services/auth';
 
 @Component({
   selector: 'app-paiement-stripe',
@@ -146,6 +147,7 @@ export class PaiementStripeComponent implements OnInit, AfterViewInit {
 
   contrat: Contrat | null = null;
   contratId!: number;
+   isClient = false; // 
 
   stripe: Stripe | null = null;
   elements: StripeElements | null = null;
@@ -162,10 +164,12 @@ export class PaiementStripeComponent implements OnInit, AfterViewInit {
     private router: Router,
     private paiementService: PaiementService,
     private contratService: ContratService,
-    private cdr: ChangeDetectorRef  // ✅ AJOUTÉ
+    private cdr: ChangeDetectorRef ,
+     private auth: Auth  // ✅ AJOUTÉ
   ) {}
 
   ngOnInit(): void {
+    this.isClient = this.auth.isClient(); 
     this.contratId = +this.route.snapshot.paramMap.get('id')!;
     this.loadContrat();
   }
@@ -186,6 +190,16 @@ export class PaiementStripeComponent implements OnInit, AfterViewInit {
       }
     });
   }
+getTypeIcon(type?: string): string {
+  const icons: any = { AUTO: '🚗', HABITATION: '🏠', SANTE: '🏥', VOYAGE: '✈️' };
+  return icons[type || ''] || '📋';
+}
+
+
+    
+
+
+
 
   async initStripe(): Promise<void> {
     this.loading = true;
@@ -223,7 +237,7 @@ export class PaiementStripeComponent implements OnInit, AfterViewInit {
 
     this.processing = true;
     this.errorMessage = '';
-    this.cdr.detectChanges();  // ✅ AJOUTÉ
+    this.cdr.detectChanges();
 
     const { error, paymentIntent } = await this.stripe.confirmPayment({
       elements: this.elements,
@@ -233,7 +247,7 @@ export class PaiementStripeComponent implements OnInit, AfterViewInit {
     if (error) {
       this.errorMessage = error.message || 'Erreur lors du paiement';
       this.processing = false;
-      this.cdr.detectChanges();  // ✅ AJOUTÉ
+      this.cdr.detectChanges();
       return;
     }
 
@@ -242,13 +256,14 @@ export class PaiementStripeComponent implements OnInit, AfterViewInit {
         next: () => {
           this.successMessage = '✅ Paiement réussi ! Votre contrat est maintenant ACTIF.';
           this.processing = false;
-          this.cdr.detectChanges();  // ✅ AJOUTÉ
-          setTimeout(() => this.router.navigate(['/admin/paiements']), 2000);
+          this.cdr.detectChanges();
+          const route = this.isClient ? '/client/paiements' : '/admin/paiements'; // ← ajouté
+          setTimeout(() => this.router.navigate([route]), 2000); // ← modifié
         },
         error: () => {
           this.errorMessage = 'Paiement Stripe OK mais erreur côté serveur';
           this.processing = false;
-          this.cdr.detectChanges();  // ✅ AJOUTÉ
+          this.cdr.detectChanges();
         }
       });
     }

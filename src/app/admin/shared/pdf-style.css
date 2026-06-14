@@ -1,0 +1,262 @@
+/* ══════════════════════════════════════════════
+   STYLE PDF OFFICIEL — LifeSure
+   Applicable aux pages : Contrats, Sinistres, Paiements
+   ══════════════════════════════════════════════ */
+
+/* ── HEADER PAGE ── */
+.pdf-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+.pdf-page-title { font-size: 1.4rem; font-weight: 700; color: #1a1a1a; }
+
+.pdf-btn-new {
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #fff !important;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+  transition: all 0.2s;
+}
+.pdf-btn-new:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(212,175,55,0.4); }
+
+/* ── LAYOUT ── */
+.pdf-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── SECTION LABEL ── */
+.pdf-section-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #d4af37;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdf-section-label::after { content: ''; flex: 1; height: 1px; background: rgba(212,175,55,0.25); }
+
+/* ── CARD STYLE PDF ── */
+.pdf-card {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-left: 3px solid #d4af37;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: all 0.18s ease;
+}
+.pdf-card:hover { box-shadow: 0 4px 16px rgba(212,175,55,0.12); transform: translateY(-1px); }
+
+.pdf-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Icône */
+.pdf-card-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.icon-auto    { background: rgba(59,130,246,0.1); }
+.icon-hab     { background: rgba(16,185,129,0.1); }
+.icon-voyage  { background: rgba(212,175,55,0.1); }
+.icon-sante   { background: rgba(239,68,68,0.1); }
+.icon-autre   { background: rgba(107,114,128,0.1); }
+
+/* Infos */
+.pdf-card-main { flex: 1; min-width: 0; }
+.pdf-card-numero { font-size: 0.88rem; font-weight: 700; color: #1a1a1a; }
+.pdf-type-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 9px; border-radius: 20px;
+  font-size: 0.62rem; font-weight: 600; margin-left: 6px;
+}
+.badge-type-auto    { background: rgba(59,130,246,0.1);  color: #1d4ed8; }
+.badge-type-hab     { background: rgba(16,185,129,0.1);  color: #065f46; }
+.badge-type-voyage  { background: rgba(212,175,55,0.15); color: #92400e; }
+.badge-type-sante   { background: rgba(239,68,68,0.1);   color: #991b1b; }
+.pdf-card-dates { display: flex; gap: 12px; margin-top: 4px; font-size: 0.7rem; color: #888; }
+.pdf-card-client { font-size: 0.7rem; color: #888; margin-top: 3px; }
+
+/* Prime */
+.pdf-card-prime { text-align: center; min-width: 90px; }
+.pdf-prime-val { font-size: 0.9rem; font-weight: 700; color: #d4af37; }
+.pdf-prime-lbl { font-size: 0.58rem; color: #aaa; }
+
+/* Statut */
+.pdf-statut {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 20px;
+  font-size: 0.68rem; font-weight: 600;
+  white-space: nowrap;
+}
+.badge-success    { background: rgba(16,185,129,0.12); color: #047857; }
+.badge-warning    { background: rgba(245,158,11,0.12); color: #b45309; }
+.badge-danger     { background: rgba(239,68,68,0.12);  color: #b91c1c; }
+.badge-info       { background: rgba(212,175,55,0.12); color: #b8860b; }
+.badge-validation { background: rgba(99,102,241,0.12); color: #4338ca; }
+.badge-refuse     { background: rgba(239,68,68,0.12);  color: #b91c1c; }
+.badge-light      { background: #f5f5f0; color: #555; }
+
+/* Actions */
+.pdf-card-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; min-width: 150px; justify-content: flex-end; }
+.pdf-btn-signer {
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #fff; border: none; border-radius: 8px;
+  padding: 5px 13px; font-size: 0.72rem; font-weight: 600; cursor: pointer;
+}
+.pdf-signed { font-size: 0.68rem; color: #047857; background: rgba(16,185,129,0.1); padding: 4px 9px; border-radius: 20px; }
+.pdf-btn-payer { background: rgba(16,185,129,0.1); color: #047857; border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 5px 12px; font-size: 0.72rem; font-weight: 600; text-decoration: none; cursor: pointer; }
+.pdf-btn-pdf { background: transparent; border: 1px solid #f0ede0; border-radius: 8px; padding: 5px 10px; font-size: 0.75rem; color: #888; cursor: pointer; }
+.pdf-btn-pdf:hover { border-color: #d4af37; color: #d4af37; }
+.pdf-btn-icon-sm { border: none; border-radius: 7px; padding: 5px 9px; font-size: 0.72rem; cursor: pointer; background: #f5f5f0; color: #555; }
+.pdf-btn-danger { background: rgba(239,68,68,0.1); color: #b91c1c; }
+.pdf-btn-dark { background: #1a1a1a; color: #fff; }
+
+.pdf-empty { text-align: center; padding: 40px; color: #aaa; }
+
+/* ══ SIDEBAR ══ */
+.pdf-sidebar { display: flex; flex-direction: column; gap: 14px; }
+
+.pdf-widget {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-top: 3px solid #d4af37;
+  border-radius: 12px;
+  padding: 15px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.pdf-widget-title {
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 1.5px; color: #d4af37;
+  text-transform: uppercase; margin-bottom: 13px;
+}
+
+/* Stats */
+.pdf-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pdf-stat { background: #faf9f5; border-radius: 8px; padding: 10px 12px; }
+.pdf-stat-val { font-size: 1.1rem; font-weight: 700; color: #d4af37; }
+.pdf-stat-lbl { font-size: 0.6rem; color: #aaa; margin-top: 2px; }
+
+/* Échéances */
+.pdf-echeance { display: flex; align-items: center; gap: 9px; padding: 7px 0; border-bottom: 1px solid #f5f2e8; }
+.pdf-echeance:last-child { border-bottom: none; }
+.pdf-ech-date { width: 36px; height: 36px; background: rgba(212,175,55,0.1); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+.pdf-ech-day { font-size: 0.82rem; font-weight: 700; color: #d4af37; }
+.pdf-ech-mon { font-size: 0.52rem; color: #d4af37; text-transform: uppercase; }
+.pdf-ech-info { flex: 1; min-width: 0; }
+.pdf-ech-num { font-size: 0.76rem; font-weight: 600; color: #1a1a1a; }
+.pdf-ech-desc { font-size: 0.65rem; color: #aaa; }
+.pdf-ech-badge { font-size: 0.58rem; padding: 2px 7px; border-radius: 10px; font-weight: 600; flex-shrink: 0; }
+.ech-urgent  { background: rgba(239,68,68,0.1); color: #991b1b; }
+.ech-bientot { background: rgba(212,175,55,0.1); color: #92400e; }
+.ech-ok      { background: rgba(16,185,129,0.1); color: #065f46; }
+
+/* Graphique */
+.pdf-chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 75px; margin-bottom: 8px; }
+.pdf-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.pdf-bar { width: 100%; background: rgba(212,175,55,0.15); border-radius: 4px 4px 0 0; }
+.pdf-bar.active { background: #d4af37; }
+.pdf-bar-lbl { font-size: 0.55rem; color: #aaa; }
+.pdf-bar-val { font-size: 0.58rem; color: #d4af37; font-weight: 600; }
+.pdf-chart-total { font-size: 0.7rem; color: #aaa; text-align: center; border-top: 1px solid #f5f2e8; padding-top: 8px; }
+.pdf-chart-total strong { color: #d4af37; }
+
+/* Score */
+.pdf-score-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.pdf-score-circle { width: 66px; height: 66px; border-radius: 50%; background: rgba(212,175,55,0.1); border: 3px solid #d4af37; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.pdf-score-num { font-size: 1.1rem; font-weight: 700; color: #d4af37; }
+.pdf-score-max { font-size: 0.55rem; color: #d4af37; }
+.pdf-score-label { font-size: 0.62rem; color: #aaa; margin-top: 4px; text-align: center; }
+.pdf-niveau-badge { display: inline-flex; padding: 5px 13px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: rgba(212,175,55,0.15); color: #92400e; }
+.pdf-membre { font-size: 0.62rem; color: #aaa; margin-top: 5px; }
+.pdf-score-bar-wrap { margin-bottom: 9px; }
+.pdf-score-bar-label { display: flex; justify-content: space-between; font-size: 0.65rem; color: #888; margin-bottom: 4px; }
+.pdf-score-bar-label span:last-child { color: #d4af37; font-weight: 600; }
+.pdf-score-bar-bg { height: 6px; background: rgba(212,175,55,0.15); border-radius: 4px; overflow: hidden; }
+.pdf-score-bar-fill { height: 100%; background: linear-gradient(90deg, #d4af37, #f4d03f); border-radius: 4px; transition: width 0.8s ease; }
+.pdf-avantages { margin-top: 10px; border-top: 1px solid #f5f2e8; padding-top: 10px; }
+.pdf-av-title { font-size: 0.6rem; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
+.pdf-av-item { display: flex; align-items: center; gap: 7px; font-size: 0.7rem; color: #1a1a1a; margin-bottom: 4px; }
+.av-check { color: #d4af37; font-weight: 700; }
+.pdf-next-level { margin-top: 9px; background: rgba(212,175,55,0.07); border-radius: 8px; padding: 8px 11px; font-size: 0.65rem; color: #888; line-height: 1.5; }
+.pdf-next-level strong { color: #d4af37; }
+
+/* ── SINISTRES SPÉCIFIQUE ── */
+.sl-card {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-left: 3px solid #d4af37;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.sl-card:hover { box-shadow: 0 4px 16px rgba(212,175,55,0.12); transform: translateY(-1px); }
+
+/* ── PAIEMENTS SPÉCIFIQUE ── */
+.mp-card {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-left: 3px solid #d4af37;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.mp-card:hover { box-shadow: 0 4px 16px rgba(212,175,55,0.12); transform: translateY(-1px); }
+
+/* Stats paiements */
+.mp-stats-top { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+.mp-stat-card {
+  background: #ffffff;
+  border: 1px solid #f0ede0;
+  border-top: 3px solid #d4af37;
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.mp-stat-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 1px; color: #aaa; text-transform: uppercase; margin-bottom: 6px; }
+.mp-stat-value { font-size: 1.3rem; font-weight: 700; color: #d4af37; }
+.mp-stat-sub { font-size: 0.65rem; color: #aaa; margin-top: 2px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .pdf-layout { grid-template-columns: 1fr; }
+  .pdf-sidebar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mp-stats-top { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .pdf-sidebar { grid-template-columns: 1fr; }
+  .pdf-card-top { flex-wrap: wrap; }
+}
